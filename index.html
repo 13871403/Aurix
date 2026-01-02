@@ -3,59 +3,76 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Demo Game</title>
+<title>Aurix</title>
 
 <style>
 body{
   margin:0;
   font-family:sans-serif;
   direction:rtl;
-  background:linear-gradient(135deg,#667eea,#764ba2);
   min-height:100vh;
+  background:
+    radial-gradient(circle at top left,#ff00cc,transparent 40%),
+    radial-gradient(circle at bottom right,#00f0ff,transparent 40%),
+    linear-gradient(135deg,#0f0c29,#302b63,#24243e);
 }
 
-/* ===== Top Bar ===== */
-.topbar{
-  position:fixed;
-  top:0;
-  right:0;
-  left:0;
-  height:56px;
-  background:#ffffffee;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 16px;
-  box-shadow:0 4px 10px rgba(0,0,0,.1);
-  z-index:1000;
+/* ===== Glass Card ===== */
+.glass{
+  max-width:380px;
+  margin:80px auto;
+  padding:24px;
+  border-radius:24px;
+  background:rgba(255,255,255,0.12);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  box-shadow:0 20px 60px rgba(0,0,0,.4);
+  color:#fff;
 }
-.menu-btn{
-  font-size:26px;
-  cursor:pointer;
+
+/* ===== Logo ===== */
+.logo{
+  text-align:center;
+  font-size:36px;
+  font-weight:800;
+  margin-bottom:20px;
 }
-.app-title{
+.logo span{
+  background:linear-gradient(45deg,#ffcc00,#ff00ff,#00e5ff);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* ===== Inputs ===== */
+input{
+  width:100%;
+  padding:14px;
+  margin-bottom:12px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.3);
+  background:rgba(0,0,0,.2);
+  color:#fff;
+  font-size:15px;
+}
+input::placeholder{color:#ddd}
+
+/* ===== Button ===== */
+.btn-main{
+  width:100%;
+  padding:16px;
+  border:none;
+  border-radius:999px;
+  font-size:16px;
   font-weight:bold;
+  cursor:pointer;
+  background:linear-gradient(90deg,#ffcc00,#ff00ff);
+  color:#000;
+  box-shadow:0 0 25px rgba(255,0,255,.6);
 }
+.btn-main:active{transform:scale(.97)}
 
-/* ===== Side Menu ===== */
-.menu{
-  position:fixed;
-  top:56px;
-  right:-220px;
-  width:200px;
-  background:#fff;
-  box-shadow:-5px 0 20px rgba(0,0,0,.15);
-  transition:.3s;
-  z-index:999;
-}
-.menu.active{ right:0; }
-.menu button{
-  background:none;
-  color:#333;
-  border-radius:0;
-}
-
-/* ===== Panels ===== */
+/* ===== Dashboard ===== */
+#dash{display:none;color:#000}
 .panel{
   background:#fff;
   margin:80px auto 16px;
@@ -63,17 +80,6 @@ body{
   border-radius:18px;
   max-width:420px;
   box-shadow:0 10px 30px rgba(0,0,0,.15);
-}
-
-h3{text-align:center}
-
-input, textarea{
-  width:100%;
-  padding:12px;
-  border-radius:12px;
-  border:1px solid #ddd;
-  font-size:16px;
-  margin-bottom:10px;
 }
 
 button{
@@ -86,164 +92,68 @@ button{
   font-size:16px;
   margin-top:8px;
 }
-
-button:active{transform:scale(.97)}
-
-.stats{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:12px;
-}
-
-.stat{
-  width:48%;
-  background:#f1f3ff;
-  padding:10px;
-  border-radius:12px;
-  text-align:center;
-}
-
-#dash{display:none}
-#support-panel{display:none}
-#support-panel.active{display:block}
 </style>
 </head>
 
 <body>
 
-<!-- ===== Top Bar ===== -->
-<div class="topbar">
-  <div class="menu-btn" onclick="toggleMenu()">☰</div>
-  <div class="app-title">Demo Game</div>
+<!-- ===== AUTH ===== -->
+<div id="auth" class="glass">
+  <div class="logo"><span>Aurix</span></div>
+
+  <input id="fullname" placeholder="نام کامل">
+  <input id="phone" placeholder="شماره تلفن همراه">
+  <input id="email" placeholder="آدرس ایمیل">
+
+  <button class="btn-main" onclick="register()">🔒 ثبت‌نام امن</button>
 </div>
 
-<!-- ===== Side Menu ===== -->
-<div id="menu" class="menu">
-  <button onclick="toggleSupport()">🆘 پشتیبانی</button>
-  <button onclick="vip()">⭐ VIP</button>
-  <button onclick="logout()">🚪 خروج</button>
-</div>
-
-<div id="auth" class="panel">
-  <h3>ورود</h3>
-  <input id="username" placeholder="نام کاربری">
-  <button onclick="login()">ورود</button>
-</div>
-
+<!-- ===== DASHBOARD ===== -->
 <div id="dash" class="panel">
-  <div class="stats">
-    <div class="stat">🎟 بلیط<br><b><span id="t"></span></b></div>
-    <div class="stat">🪙 سکه<br><b><span id="c"></span></b></div>
-  </div>
-
-  <p style="text-align:center">👤 <span id="u"></span></p>
+  <h3 style="text-align:center">خوش آمدی 👋</h3>
+  <p style="text-align:center" id="userInfo"></p>
 
   <button onclick="play()">🎮 بازی</button>
-  <button onclick="tournament()">🏆 تورنمنت</button>
-  <button onclick="mission('ig')">📸 ماموریت اینستاگرام</button>
-  <button onclick="mission('tg')">📨 ماموریت تلگرام</button>
-  <button onclick="buyTicket()">🎟 خرید بلیط</button>
-</div>
-
-<div id="support-panel" class="panel">
-  <textarea id="msg" placeholder="پیام پشتیبانی"></textarea>
-  <button onclick="support()">ارسال</button>
-  <div id="replyBox"></div>
+  <button onclick="buy()">🎟 خرید بلیط</button>
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-
-const auth = document.getElementById('auth');
-const dash = document.getElementById('dash');
-const u = document.getElementById('u');
-const t = document.getElementById('t');
-const c = document.getElementById('c');
-const msg = document.getElementById('msg');
-const menu = document.getElementById('menu');
-
-let state = JSON.parse(localStorage.getItem('demo')) || {
-  user:null, tickets:0, coins:0, done:{ig:false,tg:false}
+let state = JSON.parse(localStorage.getItem('aurix')) || {
+  user:null, coins:0
 };
 
-window.toggleMenu = function(){
-  menu.classList.toggle('active');
-}
+function register(){
+  const name=fullname.value.trim();
+  const phone=phone.value.trim();
+  const email=email.value.trim();
 
-window.login = function(){
-  const username=document.getElementById('username').value.trim();
-  if(!username) return alert('نام کاربری وارد کن');
-  state.user=username;
-  save();
-}
+  if(!name || !phone || !email){
+    alert("همه فیلدها رو پر کن");
+    return;
+  }
 
-window.logout = function(){
-  state.user=null;
-  localStorage.removeItem('demo');
-  location.reload();
+  state.user={name,phone,email};
+  localStorage.setItem('aurix',JSON.stringify(state));
+  render();
 }
 
 function render(){
   if(state.user){
-    auth.style.display='none';
-    dash.style.display='block';
-    u.textContent=state.user;
-    t.textContent=state.tickets;
-    c.textContent=state.coins;
+    auth.style.display="none";
+    dash.style.display="block";
+    userInfo.innerText=state.user.name+" ("+state.user.phone+")";
   }
 }
 
-window.play = function(){
-  state.coins+=Math.floor(Math.random()*50)+10;
-  save('بازی تموم شد 🎉');
+function play(){
+  alert("🎉 بازی اجرا شد (نمایشی)");
 }
 
-window.tournament = function(){
-  if(state.tickets<=0) return alert('بلیط نداری');
-  state.tickets--;
-  state.coins+=100;
-  save('100 سکه گرفتی 🏆');
-}
-
-window.mission = function(type){
-  if(state.done[type]) return alert('قبلاً انجام شده');
-  state.done[type]=true;
-  state.tickets++;
-  if(type==='ig') window.open('https://instagram.com/1_aurix','_blank');
-  if(type==='tg') window.open('https://t.me/Aurix','_blank');
-  save('ماموریت انجام شد 🎟');
-}
-
-window.buyTicket = function(){
-  if(state.coins<500) return alert('سکه کافی نیست');
-  state.coins-=500;
-  state.tickets++;
-  save();
-}
-
-window.vip = function(){
-  alert('VIP فعال شد (نمایشی)');
-}
-
-function save(msg){
-  localStorage.setItem('demo',JSON.stringify(state));
-  if(msg) alert(msg);
-  render();
-}
-
-window.toggleSupport = function(){
-  document.getElementById('support-panel').classList.toggle('active');
-}
-
-window.support = function(){
-  const message=msg.value.trim();
-  if(!message) return alert('پیام بنویس');
-  alert("پیام ارسال شد ✅ (نمایشی)");
-  msg.value='';
+function buy(){
+  alert("🎟 خرید بلیط (نمایشی)");
 }
 
 render();
-});
 </script>
 
 </body>
