@@ -6,34 +6,44 @@
 <title>Aurix</title>
 
 <style>
+/* ===== Background (مثل عکس) ===== */
 body{
   margin:0;
   font-family:sans-serif;
   direction:rtl;
   min-height:100vh;
-  background:linear-gradient(135deg,#6a11cb,#2575fc);
+  background:
+    radial-gradient(circle at top left,#ff00cc,transparent 40%),
+    radial-gradient(circle at bottom right,#00f0ff,transparent 40%),
+    linear-gradient(135deg,#0f0c29,#302b63,#24243e);
 }
 
+/* ===== Card ===== */
 .card{
   max-width:380px;
   margin:80px auto;
   padding:24px;
   border-radius:24px;
-  background:#fff;
-  box-shadow:0 20px 60px rgba(0,0,0,.25);
+  background:rgba(255,255,255,0.95);
+  box-shadow:0 20px 60px rgba(0,0,0,.35);
 }
 
-h2{text-align:center}
+h2{
+  text-align:center;
+  margin-bottom:20px;
+}
 
+/* ===== Inputs ===== */
 input{
   width:100%;
   padding:14px;
   margin-bottom:12px;
-  border-radius:12px;
-  border:1px solid #ccc;
+  border-radius:14px;
+  border:1px solid #ddd;
   font-size:15px;
 }
 
+/* ===== Button ===== */
 button{
   width:100%;
   padding:16px;
@@ -43,15 +53,17 @@ button{
   font-weight:bold;
   cursor:pointer;
   background:linear-gradient(90deg,#ffcc00,#ff00ff);
+  color:#000;
 }
 
+/* صفحه تایید مخفی */
 #verify{display:none}
 </style>
 </head>
 
 <body>
 
-<!-- ثبت نام -->
+<!-- ===== ثبت نام ===== -->
 <div id="register" class="card">
   <h2>Aurix</h2>
   <input id="name" placeholder="نام کامل">
@@ -60,10 +72,10 @@ button{
   <button onclick="register()">🔒 ثبت‌نام امن</button>
 </div>
 
-<!-- تایید موبایل -->
+<!-- ===== تایید موبایل ===== -->
 <div id="verify" class="card">
   <h2>تأیید شماره موبایل</h2>
-  <p id="showPhone"></p>
+  <p id="showPhone" style="text-align:center"></p>
   <input placeholder="کد تایید">
   <button onclick="alert('کد تایید شد (نمایشی)')">ارسال کد تایید</button>
 </div>
