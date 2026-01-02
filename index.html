@@ -11,52 +11,30 @@ body{
   font-family:sans-serif;
   direction:rtl;
   min-height:100vh;
-  background:
-    radial-gradient(circle at top left,#ff00cc,transparent 40%),
-    radial-gradient(circle at bottom right,#00f0ff,transparent 40%),
-    linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+  background:linear-gradient(135deg,#6a11cb,#2575fc);
 }
 
-/* ===== Glass Card ===== */
-.glass{
+.card{
   max-width:380px;
   margin:80px auto;
   padding:24px;
   border-radius:24px;
-  background:rgba(255,255,255,0.12);
-  backdrop-filter:blur(18px);
-  box-shadow:0 20px 60px rgba(0,0,0,.4);
-  color:#fff;
+  background:#fff;
+  box-shadow:0 20px 60px rgba(0,0,0,.25);
 }
 
-/* ===== Logo ===== */
-.logo{
-  text-align:center;
-  font-size:36px;
-  font-weight:800;
-  margin-bottom:20px;
-}
-.logo span{
-  background:linear-gradient(45deg,#ffcc00,#ff00ff,#00e5ff);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
+h2{text-align:center}
 
-/* ===== Inputs ===== */
 input{
   width:100%;
   padding:14px;
   margin-bottom:12px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.3);
-  background:rgba(0,0,0,.2);
-  color:#fff;
+  border-radius:12px;
+  border:1px solid #ccc;
   font-size:15px;
 }
-input::placeholder{color:#ddd}
 
-/* ===== Buttons ===== */
-.btn-main{
+button{
   width:100%;
   padding:16px;
   border:none;
@@ -65,73 +43,45 @@ input::placeholder{color:#ddd}
   font-weight:bold;
   cursor:pointer;
   background:linear-gradient(90deg,#ffcc00,#ff00ff);
-  color:#000;
-  box-shadow:0 0 25px rgba(255,0,255,.6);
 }
-.btn-secondary{
-  background:linear-gradient(90deg,#5f2cff,#00c6ff);
-  color:#fff;
-  margin-top:10px;
-}
-.btn-main:active,
-.btn-secondary:active{transform:scale(.97)}
 
-.hidden{display:none}
+#verify{display:none}
 </style>
 </head>
 
 <body>
 
-<!-- ===== REGISTER ===== -->
-<div id="registerPage" class="glass">
-  <div class="logo"><span>Aurix</span></div>
-
-  <input id="fullname" placeholder="نام کامل">
-  <input id="phone" placeholder="شماره تلفن همراه">
-  <input id="email" placeholder="آدرس ایمیل">
-
-  <button class="btn-main" onclick="goVerify()">🔒 ثبت‌نام امن</button>
+<!-- ثبت نام -->
+<div id="register" class="card">
+  <h2>Aurix</h2>
+  <input id="name" placeholder="نام کامل">
+  <input id="phone" placeholder="شماره موبایل">
+  <input id="email" placeholder="ایمیل">
+  <button onclick="register()">🔒 ثبت‌نام امن</button>
 </div>
 
-<!-- ===== VERIFY PAGE ===== -->
-<div id="verifyPage" class="glass hidden">
-  <div class="logo">📱</div>
-  <h3 style="text-align:center">تأیید شماره موبایل</h3>
-
-  <p style="text-align:center;font-size:14px">
-    کد تأیید به شماره<br>
-    <b id="showPhone"></b><br>
-    ارسال می‌شود
-  </p>
-
-  <input placeholder="کد تأیید (نمایشی)">
-
-  <button class="btn-secondary" onclick="finish()">ارسال کد تأیید</button>
+<!-- تایید موبایل -->
+<div id="verify" class="card">
+  <h2>تأیید شماره موبایل</h2>
+  <p id="showPhone"></p>
+  <input placeholder="کد تایید">
+  <button onclick="alert('کد تایید شد (نمایشی)')">ارسال کد تایید</button>
 </div>
 
 <script>
-let state = {};
-
-function goVerify(){
-  const name=fullname.value.trim();
-  const phone=phone.value.trim();
-  const email=email.value.trim();
+function register(){
+  const name=document.getElementById('name').value.trim();
+  const phone=document.getElementById('phone').value.trim();
+  const email=document.getElementById('email').value.trim();
 
   if(!name || !phone || !email){
-    alert("⚠️ لطفاً همه فیلدها را کامل پر کنید");
+    alert("❗ همه فیلدها رو پر کن");
     return;
   }
 
-  state={name,phone,email};
-  localStorage.setItem("aurix",JSON.stringify(state));
-
-  registerPage.classList.add("hidden");
-  verifyPage.classList.remove("hidden");
-  showPhone.innerText=phone;
-}
-
-function finish(){
-  alert("✅ ثبت‌نام با موفقیت انجام شد (نمایشی)");
+  document.getElementById('register').style.display="none";
+  document.getElementById('verify').style.display="block";
+  document.getElementById('showPhone').innerText="شماره: "+phone;
 }
 </script>
 
