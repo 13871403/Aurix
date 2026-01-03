@@ -73,6 +73,26 @@ a{
 }
 .nav-item{text-align:center;font-size:12px;cursor:pointer;}
 .nav-item span{display:block;font-size:22px;}
+
+/* 🔴 اضافه شده: دکمه خروج */
+.exit-btn{
+  width:100%;
+  padding:16px 20px;
+  background:#000;
+  color:#fff;
+  border:none;
+  border-radius:18px;
+  font-size:18px;
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  cursor:pointer;
+  box-shadow:0 0 20px rgba(0,0,0,.6);
+  margin-top:20px;
+}
+.exit-btn:active{transform:scale(.98);}
+.exit-icon{font-size:22px;}
 </style>
 </head>
 
@@ -111,6 +131,12 @@ a{
   <div id="settingsPage" class="game-page">
     <h3>⚙️ تنظیمات</h3>
     <p>به‌زودی...</p>
+
+    <!-- 🔴 اضافه شده: دکمه خروج -->
+    <button class="exit-btn" onclick="logout()">
+      خروج
+      <span class="exit-icon">↪</span>
+    </button>
   </div>
 </div>
 
@@ -187,6 +213,14 @@ function verifyCode(){
 function showPage(id){
   document.querySelectorAll(".game-page").forEach(p=>p.style.display="none");
   document.getElementById(id).style.display="block";
+}
+
+/* 🔴 اضافه شده: خروج بدون پاک شدن اطلاعات */
+function logout(){
+  gameContainer.style.display="none";
+  bottomNav.style.display="none";
+  verify.style.display="none";
+  register.style.display="block";
 }
 </script>
 
