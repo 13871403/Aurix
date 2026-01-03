@@ -17,6 +17,7 @@ body{
     linear-gradient(135deg,#0f0c29,#302b63,#24243e);
 }
 
+/* کارت */
 .card{
   max-width:380px;
   margin:80px auto;
@@ -57,12 +58,16 @@ a{
   text-decoration:none;
 }
 
+/* مخفی اولیه + قفل */
 #verify,
 #gameContainer,
 #bottomNav{
   display:none;
+  visibility:hidden;
+  opacity:0;
 }
 
+/* صفحات بازی */
 .game-page{
   max-width:380px;
   margin:40px auto 120px;
@@ -74,6 +79,7 @@ a{
   text-align:center;
 }
 
+/* نوار پایین */
 #bottomNav{
   position:fixed;
   bottom:0;
@@ -101,6 +107,7 @@ a{
 
 <body>
 
+<!-- ثبت نام -->
 <div id="register" class="card">
   <h2>Aurix</h2>
   <input id="fullName" placeholder="نام کامل">
@@ -109,6 +116,7 @@ a{
   <button onclick="register()">🔒 ثبت‌نام امن</button>
 </div>
 
+<!-- تایید -->
 <div id="verify" class="card">
   <h2>دریافت و تأیید کد</h2>
   <p id="showPhone" style="text-align:center"></p>
@@ -121,6 +129,7 @@ a{
   <button onclick="verifyCode()">✅ تأیید و ورود</button>
 </div>
 
+<!-- بازی -->
 <div id="gameContainer">
 
   <div id="homePage" class="game-page">
@@ -147,14 +156,24 @@ a{
 
 </div>
 
+<!-- نوار پایین -->
 <div id="bottomNav">
-  <div class="nav-item" onclick="showPage('homePage')"><span>▶️</span>شروع</div>
-  <div class="nav-item" onclick="showPage('walletPage')"><span>💰</span>کیف پول</div>
-  <div class="nav-item" onclick="showPage('accountPage')"><span>👤</span>حساب</div>
-  <div class="nav-item" onclick="showPage('settingsPage')"><span>⚙️</span>تنظیمات</div>
+  <div class="nav-item" onclick="showPage('homePage')">
+    <span>▶️</span>شروع
+  </div>
+  <div class="nav-item" onclick="showPage('walletPage')">
+    <span>💰</span>کیف پول
+  </div>
+  <div class="nav-item" onclick="showPage('accountPage')">
+    <span>👤</span>حساب
+  </div>
+  <div class="nav-item" onclick="showPage('settingsPage')">
+    <span>⚙️</span>تنظیمات
+  </div>
 </div>
 
 <script>
+// کدهای ربات (هرچقدر خواستی اضافه کن، امنه)
 const validCodes = [
   "AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AURIX-ECHO",
   "AURIX-FOXTROT","AURIX-GOLF","AURIX-HOTEL","AURIX-INDIA","AURIX-JULIET",
@@ -166,28 +185,42 @@ const validCodes = [
 ];
 
 function register(){
-  if(!fullName.value || !phoneNumber.value || !emailAddress.value){
-    alert("همه فیلدها را پر کنید");
+  const name = fullName.value.trim();
+  const phone = phoneNumber.value.trim();
+  const email = emailAddress.value.trim();
+
+  if(!name || !phone || !email){
+    alert("❗ همه فیلدها را پر کنید");
     return;
   }
+
   register.style.display="none";
   verify.style.display="block";
-  showPhone.innerText="📱 "+phoneNumber.value;
+  verify.style.visibility="visible";
+  verify.style.opacity="1";
+  showPhone.innerText="📱 "+phone;
 }
 
 function verifyCode(){
-  const code=codeInput.value.trim().toUpperCase();
+  const code = codeInput.value.trim().toUpperCase();
   if(validCodes.includes(code)){
     verify.style.display="none";
+
     gameContainer.style.display="block";
+    gameContainer.style.visibility="visible";
+    gameContainer.style.opacity="1";
+
     bottomNav.style.display="flex";
+    bottomNav.style.visibility="visible";
+    bottomNav.style.opacity="1";
+
     showPage('homePage');
 
     accName.innerText="نام: "+fullName.value;
     accPhone.innerText="شماره: "+phoneNumber.value;
     accEmail.innerText="ایمیل: "+emailAddress.value;
   }else{
-    alert("کد نامعتبر است");
+    alert("❌ کد نامعتبر است");
   }
 }
 
