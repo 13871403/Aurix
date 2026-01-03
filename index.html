@@ -15,10 +15,9 @@ body{
     radial-gradient(circle at top left,#ff00cc,transparent 40%),
     radial-gradient(circle at bottom right,#00f0ff,transparent 40%),
     linear-gradient(135deg,#0f0c29,#302b63,#24243e);
-  padding-bottom:90px;
 }
 
-/* کارت‌ها */
+/* کارت */
 .card{
   max-width:380px;
   margin:80px auto;
@@ -50,12 +49,17 @@ button{
   background:linear-gradient(90deg,#ffcc00,#ff00ff);
 }
 
-/* مخفی */
-#verify,
-#gameContainer,
-#bottomNav{
-  display:none;
+a{
+  display:block;
+  text-align:center;
+  margin:12px 0;
+  font-weight:bold;
+  color:#5a00ff;
+  text-decoration:none;
 }
+
+/* مخفی اولیه */
+#verify,#gameContainer,#bottomNav{display:none}
 
 /* صفحات بازی */
 .game-page{
@@ -100,27 +104,31 @@ button{
 <!-- ثبت نام -->
 <div id="register" class="card">
   <h2>Aurix</h2>
-  <input id="name" placeholder="نام کامل">
-  <input id="phone" placeholder="شماره موبایل">
-  <input id="email" placeholder="ایمیل">
-  <button onclick="registerUser()">🔒 ثبت‌نام امن</button>
+  <input id="fullName" placeholder="نام کامل">
+  <input id="phoneNumber" placeholder="شماره موبایل">
+  <input id="emailAddress" placeholder="ایمیل">
+  <button onclick="register()">🔒 ثبت‌نام امن</button>
 </div>
 
-<!-- تأیید کد -->
+<!-- تایید -->
 <div id="verify" class="card">
-  <h2>تأیید کد</h2>
+  <h2>دریافت و تأیید کد</h2>
   <p id="showPhone" style="text-align:center"></p>
 
-  <input id="codeInput" placeholder="کد دریافتی">
-  <button onclick="verifyCode()">✅ ورود</button>
+  <a href="https://t.me/Aurix2025_bot" target="_blank">
+    🤖 ورود به ربات دریافت کد
+  </a>
+
+  <input id="codeInput" placeholder="کد دریافتی از ربات">
+  <button onclick="verifyCode()">✅ تأیید و ورود</button>
 </div>
 
 <!-- بازی -->
 <div id="gameContainer">
 
   <div id="homePage" class="game-page">
-    <h3>🎮 خوش آمدید به Aurix</h3>
-    <p>از نوار پایین بخش موردنظر را انتخاب کنید</p>
+    <h3>🎮 خوش آمدی به Aurix</h3>
+    <p>از نوار پایین بخش موردنظر را انتخاب کن</p>
   </div>
 
   <div id="walletPage" class="game-page">
@@ -133,6 +141,11 @@ button{
     <p id="accName"></p>
     <p id="accPhone"></p>
     <p id="accEmail"></p>
+  </div>
+
+  <div id="settingsPage" class="game-page">
+    <h3>⚙️ تنظیمات</h3>
+    <p>به‌زودی...</p>
   </div>
 
 </div>
@@ -148,50 +161,47 @@ button{
   <div class="nav-item" onclick="showPage('accountPage')">
     <span>👤</span>حساب
   </div>
+  <div class="nav-item" onclick="showPage('settingsPage')">
+    <span>⚙️</span>تنظیمات
+  </div>
 </div>
 
 <script>
-const validCodes = ["AURIX-ALPHA","AURIX-BRAVO","AURIX-OMEGA"];
+const validCodes=["AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AURIX-OMEGA"];
 
-function registerUser(){
-  const nameVal = document.getElementById("name").value.trim();
-  const phoneVal = document.getElementById("phone").value.trim();
-  const emailVal = document.getElementById("email").value.trim();
+function register(){
+  const name=document.getElementById("fullName");
+  const phone=document.getElementById("phoneNumber");
+  const email=document.getElementById("emailAddress");
 
-  if(!nameVal || !phoneVal || !emailVal){
+  if(!name.value.trim() || !phone.value.trim() || !email.value.trim()){
     alert("همه فیلدها را پر کنید");
     return;
   }
 
   document.getElementById("register").style.display="none";
   document.getElementById("verify").style.display="block";
-  document.getElementById("showPhone").innerText = "📱 " + phoneVal;
+  showPhone.innerText="📱 "+phone.value;
 }
 
 function verifyCode(){
-  const code = document.getElementById("codeInput").value.trim().toUpperCase();
+  const code=codeInput.value.trim().toUpperCase();
+  if(validCodes.includes(code)){
+    verify.style.display="none";
+    gameContainer.style.display="block";
+    bottomNav.style.display="flex";
+    showPage('homePage');
 
-  if(!validCodes.includes(code)){
+    accName.innerText="نام: "+fullName.value;
+    accPhone.innerText="شماره: "+phoneNumber.value;
+    accEmail.innerText="ایمیل: "+emailAddress.value;
+  }else{
     alert("کد نامعتبر است");
-    return;
   }
-
-  document.getElementById("verify").style.display="none";
-  document.getElementById("gameContainer").style.display="block";
-  document.getElementById("bottomNav").style.display="flex";
-
-  document.getElementById("accName").innerText =
-    "نام: " + document.getElementById("name").value;
-  document.getElementById("accPhone").innerText =
-    "شماره: " + document.getElementById("phone").value;
-  document.getElementById("accEmail").innerText =
-    "ایمیل: " + document.getElementById("email").value;
-
-  showPage("homePage");
 }
 
 function showPage(id){
-  document.querySelectorAll(".game-page")
+  document.querySelectorAll('.game-page')
     .forEach(p=>p.style.display="none");
   document.getElementById(id).style.display="block";
 }
