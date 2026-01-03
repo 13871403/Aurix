@@ -217,6 +217,11 @@ function showPage(id){
 
 /* 🔴 اضافه شده: خروج بدون پاک شدن اطلاعات */
 function logout(){
+  localStorage.removeItem("aurix_logged");
+  localStorage.removeItem("aurix_name");
+  localStorage.removeItem("aurix_phone");
+  localStorage.removeItem("aurix_email");
+
   gameContainer.style.display="none";
   bottomNav.style.display="none";
   verify.style.display="none";
