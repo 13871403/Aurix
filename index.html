@@ -62,12 +62,11 @@ a{
   text-decoration:none;
 }
 
-/* مخفی پیش‌فرض */
 #verify,#gameContainer,#bottomNav{display:none;}
 
 .game-page{
   max-width:380px;
-  margin:40px auto 120px;
+  margin:40px auto 140px;
   padding:20px;
   border-radius:20px;
   background:#fff;
@@ -85,6 +84,7 @@ a{
   justify-content:space-around;
   padding:14px 0;
   box-shadow:0 -5px 20px rgba(0,0,0,.2);
+  z-index:999;
 }
 
 .nav-item{
@@ -101,19 +101,58 @@ a{
 
 .nav-item i{font-size:26px}
 
-.exit-btn{
-  width:100%;
-  padding:16px 20px;
-  background:#000;
+/* دکمه پشتیبانی شناور */
+.support-fab{
+  position:fixed;
+  bottom:90px;
+  right:20px;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  background:#ff007a;
   color:#fff;
-  border:none;
-  border-radius:18px;
-  font-size:18px;
-  font-weight:600;
+  font-size:28px;
   display:flex;
-  justify-content:space-between;
   align-items:center;
-  margin-top:20px;
+  justify-content:center;
+  cursor:pointer;
+  box-shadow:0 10px 25px rgba(0,0,0,.4);
+  z-index:1000;
+}
+
+/* پنل پشتیبانی */
+.support-panel{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:2000;
+}
+
+.support-box{
+  background:#fff;
+  width:85%;
+  max-width:380px;
+  border-radius:20px;
+  padding:20px;
+}
+
+.support-box h3{text-align:center;margin-top:0}
+
+.support-box button{
+  background:#f2f2f2;
+  margin:6px 0;
+  border-radius:14px;
+}
+
+.support-box a{
+  background:#0088cc;
+  color:#fff;
+  padding:12px;
+  border-radius:14px;
+  margin-top:12px;
 }
 </style>
 </head>
@@ -158,20 +197,42 @@ a{
 
   <div id="settingsPage" class="game-page">
     <h3>⚙️ تنظیمات</h3>
-    <button class="exit-btn" onclick="logout()">خروج <span>↪</span></button>
+    <button onclick="logout()">خروج</button>
   </div>
 </div>
 
 <!-- نوار پایین -->
 <div id="bottomNav">
-  <div class="nav-item" onclick="showPage('homePage')"><span>▶️</span>شروع</div>
+  <div class="nav-item" onclick="showPage('homePage')">🏠<span>خانه</span></div>
   <div class="nav-item" onclick="showPage('walletPage')"><i class="fas fa-wallet"></i><span>کیف پول</span></div>
-  <div class="nav-item" onclick="showPage('accountPage')"><span>👤</span>حساب</div>
-  <div class="nav-item" onclick="showPage('settingsPage')"><span>⚙️</span>تنظیمات</div>
+  <div class="nav-item" onclick="showPage('accountPage')">👤<span>حساب</span></div>
+  <div class="nav-item" onclick="showPage('settingsPage')">⚙️<span>تنظیمات</span></div>
+</div>
+
+<!-- دکمه شناور -->
+<div class="support-fab" onclick="openSupport()">💬</div>
+
+<!-- پنل پشتیبانی -->
+<div id="supportPanel" class="support-panel">
+  <div class="support-box">
+    <h3>پشتیبانی</h3>
+
+    <button onclick="setSupportText('پشتیبانی تلگرام')">پشتیبانی تلگرام</button>
+    <button onclick="setSupportText('پرسیدن سوال')">پرسیدن سوال</button>
+    <button onclick="setSupportText('میخوام بلیط طلا خرید کنم')">خرید بلیط طلا</button>
+    <button onclick="setSupportText('مشکل دارم')">مشکل دارم</button>
+    <button onclick="setSupportText('خرید اشتراک')">خرید اشتراک</button>
+    <button onclick="setSupportText('خرید کردم ولی شارژ نشده')">خرید کردم ولی شارژ نشده</button>
+
+    <a id="supportLink" href="https://t.me/Aurix_2026" target="_blank">
+      ارتباط با پشتیبانی در تلگرام
+    </a>
+
+    <button onclick="closeSupport()">بستن</button>
+  </div>
 </div>
 
 <script>
-/* ✅ ۳۰ کد تأیید */
 const validCodes=[
 "AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AURIX-ECHO",
 "AURIX-FOXTROT","AURIX-GOLF","AURIX-HOTEL","AURIX-INDIA","AURIX-JULIET",
@@ -182,25 +243,23 @@ const validCodes=[
 "AURIX-TITAN","AURIX-OMEGA"
 ];
 
-window.onload=()=>{
-  if(localStorage.getItem("aurix_logged")==="true"){
-    register.style.display="none";
-    verify.style.display="none";
-    gameContainer.style.display="block";
-    bottomNav.style.display="flex";
+function openSupport(){
+  document.getElementById("supportPanel").style.display="flex";
+}
 
-    accName.innerText="نام: "+localStorage.getItem("aurix_name");
-    accPhone.innerText="شماره: "+localStorage.getItem("aurix_phone");
-    accEmail.innerText="ایمیل: "+localStorage.getItem("aurix_email");
+function closeSupport(){
+  document.getElementById("supportPanel").style.display="none";
+}
 
-    showPage("homePage");
-  } else {
-    bottomNav.style.display="none";
-    gameContainer.style.display="none";
-    verify.style.display="none";
-    register.style.display="block";
-  }
-};
+function setSupportText(text){
+  document.getElementById("supportLink").href=
+    "https://t.me/Aurix_2026?text="+encodeURIComponent(text);
+}
+
+function showPage(id){
+  document.querySelectorAll(".game-page").forEach(p=>p.style.display="none");
+  document.getElementById(id).style.display="block";
+}
 
 function doRegister(){
   if(!fullName.value||!phoneNumber.value||!emailAddress.value){
@@ -209,31 +268,22 @@ function doRegister(){
   }
   register.style.display="none";
   verify.style.display="block";
-  bottomNav.style.display="none";
   showPhone.innerText="📱 "+phoneNumber.value;
 }
 
 function verifyCode(){
-  const code=codeInput.value.trim().toUpperCase();
-  if(!validCodes.includes(code)){
-    alert("❌ کد نامعتبر است");
+  if(!validCodes.includes(codeInput.value.trim().toUpperCase())){
+    alert("کد نامعتبر است");
     return;
   }
-
   localStorage.setItem("aurix_logged","true");
   localStorage.setItem("aurix_name",fullName.value);
   localStorage.setItem("aurix_phone",phoneNumber.value);
   localStorage.setItem("aurix_email",emailAddress.value);
-
   verify.style.display="none";
   gameContainer.style.display="block";
   bottomNav.style.display="flex";
   showPage("homePage");
-}
-
-function showPage(id){
-  document.querySelectorAll(".game-page").forEach(p=>p.style.display="none");
-  document.getElementById(id).style.display="block";
 }
 
 function logout(){
