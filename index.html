@@ -171,6 +171,12 @@ a{
 </div>
 
 <script>
+window.onload = () => {
+  // مخفی کردن نوار پایین و صفحه بازی به صورت پیش‌فرض
+  bottomNav.style.display = "none";
+  gameContainer.style.display = "none";
+};
+
 const validCodes=["AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AURIX-OMEGA"];
 
 function register(){
@@ -183,6 +189,7 @@ function register(){
     return;
   }
 
+  // پس از تکمیل ثبت‌نام، نمایش تایید کد
   document.getElementById("register").style.display="none";
   document.getElementById("verify").style.display="block";
   showPhone.innerText="📱 "+phone.value;
@@ -191,11 +198,13 @@ function register(){
 function verifyCode(){
   const code=codeInput.value.trim().toUpperCase();
   if(validCodes.includes(code)){
+    // پس از تایید کد، نمایش صفحه بازی و نوار پایین
     verify.style.display="none";
     gameContainer.style.display="block";
     bottomNav.style.display="flex";
     showPage('homePage');
 
+    // نمایش اطلاعات کاربری
     accName.innerText="نام: "+fullName.value;
     accPhone.innerText="شماره: "+phoneNumber.value;
     accEmail.innerText="ایمیل: "+emailAddress.value;
@@ -205,8 +214,7 @@ function verifyCode(){
 }
 
 function showPage(id){
-  document.querySelectorAll('.game-page')
-    .forEach(p=>p.style.display="none");
+  document.querySelectorAll('.game-page').forEach(p=>p.style.display="none");
   document.getElementById(id).style.display="block";
 }
 </script>
