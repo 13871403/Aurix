@@ -17,7 +17,6 @@ body{
     linear-gradient(135deg,#0f0c29,#302b63,#24243e);
 }
 
-/* کارت */
 .card{
   max-width:380px;
   margin:80px auto;
@@ -58,14 +57,12 @@ a{
   text-decoration:none;
 }
 
-/* مخفی اولیه */
 #verify,
 #gameContainer,
 #bottomNav{
   display:none;
 }
 
-/* صفحات بازی */
 .game-page{
   max-width:380px;
   margin:40px auto 120px;
@@ -77,7 +74,6 @@ a{
   text-align:center;
 }
 
-/* نوار پایین */
 #bottomNav{
   position:fixed;
   bottom:0;
@@ -105,7 +101,6 @@ a{
 
 <body>
 
-<!-- ثبت نام -->
 <div id="register" class="card">
   <h2>Aurix</h2>
   <input id="fullName" placeholder="نام کامل">
@@ -114,7 +109,6 @@ a{
   <button onclick="register()">🔒 ثبت‌نام امن</button>
 </div>
 
-<!-- تایید -->
 <div id="verify" class="card">
   <h2>دریافت و تأیید کد</h2>
   <p id="showPhone" style="text-align:center"></p>
@@ -127,7 +121,6 @@ a{
   <button onclick="verifyCode()">✅ تأیید و ورود</button>
 </div>
 
-<!-- بازی -->
 <div id="gameContainer">
 
   <div id="homePage" class="game-page">
@@ -154,57 +147,42 @@ a{
 
 </div>
 
-<!-- نوار پایین -->
 <div id="bottomNav">
-  <div class="nav-item" onclick="showPage('homePage')">
-    <span>▶️</span>شروع
-  </div>
-  <div class="nav-item" onclick="showPage('walletPage')">
-    <span>💰</span>کیف پول
-  </div>
-  <div class="nav-item" onclick="showPage('accountPage')">
-    <span>👤</span>حساب
-  </div>
-  <div class="nav-item" onclick="showPage('settingsPage')">
-    <span>⚙️</span>تنظیمات
-  </div>
+  <div class="nav-item" onclick="showPage('homePage')"><span>▶️</span>شروع</div>
+  <div class="nav-item" onclick="showPage('walletPage')"><span>💰</span>کیف پول</div>
+  <div class="nav-item" onclick="showPage('accountPage')"><span>👤</span>حساب</div>
+  <div class="nav-item" onclick="showPage('settingsPage')"><span>⚙️</span>تنظیمات</div>
 </div>
 
 <script>
-window.onload = () => {
-  // مخفی کردن نوار پایین و صفحه بازی به صورت پیش‌فرض
-  bottomNav.style.display = "none";
-  gameContainer.style.display = "none";
-};
-
-const validCodes=["AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AURIX-OMEGA"];
+const validCodes = [
+  "AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AURIX-ECHO",
+  "AURIX-FOXTROT","AURIX-GOLF","AURIX-HOTEL","AURIX-INDIA","AURIX-JULIET",
+  "AURIX-KILO","AURIX-LIMA","AURIX-MIKE","AURIX-NOVEMBER","AURIX-OSCAR",
+  "AURIX-PAPA","AURIX-QUEBEC","AURIX-ROMEO","AURIX-SIERRA","AURIX-TANGO",
+  "AURIX-UNIFORM","AURIX-VICTOR","AURIX-WHISKEY","AURIX-XRAY",
+  "AURIX-YANKEE","AURIX-ZULU","AURIX-PHOENIX","AURIX-DRAGON",
+  "AURIX-TITAN","AURIX-OMEGA","AURIX-LUXURY","AURIX-PREMIUM"
+];
 
 function register(){
-  const name=document.getElementById("fullName");
-  const phone=document.getElementById("phoneNumber");
-  const email=document.getElementById("emailAddress");
-
-  if(!name.value.trim() || !phone.value.trim() || !email.value.trim()){
+  if(!fullName.value || !phoneNumber.value || !emailAddress.value){
     alert("همه فیلدها را پر کنید");
     return;
   }
-
-  // پس از تکمیل ثبت‌نام، نمایش تایید کد
-  document.getElementById("register").style.display="none";
-  document.getElementById("verify").style.display="block";
-  showPhone.innerText="📱 "+phone.value;
+  register.style.display="none";
+  verify.style.display="block";
+  showPhone.innerText="📱 "+phoneNumber.value;
 }
 
 function verifyCode(){
   const code=codeInput.value.trim().toUpperCase();
   if(validCodes.includes(code)){
-    // پس از تایید کد، نمایش صفحه بازی و نوار پایین
     verify.style.display="none";
     gameContainer.style.display="block";
     bottomNav.style.display="flex";
     showPage('homePage');
 
-    // نمایش اطلاعات کاربری
     accName.innerText="نام: "+fullName.value;
     accPhone.innerText="شماره: "+phoneNumber.value;
     accEmail.innerText="ایمیل: "+emailAddress.value;
