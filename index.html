@@ -112,7 +112,7 @@ a{
   margin-top:20px;
 }
 
-/* ===== پشتیبانی شناور (اضافه شده) ===== */
+/* پشتیبانی شناور */
 .support-fab{
   position:fixed;
   bottom:90px;
@@ -129,30 +129,6 @@ a{
   cursor:pointer;
   box-shadow:0 10px 25px rgba(0,0,0,.4);
   z-index:1000;
-}
-
-.support-panel{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.6);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:2000;
-}
-
-.support-box{
-  background:#fff;
-  width:85%;
-  max-width:380px;
-  border-radius:20px;
-  padding:20px;
-}
-
-.support-box button{
-  background:#f2f2f2;
-  margin:6px 0;
-  border-radius:14px;
 }
 </style>
 </head>
@@ -200,29 +176,23 @@ a{
 
 <div id="bottomNav">
   <div class="nav-item" onclick="showPage('homePage')"><span>▶️</span>شروع</div>
-  <div class="nav-item" onclick="showPage('walletPage')"><span>💰</span>کیف پول</div>
+
+  <div class="nav-item" onclick="showPage('walletPage')">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="black">
+      <path d="M21 7H3c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zM3 9h18v6H3V9z"/>
+      <circle cx="16.5" cy="12" r="1.5"/>
+    </svg>
+    <span>کیف پول</span>
+  </div>
+
   <div class="nav-item" onclick="showPage('accountPage')"><span>👤</span>حساب</div>
   <div class="nav-item" onclick="showPage('settingsPage')"><span>⚙️</span>تنظیمات</div>
 </div>
 
-<!-- دکمه پشتیبانی شناور -->
-<div id="supportFab" class="support-fab" onclick="openSupport()">💬</div>
-
-<!-- پنل پشتیبانی -->
-<div id="supportPanel" class="support-panel">
-  <div class="support-box">
-    <h3>پشتیبانی</h3>
-    <button onclick="sendSupport('پشتیبانی تلگرام')">پشتیبانی تلگرام</button>
-    <button onclick="sendSupport('پرسیدن سوال')">پرسیدن سوال</button>
-    <button onclick="sendSupport('میخوام بلیط طلا خرید کنم')">خرید بلیط طلا</button>
-    <button onclick="sendSupport('مشکل دارم')">مشکل دارم</button>
-    <button onclick="sendSupport('خرید اشتراک')">خرید اشتراک</button>
-    <button onclick="sendSupport('خرید کردم ولی شارژ نشده')">خرید کردم ولی شارژ نشده</button>
-    <button onclick="closeSupport()">بستن</button>
-  </div>
-</div>
+<div id="supportFab" class="support-fab" onclick="window.open('https://t.me/Aurix_2026','_blank')">💬</div>
 
 <script>
+/* ✅ ۳۰ کد تأیید */
 const validCodes=[
 "AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AURIX-ECHO",
 "AURIX-FOXTROT","AURIX-GOLF","AURIX-HOTEL","AURIX-INDIA","AURIX-JULIET",
@@ -240,11 +210,6 @@ window.onload=()=>{
     gameContainer.style.display="block";
     bottomNav.style.display="flex";
     supportFab.style.display="flex";
-
-    accName.innerText="نام: "+localStorage.getItem("aurix_name");
-    accPhone.innerText="شماره: "+localStorage.getItem("aurix_phone");
-    accEmail.innerText="ایمیل: "+localStorage.getItem("aurix_email");
-
     showPage("homePage");
   }
 };
@@ -256,19 +221,14 @@ function doRegister(){
   }
   register.style.display="none";
   verify.style.display="block";
-  showPhone.innerText="📱 "+phoneNumber.value;
 }
 
 function verifyCode(){
   if(!validCodes.includes(codeInput.value.trim().toUpperCase())){
-    alert("کد نامعتبر است");
+    alert("❌ کد نامعتبر است");
     return;
   }
   localStorage.setItem("aurix_logged","true");
-  localStorage.setItem("aurix_name",fullName.value);
-  localStorage.setItem("aurix_phone",phoneNumber.value);
-  localStorage.setItem("aurix_email",emailAddress.value);
-
   verify.style.display="none";
   gameContainer.style.display="block";
   bottomNav.style.display="flex";
@@ -284,20 +244,6 @@ function showPage(id){
 function logout(){
   localStorage.clear();
   location.reload();
-}
-
-/* پشتیبانی */
-function openSupport(){
-  supportPanel.style.display="flex";
-}
-function closeSupport(){
-  supportPanel.style.display="none";
-}
-function sendSupport(text){
-  window.open(
-    "https://t.me/Aurix_2026?text="+encodeURIComponent(text),
-    "_blank"
-  );
 }
 </script>
 
