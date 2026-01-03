@@ -5,9 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Aurix</title>
 
-<!-- اضافه کردن Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
 <style>
 body{
   margin:0;
@@ -74,47 +71,26 @@ a{
   padding:10px 0;
   box-shadow:0 -5px 20px rgba(0,0,0,.2);
 }
-.nav-item{text-align:center;font-size:12px;cursor:pointer;}
-.nav-item span{display:block;font-size:22px;}
-
-/* استایل جدید برای آیکون و متن */
-.wallet-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-}
-
-.wallet-text {
-  margin-left: 8px;
-  font-size: 14px;
-  white-space: nowrap;
-}
-
-/* 🔴 اضافه شده: دکمه خروج */
-.exit-btn{
-  width:100%;
-  padding:16px 20px;
-  background:#000;
-  color:#fff;
-  border:none;
-  border-radius:18px;
-  font-size:18px;
-  font-weight:600;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+.nav-item{
+  text-align:center;
+  font-size:12px;
   cursor:pointer;
-  box-shadow:0 0 20px rgba(0,0,0,.6);
-  margin-top:20px;
+  display: flex;
+  flex-direction: column; /* اضافه کردن این خط */
+  justify-content: center;
+  align-items: center;
 }
-.exit-btn:active{transform:scale(.98);}
-.exit-icon{font-size:22px;}
+.nav-item span{
+  display:block;
+  font-size:22px;
+  margin-bottom: 5px; /* فاصله بین آیکون و متن */
+}
 </style>
 </head>
 
 <body>
 
+<!-- ثبت نام -->
 <div id="register" class="card">
   <h2>Aurix</h2>
   <input id="fullName" placeholder="نام کامل">
@@ -123,6 +99,7 @@ a{
   <button onclick="doRegister()">🔒 ثبت‌نام امن</button>
 </div>
 
+<!-- تایید کد -->
 <div id="verify" class="card">
   <h2>دریافت و تأیید کد</h2>
   <p id="showPhone" style="text-align:center"></p>
@@ -131,6 +108,7 @@ a{
   <button onclick="verifyCode()">✅ تأیید و ورود</button>
 </div>
 
+<!-- بازی -->
 <div id="gameContainer">
   <div id="homePage" class="game-page">
     <h3>🎮 خوش آمدی به Aurix</h3>
@@ -148,46 +126,29 @@ a{
   <div id="settingsPage" class="game-page">
     <h3>⚙️ تنظیمات</h3>
     <p>به‌زودی...</p>
-
-    <!-- 🔴 اضافه شده: دکمه خروج -->
-    <button class="exit-btn" onclick="logout()">
-      خروج
-      <span class="exit-icon">↪</span>
-    </button>
   </div>
 </div>
 
+<!-- نوار پایین -->
 <div id="bottomNav">
-  <div class="nav-item" onclick="showPage('homePage')"><span>▶️</span>شروع</div>
-  <div class="nav-item" onclick="showPage('walletPage')">
-    <div class="wallet-icon">
-      <i class="fas fa-wallet"></i>
-      <span class="wallet-text">کیف پول</span>
-    </div>
+  <div class="nav-item" onclick="showPage('homePage')">
+    <span>▶️</span>شروع
   </div>
-  <div class="nav-item" onclick="showPage('accountPage')"><span>👤</span>حساب</div>
-  <div class="nav-item" onclick="showPage('settingsPage')"><span>⚙️</span>تنظیمات</div>
+  <div class="nav-item" onclick="showPage('walletPage')">
+    <span>💰</span>کیف پول
+  </div>
+  <div class="nav-item" onclick="showPage('accountPage')">
+    <span>👤</span>حساب
+  </div>
+  <div class="nav-item" onclick="showPage('settingsPage')">
+    <span>⚙️</span>تنظیمات
+  </div>
 </div>
 
 <script>
 window.onload = () => {
-  const logged = localStorage.getItem("aurix_logged");
-
-  if(logged === "true"){
-    register.style.display="none";
-    verify.style.display="none";
-    gameContainer.style.display="block";
-    bottomNav.style.display="flex";
-
-    accName.innerText="نام: "+localStorage.getItem("aurix_name");
-    accPhone.innerText="شماره: "+localStorage.getItem("aurix_phone");
-    accEmail.innerText="ایمیل: "+localStorage.getItem("aurix_email");
-
-    showPage("homePage");
-  }else{
-    bottomNav.style.display="none";
-    gameContainer.style.display="none";
-  }
+  bottomNav.style.display = "none";
+  gameContainer.style.display = "none";
 };
 
 const validCodes = [
@@ -237,7 +198,6 @@ function showPage(id){
   document.getElementById(id).style.display="block";
 }
 
-/* 🔴 اضافه شده: خروج بدون پاک شدن اطلاعات */
 function logout(){
   localStorage.removeItem("aurix_logged");
   localStorage.removeItem("aurix_name");
