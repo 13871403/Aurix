@@ -59,6 +59,12 @@ a{
 }
 
 #verify{display:none}
+
+#gamePage{
+  display:none;
+  text-align:center;
+}
+
 </style>
 </head>
 
@@ -86,6 +92,15 @@ a{
   <input id="codeInput" placeholder="کد دریافتی از ربات">
 
   <button onclick="verifyCode()">✅ تأیید و ورود به بازی</button>
+</div>
+
+<!-- ===== صفحه بازی ===== -->
+<div id="gamePage" class="card">
+  <h2>Aurix بازی تایمر</h2>
+  <p>🎮 بازی شروع شده است!</p>
+  <button onclick="startGame()">شروع بازی</button>
+  <button onclick="stopGame()">توقف بازی</button>
+  <p id="gameStatus">وضعیت: آماده برای شروع</p>
 </div>
 
 <script>
@@ -120,10 +135,21 @@ function verifyCode(){
 
   if(validCodes.includes(code)){
     alert("🎉 کد معتبر است!\nورود به بازی با موفقیت انجام شد 🚀");
-    // اینجا بعداً می‌تونی بری به صفحه بازی
+    document.getElementById('verify').style.display = "none";
+    document.getElementById('gamePage').style.display = "block";
   }else{
     alert("❌ کد نامعتبر است!\nلطفاً کد را از ربات دریافت کنید");
   }
+}
+
+function startGame(){
+  document.getElementById('gameStatus').innerText = "بازی در حال اجرا...";
+  // اضافه کردن کدهای شروع بازی و تایمر
+}
+
+function stopGame(){
+  document.getElementById('gameStatus').innerText = "بازی متوقف شد";
+  // اضافه کردن کدهای توقف بازی
 }
 </script>
 
