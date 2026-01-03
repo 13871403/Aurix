@@ -58,13 +58,11 @@ a{
   text-decoration:none;
 }
 
-/* مخفی اولیه + قفل */
+/* مخفی اولیه */
 #verify,
 #gameContainer,
 #bottomNav{
   display:none;
-  visibility:hidden;
-  opacity:0;
 }
 
 /* صفحات بازی */
@@ -113,7 +111,7 @@ a{
   <input id="fullName" placeholder="نام کامل">
   <input id="phoneNumber" placeholder="شماره موبایل">
   <input id="emailAddress" placeholder="ایمیل">
-  <button onclick="register()">🔒 ثبت‌نام امن</button>
+  <button onclick="doRegister()">🔒 ثبت‌نام امن</button>
 </div>
 
 <!-- تایید -->
@@ -173,7 +171,12 @@ a{
 </div>
 
 <script>
-// کدهای ربات (هرچقدر خواستی اضافه کن، امنه)
+window.onload = () => {
+  bottomNav.style.display = "none";
+  gameContainer.style.display = "none";
+};
+
+/* تمام کدهای ربات */
 const validCodes = [
   "AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AURIX-ECHO",
   "AURIX-FOXTROT","AURIX-GOLF","AURIX-HOTEL","AURIX-INDIA","AURIX-JULIET",
@@ -184,48 +187,39 @@ const validCodes = [
   "AURIX-TITAN","AURIX-OMEGA","AURIX-LUXURY","AURIX-PREMIUM"
 ];
 
-function register(){
-  const name = fullName.value.trim();
-  const phone = phoneNumber.value.trim();
-  const email = emailAddress.value.trim();
-
-  if(!name || !phone || !email){
-    alert("❗ همه فیلدها را پر کنید");
+/* ثبت نام */
+function doRegister(){
+  if(!fullName.value.trim() || !phoneNumber.value.trim() || !emailAddress.value.trim()){
+    alert("همه فیلدها را پر کنید");
     return;
   }
 
   register.style.display="none";
   verify.style.display="block";
-  verify.style.visibility="visible";
-  verify.style.opacity="1";
-  showPhone.innerText="📱 "+phone;
+  showPhone.innerText="📱 "+phoneNumber.value;
 }
 
+/* تایید کد */
 function verifyCode(){
   const code = codeInput.value.trim().toUpperCase();
+
   if(validCodes.includes(code)){
     verify.style.display="none";
-
     gameContainer.style.display="block";
-    gameContainer.style.visibility="visible";
-    gameContainer.style.opacity="1";
-
     bottomNav.style.display="flex";
-    bottomNav.style.visibility="visible";
-    bottomNav.style.opacity="1";
-
-    showPage('homePage');
 
     accName.innerText="نام: "+fullName.value;
     accPhone.innerText="شماره: "+phoneNumber.value;
     accEmail.innerText="ایمیل: "+emailAddress.value;
+
+    showPage("homePage");
   }else{
     alert("❌ کد نامعتبر است");
   }
 }
 
 function showPage(id){
-  document.querySelectorAll('.game-page').forEach(p=>p.style.display="none");
+  document.querySelectorAll(".game-page").forEach(p=>p.style.display="none");
   document.getElementById(id).style.display="block";
 }
 </script>
