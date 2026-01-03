@@ -15,7 +15,6 @@ body{
     radial-gradient(circle at top left,#ff00cc,transparent 40%),
     radial-gradient(circle at bottom right,#00f0ff,transparent 40%),
     linear-gradient(135deg,#0f0c29,#302b63,#24243e);
-  padding-bottom:90px;
 }
 
 /* کارت عمومی */
@@ -48,7 +47,6 @@ button{
   font-weight:bold;
   cursor:pointer;
   background:linear-gradient(90deg,#ffcc00,#ff00ff);
-  margin-bottom:12px;
 }
 
 a{
@@ -60,12 +58,17 @@ a{
   text-decoration:none;
 }
 
-#verify,#gameContainer,#bottomNav{display:none}
+/* مخفی قطعی */
+#verify,
+#gameContainer,
+#bottomNav{
+  display:none !important;
+}
 
 /* صفحات داخل بازی */
 .game-page{
   max-width:380px;
-  margin:40px auto;
+  margin:40px auto 120px;
   padding:20px;
   border-radius:20px;
   background:#fff;
@@ -124,17 +127,16 @@ a{
   <button onclick="verifyCode()">✅ تأیید و ورود</button>
 </div>
 
-<!-- کانتینر بازی -->
+<!-- بازی -->
 <div id="gameContainer">
 
   <div id="homePage" class="game-page">
     <h3>🎮 خوش آمدی به Aurix</h3>
-    <p>برای شروع بازی دکمه پایین را بزن</p>
+    <p>از نوار پایین بخش موردنظر را انتخاب کن</p>
   </div>
 
   <div id="walletPage" class="game-page">
     <h3>💰 کیف پول</h3>
-    <p>امتیاز شما:</p>
     <h1>1250 ⭐</h1>
   </div>
 
@@ -169,7 +171,12 @@ a{
 </div>
 
 <script>
-const validCodes=["AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AURIX-ECHO","AURIX-OMEGA"];
+window.onload = () => {
+  bottomNav.style.display = "none";
+  gameContainer.style.display = "none";
+};
+
+const validCodes=["AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AURIX-OMEGA"];
 
 function register(){
   if(!name.value||!phone.value||!email.value){
