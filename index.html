@@ -44,10 +44,10 @@ input{
 
 button{
   width:100%;
-  padding:16px;
+  padding:18px;
   border:none;
   border-radius:999px;
-  font-size:16px;
+  font-size:17px;
   font-weight:bold;
   cursor:pointer;
   background:linear-gradient(90deg,#ffcc00,#ff00ff);
@@ -62,7 +62,7 @@ a{
   text-decoration:none;
 }
 
-/* وضعیت اولیه */
+/* مخفی پیش‌فرض */
 #verify,#gameContainer,#bottomNav{display:none;}
 
 .game-page{
@@ -99,11 +99,8 @@ a{
   margin-top:4px;
 }
 
-.nav-item i{
-  font-size:26px;
-}
+.nav-item i{font-size:26px}
 
-/* خروج */
 .exit-btn{
   width:100%;
   padding:16px 20px;
@@ -115,7 +112,7 @@ a{
   font-weight:600;
   display:flex;
   justify-content:space-between;
-  cursor:pointer;
+  align-items:center;
   margin-top:20px;
 }
 </style>
@@ -123,6 +120,7 @@ a{
 
 <body>
 
+<!-- ثبت نام -->
 <div id="register" class="card">
   <h2>Aurix</h2>
   <input id="fullName" placeholder="نام کامل">
@@ -131,6 +129,7 @@ a{
   <button onclick="doRegister()">🔒 ثبت‌نام امن</button>
 </div>
 
+<!-- دریافت کد -->
 <div id="verify" class="card">
   <h2>دریافت و تأیید کد</h2>
   <p id="showPhone" style="text-align:center"></p>
@@ -139,8 +138,11 @@ a{
   <button onclick="verifyCode()">✅ تأیید و ورود</button>
 </div>
 
+<!-- محیط برنامه -->
 <div id="gameContainer">
-  <div id="homePage" class="game-page"><h3>🎮 خوش آمدی به Aurix</h3></div>
+  <div id="homePage" class="game-page">
+    <h3>🎮 خوش آمدی به Aurix</h3>
+  </div>
 
   <div id="walletPage" class="game-page">
     <h3>💰 کیف پول</h3>
@@ -160,31 +162,24 @@ a{
   </div>
 </div>
 
+<!-- نوار پایین -->
 <div id="bottomNav">
-  <div class="nav-item" onclick="showPage('homePage')">
-    <span>▶️</span>شروع
-  </div>
-  <div class="nav-item" onclick="showPage('walletPage')">
-    <i class="fas fa-wallet"></i>
-    <span>کیف پول</span>
-  </div>
-  <div class="nav-item" onclick="showPage('accountPage')">
-    <span>👤</span>حساب
-  </div>
-  <div class="nav-item" onclick="showPage('settingsPage')">
-    <span>⚙️</span>تنظیمات
-  </div>
+  <div class="nav-item" onclick="showPage('homePage')"><span>▶️</span>شروع</div>
+  <div class="nav-item" onclick="showPage('walletPage')"><i class="fas fa-wallet"></i><span>کیف پول</span></div>
+  <div class="nav-item" onclick="showPage('accountPage')"><span>👤</span>حساب</div>
+  <div class="nav-item" onclick="showPage('settingsPage')"><span>⚙️</span>تنظیمات</div>
 </div>
 
 <script>
 /* ✅ ۳۰ کد تأیید */
-const validCodes = [
-  "AURIX-01","AURIX-02","AURIX-03","AURIX-04","AURIX-05",
-  "AURIX-06","AURIX-07","AURIX-08","AURIX-09","AURIX-10",
-  "AURIX-11","AURIX-12","AURIX-13","AURIX-14","AURIX-15",
-  "AURIX-16","AURIX-17","AURIX-18","AURIX-19","AURIX-20",
-  "AURIX-21","AURIX-22","AURIX-23","AURIX-24","AURIX-25",
-  "AURIX-26","AURIX-27","AURIX-28","AURIX-29","AURIX-30"
+const validCodes=[
+"AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AURIX-ECHO",
+"AURIX-FOXTROT","AURIX-GOLF","AURIX-HOTEL","AURIX-INDIA","AURIX-JULIET",
+"AURIX-KILO","AURIX-LIMA","AURIX-MIKE","AURIX-NOVEMBER","AURIX-OSCAR",
+"AURIX-PAPA","AURIX-QUEBEC","AURIX-ROMEO","AURIX-SIERRA","AURIX-TANGO",
+"AURIX-UNIFORM","AURIX-VICTOR","AURIX-WHISKEY","AURIX-XRAY",
+"AURIX-YANKEE","AURIX-ZULU","AURIX-PHOENIX","AURIX-DRAGON",
+"AURIX-TITAN","AURIX-OMEGA"
 ];
 
 window.onload=()=>{
@@ -199,6 +194,11 @@ window.onload=()=>{
     accEmail.innerText="ایمیل: "+localStorage.getItem("aurix_email");
 
     showPage("homePage");
+  } else {
+    bottomNav.style.display="none";
+    gameContainer.style.display="none";
+    verify.style.display="none";
+    register.style.display="block";
   }
 };
 
@@ -209,13 +209,12 @@ function doRegister(){
   }
   register.style.display="none";
   verify.style.display="block";
-  bottomNav.style.display="none"; // ❌ مخفی
+  bottomNav.style.display="none";
   showPhone.innerText="📱 "+phoneNumber.value;
 }
 
 function verifyCode(){
-  const code = codeInput.value.trim().toUpperCase();
-
+  const code=codeInput.value.trim().toUpperCase();
   if(!validCodes.includes(code)){
     alert("❌ کد نامعتبر است");
     return;
