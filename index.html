@@ -6,7 +6,6 @@
 <title>Aurix</title>
 
 <style>
-/* ===== Background (مثل عکس) ===== */
 body{
   margin:0;
   font-family:sans-serif;
@@ -18,7 +17,6 @@ body{
     linear-gradient(135deg,#0f0c29,#302b63,#24243e);
 }
 
-/* ===== Card ===== */
 .card{
   max-width:380px;
   margin:80px auto;
@@ -28,12 +26,8 @@ body{
   box-shadow:0 20px 60px rgba(0,0,0,.35);
 }
 
-h2{
-  text-align:center;
-  margin-bottom:20px;
-}
+h2{text-align:center;margin-bottom:16px}
 
-/* ===== Inputs ===== */
 input{
   width:100%;
   padding:14px;
@@ -43,7 +37,6 @@ input{
   font-size:15px;
 }
 
-/* ===== Button ===== */
 button{
   width:100%;
   padding:16px;
@@ -56,7 +49,15 @@ button{
   color:#000;
 }
 
-/* صفحه تایید مخفی */
+a{
+  display:block;
+  text-align:center;
+  margin:12px 0;
+  font-weight:bold;
+  color:#5a00ff;
+  text-decoration:none;
+}
+
 #verify{display:none}
 </style>
 </head>
@@ -74,13 +75,31 @@ button{
 
 <!-- ===== تایید موبایل ===== -->
 <div id="verify" class="card">
-  <h2>تأیید شماره موبایل</h2>
+  <h2>دریافت و تأیید کد</h2>
+
   <p id="showPhone" style="text-align:center"></p>
-  <input placeholder="کد تایید">
-  <button onclick="alert('کد تایید شد (نمایشی)')">ارسال کد تایید</button>
+
+  <a href="https://t.me/Aurix2025_bot" target="_blank">
+    🤖 ورود به ربات دریافت کد
+  </a>
+
+  <input id="codeInput" placeholder="کد دریافتی از ربات">
+
+  <button onclick="verifyCode()">✅ تأیید و ورود به بازی</button>
 </div>
 
 <script>
+// 🔐 کدهای صادر شده توسط ربات
+const validCodes = [
+  "AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AURIX-ECHO",
+  "AURIX-FOXTROT","AURIX-GOLF","AURIX-HOTEL","AURIX-INDIA","AURIX-JULIET",
+  "AURIX-KILO","AURIX-LIMA","AURIX-MIKE","AURIX-NOVEMBER","AURIX-OSCAR",
+  "AURIX-PAPA","AURIX-QUEBEC","AURIX-ROMEO","AURIX-SIERRA","AURIX-TANGO",
+  "AURIX-UNIFORM","AURIX-VICTOR","AURIX-WHISKEY","AURIX-XRAY",
+  "AURIX-YANKEE","AURIX-ZULU","AURIX-PHOENIX","AURIX-DRAGON",
+  "AURIX-TITAN","AURIX-OMEGA"
+];
+
 function register(){
   const name=document.getElementById('name').value.trim();
   const phone=document.getElementById('phone').value.trim();
@@ -93,7 +112,18 @@ function register(){
 
   document.getElementById('register').style.display="none";
   document.getElementById('verify').style.display="block";
-  document.getElementById('showPhone').innerText="شماره: "+phone;
+  document.getElementById('showPhone').innerText="📱 شماره ثبت‌شده: "+phone;
+}
+
+function verifyCode(){
+  const code=document.getElementById('codeInput').value.trim().toUpperCase();
+
+  if(validCodes.includes(code)){
+    alert("🎉 کد معتبر است!\nورود به بازی با موفقیت انجام شد 🚀");
+    // اینجا بعداً می‌تونی بری به صفحه بازی
+  }else{
+    alert("❌ کد نامعتبر است!\nلطفاً کد را از ربات دریافت کنید");
+  }
 }
 </script>
 
