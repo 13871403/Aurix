@@ -1,76 +1,87 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aurix</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aurix</title>
 
-<style>
-body{
-  margin:0;
-  font-family:sans-serif;
-  direction:rtl;
-  min-height:100vh;
-  background:
-    radial-gradient(circle at top left,#ff00cc,transparent 40%),
-    radial-gradient(circle at bottom right,#00f0ff,transparent 40%),
-    linear-gradient(135deg,#0f0c29,#302b63,#24243e);
-}
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      direction: rtl;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, #ff00cc, transparent 40%),
+        radial-gradient(circle at bottom right, #00f0ff, transparent 40%),
+        linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    }
 
-.card{
-  max-width:380px;
-  margin:80px auto;
-  padding:24px;
-  border-radius:24px;
-  background:rgba(255,255,255,0.95);
-  box-shadow:0 20px 60px rgba(0,0,0,.35);
-}
+    .card {
+      max-width: 380px;
+      margin: 80px auto;
+      padding: 24px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .35);
+    }
 
-h2{text-align:center;margin-bottom:16px}
+    h2 {
+      text-align: center;
+      margin-bottom: 16px;
+    }
 
-input{
-  width:100%;
-  padding:14px;
-  margin-bottom:12px;
-  border-radius:14px;
-  border:1px solid #ddd;
-  font-size:15px;
-}
+    input {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 12px;
+      border-radius: 14px;
+      border: 1px solid #ddd;
+      font-size: 15px;
+    }
 
-button{
-  width:100%;
-  padding:16px;
-  border:none;
-  border-radius:999px;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
-  background:linear-gradient(90deg,#ffcc00,#ff00ff);
-  color:#000;
-}
+    button {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 999px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      background: linear-gradient(90deg, #ffcc00, #ff00ff);
+      color: #000;
+    }
 
-a{
-  display:block;
-  text-align:center;
-  margin:12px 0;
-  font-weight:bold;
-  color:#5a00ff;
-  text-decoration:none;
-}
+    /* دکمه‌ها در پایین صفحه */
+    #footer {
+      display: flex;
+      justify-content: space-around;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      padding: 10px 0;
+      background: #000;
+      color: white;
+    }
 
-#verify{display:none}
+    .footer-btn {
+      width: 30%;
+      padding: 12px;
+      background: #ff00ff;
+      color: white;
+      font-size: 16px;
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      font-weight: bold;
+    }
 
-#gamePage{
-  display:none;
-  text-align:center;
-}
+    /* صفحه تایید مخفی */
+    #verify {
+      display: none;
+    }
 
-.game-footer {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
-}
-</style>
+  </style>
 </head>
 
 <body>
@@ -99,17 +110,11 @@ a{
   <button onclick="verifyCode()">✅ تأیید و ورود به بازی</button>
 </div>
 
-<!-- ===== صفحه بازی ===== -->
-<div id="gamePage" class="card">
-  <h2>Aurix بازی تایمر</h2>
-  <p>🎮 بازی شروع شده است!</p>
-  <p id="gameStatus">وضعیت: آماده برای شروع</p>
-
-  <!-- دکمه‌ها در پایین صفحه -->
-  <div class="game-footer">
-    <button onclick="startGame()">شروع بازی</button>
-    <button onclick="stopGame()">توقف بازی</button>
-  </div>
+<!-- ===== دکمه‌های پایین صفحه ===== -->
+<div id="footer">
+  <button class="footer-btn" onclick="showAccount()">حساب کاربری</button>
+  <button class="footer-btn" onclick="showWallet()">کیف پول</button>
+  <button class="footer-btn" onclick="startGame()">شروع بازی</button>
 </div>
 
 <script>
@@ -125,40 +130,44 @@ const validCodes = [
 ];
 
 function register(){
-  const name=document.getElementById('name').value.trim();
-  const phone=document.getElementById('phone').value.trim();
-  const email=document.getElementById('email').value.trim();
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const email = document.getElementById('email').value.trim();
 
-  if(!name || !phone || !email){
+  if (!name || !phone || !email) {
     alert("❗ همه فیلدها رو پر کن");
     return;
   }
 
-  document.getElementById('register').style.display="none";
-  document.getElementById('verify').style.display="block";
-  document.getElementById('showPhone').innerText="📱 شماره ثبت‌شده: "+phone;
+  document.getElementById('register').style.display = "none";
+  document.getElementById('verify').style.display = "block";
+  document.getElementById('showPhone').innerText = "📱 شماره ثبت‌شده: " + phone;
 }
 
 function verifyCode(){
-  const code=document.getElementById('codeInput').value.trim().toUpperCase();
+  const code = document.getElementById('codeInput').value.trim().toUpperCase();
 
-  if(validCodes.includes(code)){
+  if (validCodes.includes(code)) {
     alert("🎉 کد معتبر است!\nورود به بازی با موفقیت انجام شد 🚀");
-    document.getElementById('verify').style.display = "none";
-    document.getElementById('gamePage').style.display = "block";
-  }else{
+    // اینجا بعداً می‌تونی بری به صفحه بازی
+  } else {
     alert("❌ کد نامعتبر است!\nلطفاً کد را از ربات دریافت کنید");
   }
 }
 
 function startGame(){
-  document.getElementById('gameStatus').innerText = "بازی در حال اجرا...";
-  // اضافه کردن کدهای شروع بازی و تایمر
+  alert("🕹️ بازی شروع شد!");
+  // کد بازی شروع می‌شود
 }
 
-function stopGame(){
-  document.getElementById('gameStatus').innerText = "بازی متوقف شد";
-  // اضافه کردن کدهای توقف بازی
+function showWallet() {
+  alert("💰 نمایش کیف پول شما");
+  // کد نمایش کیف پول
+}
+
+function showAccount() {
+  alert("👤 نمایش حساب کاربری");
+  // کد نمایش اطلاعات حساب کاربری
 }
 </script>
 
