@@ -14,12 +14,11 @@ body{
   font-family:sans-serif;
   direction:rtl;
   min-height:100vh;
-  background-image: url('https://i.imgur.com/5yAh59d.jpg'); /* URL تصویر جدید */
-  background-size: cover; /* این باعث می‌شود تصویر به اندازه صفحه پخش شود */
-  background-position: center center; /* موقعیت تصویر در وسط صفحه */
-  background-attachment: fixed; /* تصویر ثابت می‌ماند هنگام اسکرول کردن */
+  background:
+    radial-gradient(circle at top left,#ff00cc,transparent 40%),
+    radial-gradient(circle at bottom right,#00f0ff,transparent 40%),
+    linear-gradient(135deg,#0f0c29,#302b63,#24243e);
 }
-
 .card{
   max-width:380px;
   margin:80px auto;
