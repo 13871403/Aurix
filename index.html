@@ -170,7 +170,15 @@ a{
 
 <script>
 // کدهای صادر شده توسط ربات
-const validCodes=["AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AURIX-OMEGA"];
+const validCodes = [
+  "AURIX-ALPHA", "AURIX-BRAVO", "AURIX-CHARLIE", "AURIX-DELTA", "AURIX-ECHO",
+  "AURIX-FOXTROT", "AURIX-GOLF", "AURIX-HOTEL", "AURIX-INDIA", "AURIX-JULIET",
+  "AURIX-KILO", "AURIX-LIMA", "AURIX-MIKE", "AURIX-NOVEMBER", "AURIX-OSCAR",
+  "AURIX-PAPA", "AURIX-QUEBEC", "AURIX-ROMEO", "AURIX-SIERRA", "AURIX-TANGO",
+  "AURIX-UNIFORM", "AURIX-VICTOR", "AURIX-WHISKEY", "AURIX-XRAY",
+  "AURIX-YANKEE", "AURIX-ZULU", "AURIX-PHOENIX", "AURIX-DRAGON",
+  "AURIX-TITAN", "AURIX-OMEGA", "AURIX-LUXURY", "AURIX-PREMIUM"
+];
 
 function register(){
   const name = document.getElementById("fullName");
@@ -182,19 +190,22 @@ function register(){
     return;
   }
 
+  // پس از تکمیل ثبت‌نام، نمایش تایید کد
   document.getElementById("register").style.display = "none";
   document.getElementById("verify").style.display = "block";
-  document.getElementById("showPhone").innerText = "📱 " + phone.value;
+  showPhone.innerText = "📱 " + phone.value;
 }
 
 function verifyCode() {
   const code = document.getElementById("codeInput").value.trim().toUpperCase();
   if (validCodes.includes(code)) {
+    // پس از تایید کد، نمایش صفحه بازی و نوار پایین
     document.getElementById("verify").style.display = "none";
     document.getElementById("gameContainer").style.display = "block";
     document.getElementById("bottomNav").style.display = "flex";
     showPage('homePage');
 
+    // نمایش اطلاعات کاربری
     document.getElementById("accName").innerText = "نام: " + document.getElementById("fullName").value;
     document.getElementById("accPhone").innerText = "شماره: " + document.getElementById("phoneNumber").value;
     document.getElementById("accEmail").innerText = "ایمیل: " + document.getElementById("emailAddress").value;
