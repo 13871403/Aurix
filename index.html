@@ -112,7 +112,7 @@ a{
   <button onclick="register()">🔒 ثبت‌نام امن</button>
 </div>
 
-<!-- تایید -->
+<!-- تایید کد -->
 <div id="verify" class="card">
   <h2>دریافت و تأیید کد</h2>
   <p id="showPhone" style="text-align:center"></p>
@@ -169,16 +169,8 @@ a{
 </div>
 
 <script>
-// 🔐 کدهای صادر شده توسط ربات
-const validCodes = [
-  "AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AURIX-ECHO",
-  "AURIX-FOXTROT","AURIX-GOLF","AURIX-HOTEL","AURIX-INDIA","AURIX-JULIET",
-  "AURIX-KILO","AURIX-LIMA","AURIX-MIKE","AURIX-NOVEMBER","AURIX-OSCAR",
-  "AURIX-PAPA","AURIX-QUEBEC","AURIX-ROMEO","AURIX-SIERRA","AURIX-TANGO",
-  "AURIX-UNIFORM","AURIX-VICTOR","AURIX-WHISKEY","AURIX-XRAY",
-  "AURIX-YANKEE","AURIX-ZULU","AURIX-PHOENIX","AURIX-DRAGON",
-  "AURIX-TITAN","AURIX-OMEGA"
-];
+// کدهای صادر شده توسط ربات
+const validCodes=["AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AURIX-OMEGA"];
 
 function register(){
   const name = document.getElementById("fullName");
