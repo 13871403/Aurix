@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Aurix</title>
 
-<!-- اضافه کردن Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 <style>
@@ -14,11 +13,17 @@ body{
   font-family:sans-serif;
   direction:rtl;
   min-height:100vh;
-  background:
-    radial-gradient(circle at top left,#ff00cc,transparent 40%),
-    radial-gradient(circle at bottom right,#00f0ff,transparent 40%),
-    linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+
+  /* 🔥 پس‌زمینه با عکس */
+  background-image:
+    linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
+    url("https://i.imgur.com/VYMs5FH.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
+
 .card{
   max-width:380px;
   margin:80px auto;
@@ -27,7 +32,9 @@ body{
   background:#fff;
   box-shadow:0 20px 60px rgba(0,0,0,.35);
 }
+
 h2{text-align:center;margin-bottom:16px}
+
 input{
   width:100%;
   padding:14px;
@@ -36,6 +43,7 @@ input{
   border:1px solid #ddd;
   font-size:15px;
 }
+
 button{
   width:100%;
   padding:16px;
@@ -46,6 +54,7 @@ button{
   cursor:pointer;
   background:linear-gradient(90deg,#ffcc00,#ff00ff);
 }
+
 a{
   display:block;
   text-align:center;
@@ -54,7 +63,9 @@ a{
   color:#5a00ff;
   text-decoration:none;
 }
+
 #verify,#gameContainer,#bottomNav{display:none;}
+
 .game-page{
   max-width:380px;
   margin:40px auto 120px;
@@ -65,6 +76,7 @@ a{
   box-shadow:0 10px 30px rgba(0,0,0,.25);
   text-align:center;
 }
+
 #bottomNav{
   position:fixed;
   bottom:0;left:0;right:0;
@@ -74,13 +86,10 @@ a{
   padding:10px 0;
   box-shadow:0 -5px 20px rgba(0,0,0,.2);
 }
-.nav-item{text-align:center;font-size:12px;cursor:pointer;}
-.nav-item span{
-  display:block;
-  font-size:10px; /* متن کوچکتر می‌شود */
-}
 
-/* 🔴 اضافه شده: دکمه خروج */
+.nav-item{text-align:center;font-size:12px;cursor:pointer;}
+.nav-item span{display:block;font-size:10px;}
+
 .exit-btn{
   width:100%;
   padding:16px 20px;
@@ -94,11 +103,8 @@ a{
   align-items:center;
   justify-content:space-between;
   cursor:pointer;
-  box-shadow:0 0 20px rgba(0,0,0,.6);
   margin-top:20px;
 }
-.exit-btn:active{transform:scale(.98);}
-.exit-icon{font-size:22px;}
 </style>
 </head>
 
@@ -121,13 +127,8 @@ a{
 </div>
 
 <div id="gameContainer">
-  <div id="homePage" class="game-page">
-    <h3>🎮 خوش آمدی به Aurix</h3>
-  </div>
-  <div id="walletPage" class="game-page">
-    <h3>💰 کیف پول</h3>
-    <h1>1250 ⭐</h1>
-  </div>
+  <div id="homePage" class="game-page"><h3>🎮 خوش آمدی به Aurix</h3></div>
+  <div id="walletPage" class="game-page"><h3>💰 کیف پول</h3><h1>1250 ⭐</h1></div>
   <div id="accountPage" class="game-page">
     <h3>👤 حساب کاربری</h3>
     <p id="accName"></p>
@@ -136,87 +137,46 @@ a{
   </div>
   <div id="settingsPage" class="game-page">
     <h3>⚙️ تنظیمات</h3>
-    <p>به‌زودی...</p>
-
-    <!-- 🔴 اضافه شده: دکمه خروج -->
-    <button class="exit-btn" onclick="logout()">
-      خروج
-      <span class="exit-icon">↪</span>
-    </button>
+    <button class="exit-btn" onclick="logout()">خروج <span>↪</span></button>
   </div>
 </div>
 
 <div id="bottomNav">
   <div class="nav-item" onclick="showPage('homePage')"><span>▶️</span>شروع</div>
-  <div class="nav-item" onclick="showPage('walletPage')">
-    <i class="fas fa-wallet" style="font-size: 22px;"></i> 
-    <span>کیف پول</span> <!-- متن زیر آیکون قرار می‌گیرد -->
-  </div>
+  <div class="nav-item" onclick="showPage('walletPage')"><i class="fas fa-wallet"></i><span>کیف پول</span></div>
   <div class="nav-item" onclick="showPage('accountPage')"><span>👤</span>حساب</div>
   <div class="nav-item" onclick="showPage('settingsPage')"><span>⚙️</span>تنظیمات</div>
 </div>
 
 <script>
-window.onload = () => {
-  const logged = localStorage.getItem("aurix_logged");
-
-  if(logged === "true"){
+window.onload=()=>{
+  if(localStorage.getItem("aurix_logged")==="true"){
     register.style.display="none";
-    verify.style.display="none";
     gameContainer.style.display="block";
     bottomNav.style.display="flex";
-
     accName.innerText="نام: "+localStorage.getItem("aurix_name");
     accPhone.innerText="شماره: "+localStorage.getItem("aurix_phone");
     accEmail.innerText="ایمیل: "+localStorage.getItem("aurix_email");
-
     showPage("homePage");
-  }else{
-    bottomNav.style.display="none";
-    gameContainer.style.display="none";
   }
 };
 
-const validCodes = [
-  "AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AURIX-ECHO",
-  "AURIX-FOXTROT","AURIX-GOLF","AURIX-HOTEL","AURIX-INDIA","AURIX-JULIET",
-  "AURIX-KILO","AURIX-LIMA","AURIX-MIKE","AURIX-NOVEMBER","AURIX-OSCAR",
-  "AURIX-PAPA","AURIX-QUEBEC","AURIX-ROMEO","AURIX-SIERRA","AURIX-TANGO",
-  "AURIX-UNIFORM","AURIX-VICTOR","AURIX-WHISKEY","AURIX-XRAY",
-  "AURIX-YANKEE","AURIX-ZULU","AURIX-PHOENIX","AURIX-DRAGON",
-  "AURIX-TITAN","AURIX-OMEGA","AURIX-LUXURY","AURIX-PREMIUM"
-];
-
 function doRegister(){
-  if(!fullName.value || !phoneNumber.value || !emailAddress.value){
-    alert("همه فیلدها را پر کنید");
-    return;
-  }
+  if(!fullName.value||!phoneNumber.value||!emailAddress.value)return alert("همه فیلدها را پر کنید");
   register.style.display="none";
   verify.style.display="block";
   showPhone.innerText="📱 "+phoneNumber.value;
 }
 
 function verifyCode(){
-  const code = codeInput.value.trim().toUpperCase();
-  if(validCodes.includes(code)){
-    localStorage.setItem("aurix_logged","true");
-    localStorage.setItem("aurix_name",fullName.value);
-    localStorage.setItem("aurix_phone",phoneNumber.value);
-    localStorage.setItem("aurix_email",emailAddress.value);
-
-    verify.style.display="none";
-    gameContainer.style.display="block";
-    bottomNav.style.display="flex";
-
-    accName.innerText="نام: "+fullName.value;
-    accPhone.innerText="شماره: "+phoneNumber.value;
-    accEmail.innerText="ایمیل: "+emailAddress.value;
-
-    showPage("homePage");
-  }else{
-    alert("❌ کد نامعتبر است");
-  }
+  localStorage.setItem("aurix_logged","true");
+  localStorage.setItem("aurix_name",fullName.value);
+  localStorage.setItem("aurix_phone",phoneNumber.value);
+  localStorage.setItem("aurix_email",emailAddress.value);
+  verify.style.display="none";
+  gameContainer.style.display="block";
+  bottomNav.style.display="flex";
+  showPage("homePage");
 }
 
 function showPage(id){
@@ -224,17 +184,9 @@ function showPage(id){
   document.getElementById(id).style.display="block";
 }
 
-/* 🔴 اضافه شده: خروج بدون پاک شدن اطلاعات */
 function logout(){
-  localStorage.removeItem("aurix_logged");
-  localStorage.removeItem("aurix_name");
-  localStorage.removeItem("aurix_phone");
-  localStorage.removeItem("aurix_email");
-
-  gameContainer.style.display="none";
-  bottomNav.style.display="none";
-  verify.style.display="none";
-  register.style.display="block";
+  localStorage.clear();
+  location.reload();
 }
 </script>
 
