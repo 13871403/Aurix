@@ -61,9 +61,7 @@ a{
 /* مخفی اولیه */
 #verify,
 #gameContainer,
-#bottomNav{
-  display:none;
-}
+#bottomNav{display:none}
 
 /* صفحات بازی */
 .game-page{
@@ -171,51 +169,51 @@ a{
 </div>
 
 <script>
-window.onload = () => {
-  // مخفی کردن نوار پایین و صفحه بازی به صورت پیش‌فرض
-  bottomNav.style.display = "none";
-  gameContainer.style.display = "none";
-};
-
-const validCodes=["AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AURIX-OMEGA"];
+// 🔐 کدهای صادر شده توسط ربات
+const validCodes = [
+  "AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AURIX-ECHO",
+  "AURIX-FOXTROT","AURIX-GOLF","AURIX-HOTEL","AURIX-INDIA","AURIX-JULIET",
+  "AURIX-KILO","AURIX-LIMA","AURIX-MIKE","AURIX-NOVEMBER","AURIX-OSCAR",
+  "AURIX-PAPA","AURIX-QUEBEC","AURIX-ROMEO","AURIX-SIERRA","AURIX-TANGO",
+  "AURIX-UNIFORM","AURIX-VICTOR","AURIX-WHISKEY","AURIX-XRAY",
+  "AURIX-YANKEE","AURIX-ZULU","AURIX-PHOENIX","AURIX-DRAGON",
+  "AURIX-TITAN","AURIX-OMEGA"
+];
 
 function register(){
-  const name=document.getElementById("fullName");
-  const phone=document.getElementById("phoneNumber");
-  const email=document.getElementById("emailAddress");
+  const name = document.getElementById("fullName");
+  const phone = document.getElementById("phoneNumber");
+  const email = document.getElementById("emailAddress");
 
-  if(!name.value.trim() || !phone.value.trim() || !email.value.trim()){
-    alert("همه فیلدها را پر کنید");
+  if (!name.value.trim() || !phone.value.trim() || !email.value.trim()) {
+    alert("❗ همه فیلدها را پر کنید");
     return;
   }
 
-  // پس از تکمیل ثبت‌نام، نمایش تایید کد
-  document.getElementById("register").style.display="none";
-  document.getElementById("verify").style.display="block";
-  showPhone.innerText="📱 "+phone.value;
+  document.getElementById("register").style.display = "none";
+  document.getElementById("verify").style.display = "block";
+  document.getElementById("showPhone").innerText = "📱 " + phone.value;
 }
 
-function verifyCode(){
-  const code=codeInput.value.trim().toUpperCase();
-  if(validCodes.includes(code)){
-    // پس از تایید کد، نمایش صفحه بازی و نوار پایین
-    verify.style.display="none";
-    gameContainer.style.display="block";
-    bottomNav.style.display="flex";
+function verifyCode() {
+  const code = document.getElementById("codeInput").value.trim().toUpperCase();
+  if (validCodes.includes(code)) {
+    document.getElementById("verify").style.display = "none";
+    document.getElementById("gameContainer").style.display = "block";
+    document.getElementById("bottomNav").style.display = "flex";
     showPage('homePage');
 
-    // نمایش اطلاعات کاربری
-    accName.innerText="نام: "+fullName.value;
-    accPhone.innerText="شماره: "+phoneNumber.value;
-    accEmail.innerText="ایمیل: "+emailAddress.value;
-  }else{
-    alert("کد نامعتبر است");
+    document.getElementById("accName").innerText = "نام: " + document.getElementById("fullName").value;
+    document.getElementById("accPhone").innerText = "شماره: " + document.getElementById("phoneNumber").value;
+    document.getElementById("accEmail").innerText = "ایمیل: " + document.getElementById("emailAddress").value;
+  } else {
+    alert("❌ کد نامعتبر است");
   }
 }
 
-function showPage(id){
-  document.querySelectorAll('.game-page').forEach(p=>p.style.display="none");
-  document.getElementById(id).style.display="block";
+function showPage(id) {
+  document.querySelectorAll('.game-page').forEach(p => p.style.display = "none");
+  document.getElementById(id).style.display = "block";
 }
 </script>
 
