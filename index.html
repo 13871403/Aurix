@@ -14,11 +14,10 @@ body{
   font-family:sans-serif;
   direction:rtl;
   min-height:100vh;
-  /* ابتدا رنگ پس زمینه ساده */
-  background-color: #000;
-  /* اضافه کردن تصویر به پس‌زمینه */
-  background: url('https://path-to-your-image.jpg') no-repeat center center fixed;
-  background-size: cover;
+  background:
+    radial-gradient(circle at top left,#ff00cc,transparent 40%),
+    radial-gradient(circle at bottom right,#00f0ff,transparent 40%),
+    linear-gradient(135deg,#0f0c29,#302b63,#24243e);
 }
 .card{
   max-width:380px;
@@ -78,7 +77,7 @@ a{
 .nav-item{text-align:center;font-size:12px;cursor:pointer;}
 .nav-item span{
   display:block;
-  font-size:10px;
+  font-size:10px; /* متن کوچکتر می‌شود */
 }
 
 /* 🔴 اضافه شده: دکمه خروج */
