@@ -17,7 +17,7 @@ body{
     linear-gradient(135deg,#0f0c29,#302b63,#24243e);
 }
 
-/* کارت عمومی */
+/* کارت */
 .card{
   max-width:380px;
   margin:80px auto;
@@ -58,14 +58,10 @@ a{
   text-decoration:none;
 }
 
-/* مخفی قطعی */
-#verify,
-#gameContainer,
-#bottomNav{
-  display:none !important;
-}
+/* مخفی اولیه */
+#verify,#gameContainer,#bottomNav{display:none}
 
-/* صفحات داخل بازی */
+/* صفحات بازی */
 .game-page{
   max-width:380px;
   margin:40px auto 120px;
@@ -108,13 +104,13 @@ a{
 <!-- ثبت نام -->
 <div id="register" class="card">
   <h2>Aurix</h2>
-  <input id="name" placeholder="نام کامل">
-  <input id="phone" placeholder="شماره موبایل">
-  <input id="email" placeholder="ایمیل">
+  <input id="fullName" placeholder="نام کامل">
+  <input id="phoneNumber" placeholder="شماره موبایل">
+  <input id="emailAddress" placeholder="ایمیل">
   <button onclick="register()">🔒 ثبت‌نام امن</button>
 </div>
 
-<!-- تایید کد -->
+<!-- تایید -->
 <div id="verify" class="card">
   <h2>دریافت و تأیید کد</h2>
   <p id="showPhone" style="text-align:center"></p>
@@ -171,20 +167,20 @@ a{
 </div>
 
 <script>
-window.onload = () => {
-  bottomNav.style.display = "none";
-  gameContainer.style.display = "none";
-};
-
 const validCodes=["AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AURIX-OMEGA"];
 
 function register(){
-  if(!name.value||!phone.value||!email.value){
+  const name=document.getElementById("fullName");
+  const phone=document.getElementById("phoneNumber");
+  const email=document.getElementById("emailAddress");
+
+  if(!name.value.trim() || !phone.value.trim() || !email.value.trim()){
     alert("همه فیلدها را پر کنید");
     return;
   }
-  register.style.display="none";
-  verify.style.display="block";
+
+  document.getElementById("register").style.display="none";
+  document.getElementById("verify").style.display="block";
   showPhone.innerText="📱 "+phone.value;
 }
 
@@ -196,16 +192,17 @@ function verifyCode(){
     bottomNav.style.display="flex";
     showPage('homePage');
 
-    accName.innerText="نام: "+name.value;
-    accPhone.innerText="شماره: "+phone.value;
-    accEmail.innerText="ایمیل: "+email.value;
+    accName.innerText="نام: "+fullName.value;
+    accPhone.innerText="شماره: "+phoneNumber.value;
+    accEmail.innerText="ایمیل: "+emailAddress.value;
   }else{
     alert("کد نامعتبر است");
   }
 }
 
 function showPage(id){
-  document.querySelectorAll('.game-page').forEach(p=>p.style.display="none");
+  document.querySelectorAll('.game-page')
+    .forEach(p=>p.style.display="none");
   document.getElementById(id).style.display="block";
 }
 </script>
