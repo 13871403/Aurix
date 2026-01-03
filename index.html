@@ -17,6 +17,7 @@ body{
     linear-gradient(135deg,#0f0c29,#302b63,#24243e);
 }
 
+/* کارت‌ها */
 .card{
   max-width:380px;
   margin:80px auto;
@@ -47,8 +48,6 @@ button{
   cursor:pointer;
   background:linear-gradient(90deg,#ffcc00,#ff00ff);
   color:#000;
-  margin-bottom:12px; /* فاصله بین دکمه‌ها */
-  box-shadow:0px 4px 6px rgba(0, 0, 0, 0.1); /* سایه دکمه‌ها */
 }
 
 a{
@@ -61,17 +60,30 @@ a{
 }
 
 #verify{display:none}
-#gameButtons{display:none} /* پنهان کردن دکمه‌ها به طور پیش‌فرض */
-#gameButtons button{
-  background:linear-gradient(90deg, #f2b600, #e81b79);
-  margin:10px 0;  /* فاصله بیشتر بین دکمه‌ها */
-  box-shadow:0px 4px 8px rgba(0, 0, 0, 0.2); /* سایه قوی‌تر */
-  transition: all 0.3s ease; /* انیمیشن برای افکت‌ها */
+#gameScreen{display:none}
+
+/* ===== Bottom Navigation ===== */
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#fff;
+  display:flex;
+  justify-content:space-around;
+  padding:10px 0;
+  box-shadow:0 -4px 10px rgba(0,0,0,.2);
 }
 
-#gameButtons button:hover{
-  transform: scale(1.05); /* انیمیشن بزرگ شدن دکمه */
-  box-shadow:0px 6px 12px rgba(0, 0, 0, 0.2); /* افزایش سایه دکمه هنگام هاور */
+.bottom-item{
+  text-align:center;
+  font-size:12px;
+  cursor:pointer;
+}
+
+.bottom-item span{
+  display:block;
+  font-size:20px;
 }
 </style>
 </head>
@@ -87,7 +99,7 @@ a{
   <button onclick="register()">🔒 ثبت‌نام امن</button>
 </div>
 
-<!-- ===== تایید موبایل ===== -->
+<!-- ===== تایید کد ===== -->
 <div id="verify" class="card">
   <h2>دریافت و تأیید کد</h2>
 
@@ -102,16 +114,36 @@ a{
   <button onclick="verifyCode()">✅ تأیید و ورود به بازی</button>
 </div>
 
-<!-- ===== دکمه‌های بازی ===== -->
-<div id="gameButtons">
-  <button onclick="startGame()">شروع بازی</button>
-  <button onclick="stopGame()">توقف بازی</button>
-  <button onclick="viewAccount()">حساب کاربری</button>
-  <button onclick="viewWallet()">کیف پول</button>
+<!-- ===== صفحه بازی ===== -->
+<div id="gameScreen" class="card">
+  <h2>🎮 Aurix</h2>
+  <p style="text-align:center">
+    به بازی Aurix خوش آمدید 🚀<br>
+    از نوار پایین بخش موردنظر را انتخاب کنید
+  </p>
+</div>
+
+<!-- ===== Bottom Navigation ===== -->
+<div id="bottomNav" class="bottom-nav" style="display:none">
+  <div class="bottom-item" onclick="startGame()">
+    <span>▶️</span>
+    شروع
+  </div>
+  <div class="bottom-item" onclick="stopGame()">
+    <span>⏹</span>
+    توقف
+  </div>
+  <div class="bottom-item" onclick="viewWallet()">
+    <span>💰</span>
+    کیف پول
+  </div>
+  <div class="bottom-item" onclick="viewAccount()">
+    <span>👤</span>
+    حساب
+  </div>
 </div>
 
 <script>
-// 🔐 کدهای صادر شده توسط ربات
 const validCodes = [
   "AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AURIX-ECHO",
   "AURIX-FOXTROT","AURIX-GOLF","AURIX-HOTEL","AURIX-INDIA","AURIX-JULIET",
@@ -123,48 +155,36 @@ const validCodes = [
 ];
 
 function register(){
-  const name=document.getElementById('name').value.trim();
-  const phone=document.getElementById('phone').value.trim();
-  const email=document.getElementById('email').value.trim();
+  const name=nameInput.value.trim();
+  const phone=phoneInput.value.trim();
+  const email=emailInput.value.trim();
 
   if(!name || !phone || !email){
     alert("❗ همه فیلدها رو پر کن");
     return;
   }
 
-  document.getElementById('register').style.display="none";
-  document.getElementById('verify').style.display="block";
-  document.getElementById('showPhone').innerText="📱 شماره ثبت‌شده: "+phone;
+  register.style.display="none";
+  verify.style.display="block";
+  showPhone.innerText="📱 شماره ثبت‌شده: "+phone;
 }
 
 function verifyCode(){
-  const code=document.getElementById('codeInput').value.trim().toUpperCase();
+  const code=codeInput.value.trim().toUpperCase();
 
   if(validCodes.includes(code)){
-    alert("🎉 کد معتبر است!\nورود به بازی با موفقیت انجام شد 🚀");
-    // نمایش دکمه‌های بازی
-    document.getElementById('gameButtons').style.display = 'block';
-    document.getElementById('verify').style.display="none";
+    verify.style.display="none";
+    gameScreen.style.display="block";
+    bottomNav.style.display="flex";
   }else{
-    alert("❌ کد نامعتبر است!\nلطفاً کد را از ربات دریافت کنید");
+    alert("❌ کد نامعتبر است");
   }
 }
 
-function startGame(){
-  alert("بازی شروع شد!");
-}
-
-function stopGame(){
-  alert("بازی متوقف شد!");
-}
-
-function viewAccount(){
-  alert("نمایش حساب کاربری");
-}
-
-function viewWallet(){
-  alert("نمایش کیف پول");
-}
+function startGame(){ alert("🎮 بازی شروع شد"); }
+function stopGame(){ alert("⏹ بازی متوقف شد"); }
+function viewWallet(){ alert("💰 موجودی کیف پول"); }
+function viewAccount(){ alert("👤 حساب کاربری"); }
 </script>
 
 </body>
