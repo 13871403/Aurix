@@ -19,7 +19,7 @@ body{
   background-size:cover;
   background-position:center;
   background-repeat:no-repeat;
-  overflow-x:hidden; /* ⬅️ جلوگیری از اسکرول افقی */
+  overflow-x:hidden;
 }
 
 .card{
@@ -139,7 +139,6 @@ a{
 
 .support-float i{font-size:24px}
 
-/* ===== حساب کاربری ===== */
 .profile-img{
   width:110px;
   height:110px;
@@ -150,10 +149,7 @@ a{
   border:3px solid #eee;
 }
 
-/* ⬇️ حل مشکل اصلی */
-input[type="file"]{
-  display:none;
-}
+input[type="file"]{display:none;}
 
 .upload-btn{
   display:block;
@@ -332,8 +328,9 @@ function changeAvatar(e){
   reader.readAsDataURL(file);
 }
 
+/* ✅ فقط همین تابع اصلاح شده */
 function logout(){
-  localStorage.clear();
+  localStorage.removeItem("aurix_logged");
   location.reload();
 }
 
