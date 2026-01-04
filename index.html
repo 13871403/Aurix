@@ -62,7 +62,6 @@ a{
   text-decoration:none;
 }
 
-/* مخفی پیش‌فرض */
 #verify,#gameContainer,#bottomNav{display:none;}
 
 .game-page{
@@ -74,7 +73,6 @@ a{
   display:none;
   box-shadow:0 10px 30px rgba(0,0,0,.25);
   text-align:center;
-  position:relative;
 }
 
 /* نوار پایین */
@@ -117,30 +115,32 @@ a{
   margin-top:20px;
 }
 
-/* ✅ پشتیبانی شناور فقط صفحه شروع */
+/* ✅ پشتیبانی دایره‌ای واقعی */
 .support-float{
-  position:absolute;
-  bottom:20px;
+  position:fixed;
+  bottom:90px;      /* بالای نوار پایین */
   right:20px;
+  width:56px;
+  height:56px;
   background:#0088cc;
   color:#fff;
-  padding:14px 18px;
-  border-radius:999px;
-  font-size:14px;
-  font-weight:bold;
-  box-shadow:0 10px 25px rgba(0,0,0,.3);
-  cursor:pointer;
+  border-radius:50%;
+  box-shadow:0 10px 25px rgba(0,0,0,.35);
   display:flex;
   align-items:center;
-  gap:8px;
+  justify-content:center;
+  cursor:pointer;
+  z-index:999;
 }
-.support-float i{font-size:18px}
+
+.support-float i{
+  font-size:24px;
+}
 </style>
 </head>
 
 <body>
 
-<!-- ثبت نام -->
 <div id="register" class="card">
   <h2>Aurix</h2>
   <input id="fullName" placeholder="نام کامل">
@@ -149,7 +149,6 @@ a{
   <button onclick="doRegister()">🔒 ثبت‌نام امن</button>
 </div>
 
-<!-- دریافت کد -->
 <div id="verify" class="card">
   <h2>دریافت و تأیید کد</h2>
   <p id="showPhone" style="text-align:center"></p>
@@ -158,15 +157,14 @@ a{
   <button onclick="verifyCode()">✅ تأیید و ورود</button>
 </div>
 
-<!-- محیط برنامه -->
 <div id="gameContainer">
+
   <div id="homePage" class="game-page">
     <h3>🎮 خوش آمدی به Aurix</h3>
 
-    <!-- پشتیبانی فقط همین‌جا -->
+    <!-- ✅ فقط همین صفحه -->
     <div class="support-float" onclick="openSupport()">
       <i class="fab fa-telegram-plane"></i>
-      پشتیبانی تلگرام
     </div>
   </div>
 
@@ -188,7 +186,6 @@ a{
   </div>
 </div>
 
-<!-- نوار پایین -->
 <div id="bottomNav">
   <div class="nav-item" onclick="showPage('homePage')"><span>▶️</span>شروع</div>
   <div class="nav-item" onclick="showPage('walletPage')"><i class="fas fa-wallet"></i><span>کیف پول</span></div>
@@ -213,16 +210,8 @@ window.onload=()=>{
     verify.style.display="none";
     gameContainer.style.display="block";
     bottomNav.style.display="flex";
-
-    accName.innerText="نام: "+localStorage.getItem("aurix_name");
-    accPhone.innerText="شماره: "+localStorage.getItem("aurix_phone");
-    accEmail.innerText="ایمیل: "+localStorage.getItem("aurix_email");
-
     showPage("homePage");
   } else {
-    bottomNav.style.display="none";
-    gameContainer.style.display="none";
-    verify.style.display="none";
     register.style.display="block";
   }
 };
@@ -234,22 +223,15 @@ function doRegister(){
   }
   register.style.display="none";
   verify.style.display="block";
-  bottomNav.style.display="none";
   showPhone.innerText="📱 "+phoneNumber.value;
 }
 
 function verifyCode(){
-  const code=codeInput.value.trim().toUpperCase();
-  if(!validCodes.includes(code)){
+  if(!validCodes.includes(codeInput.value.trim().toUpperCase())){
     alert("❌ کد نامعتبر است");
     return;
   }
-
   localStorage.setItem("aurix_logged","true");
-  localStorage.setItem("aurix_name",fullName.value);
-  localStorage.setItem("aurix_phone",phoneNumber.value);
-  localStorage.setItem("aurix_email",emailAddress.value);
-
   verify.style.display="none";
   gameContainer.style.display="block";
   bottomNav.style.display="flex";
