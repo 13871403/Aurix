@@ -75,12 +75,10 @@ a{
   text-align:center;
 }
 
-/* نوار پایین */
 #bottomNav{
   position:fixed;
   bottom:0;left:0;right:0;
   background:#fff;
-  display:flex;
   justify-content:space-around;
   padding:14px 0;
   box-shadow:0 -5px 20px rgba(0,0,0,.2);
@@ -98,8 +96,6 @@ a{
   margin-top:4px;
 }
 
-.nav-item i{font-size:26px}
-
 .exit-btn{
   width:100%;
   padding:16px 20px;
@@ -115,7 +111,6 @@ a{
   margin-top:20px;
 }
 
-/* پشتیبانی دایره‌ای */
 .support-float{
   position:fixed;
   bottom:90px;
@@ -126,7 +121,7 @@ a{
   color:#fff;
   border-radius:50%;
   box-shadow:0 10px 25px rgba(0,0,0,.35);
-  display:none;
+  display:flex;
   align-items:center;
   justify-content:center;
   cursor:pointer;
@@ -159,6 +154,9 @@ a{
 
   <div id="homePage" class="game-page">
     <h3>🎮 خوش آمدی به Aurix</h3>
+    <div class="support-float" onclick="openSupport()">
+      <i class="fas fa-headset"></i>
+    </div>
   </div>
 
   <div id="walletPage" class="game-page">
@@ -176,11 +174,6 @@ a{
   </div>
 </div>
 
-<!-- دکمه پشتیبانی -->
-<div id="supportBtn" class="support-float" onclick="openSupport()">
-  <i class="fab fa-telegram-plane"></i>
-</div>
-
 <div id="bottomNav">
   <div class="nav-item" onclick="showPage('homePage')"><span>▶️</span>شروع</div>
   <div class="nav-item" onclick="showPage('walletPage')"><i class="fas fa-wallet"></i><span>کیف پول</span></div>
@@ -189,12 +182,18 @@ a{
 </div>
 
 <script>
-const validCodes=["AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AURIX-ECHO","AURIX-FOXTROT","AURIX-GOLF","AURIX-HOTEL","AURIX-INDIA","AURIX-JULIET","AURIX-KILO","AURIX-LIMA","AURIX-MIKE","AURIX-NOVEMBER","AURIX-OSCAR","AURIX-PAPA","AURIX-QUEBEC","AURIX-ROMEO","AURIX-SIERRA","AURIX-TANGO","AURIX-UNIFORM","AURIX-VICTOR","AURIX-WHISKEY","AURIX-XRAY","AURIX-YANKEE","AURIX-ZULU","AURIX-PHOENIX","AURIX-DRAGON","AURIX-TITAN","AURIX-OMEGA"];
+const validCodes=[
+"AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AURIX-ECHO",
+"AURIX-FOXTROT","AURIX-GOLF","AURIX-HOTEL","AURIX-INDIA","AURIX-JULIET",
+"AURIX-KILO","AURIX-LIMA","AURIX-MIKE","AURIX-NOVEMBER","AURIX-OSCAR",
+"AURIX-PAPA","AURIX-QUEBEC","AURIX-ROMEO","AURIX-SIERRA","AURIX-TANGO",
+"AURIX-UNIFORM","AURIX-VICTOR","AURIX-WHISKEY","AURIX-XRAY",
+"AURIX-YANKEE","AURIX-ZULU","AURIX-PHOENIX","AURIX-DRAGON",
+"AURIX-TITAN","AURIX-OMEGA"
+];
 
 window.onload=()=>{
   bottomNav.style.display="none";
-  supportBtn.style.display="none";
-
   if(localStorage.getItem("aurix_logged")==="true"){
     register.style.display="none";
     verify.style.display="none";
@@ -214,7 +213,6 @@ function doRegister(){
   register.style.display="none";
   verify.style.display="block";
   bottomNav.style.display="none";
-  supportBtn.style.display="none";
   showPhone.innerText="📱 "+phoneNumber.value;
 }
 
@@ -233,8 +231,6 @@ function verifyCode(){
 function showPage(id){
   document.querySelectorAll(".game-page").forEach(p=>p.style.display="none");
   document.getElementById(id).style.display="block";
-
-  supportBtn.style.display = (id === "homePage") ? "flex" : "none";
 }
 
 function logout(){
