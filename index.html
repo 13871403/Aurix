@@ -5,6 +5,12 @@
 <title>Aurix</title>  
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">  
 <style>  
+.wallet-glass {
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 20px;
+}
 body{  
   margin:0;  
   font-family:sans-serif;  
@@ -256,7 +262,7 @@ justify-content:center;
     <div class="support-float" onclick="openSupport()">  
       <i class="fas fa-headset"></i>  
     </div>  
-  </div>    <div id="walletPage" class="game-page">  
+  </div>    <div id="walletPage" class="game-page wallet-glass">  
     <h3>💰 کیف پول</h3>  
     <h1 id="balanceText">0 تومان</h1>  
     <button onclick="openGateway()" style="margin-top:20px;background:#00c853;border-radius:18px;font-size:16px;">  
