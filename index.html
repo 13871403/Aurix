@@ -62,6 +62,7 @@ a{
   text-decoration:none;
 }
 
+/* مخفی پیش‌فرض */
 #verify,#gameContainer,#bottomNav{display:none;}
 
 .game-page{
@@ -75,6 +76,7 @@ a{
   text-align:center;
 }
 
+/* نوار پایین */
 #bottomNav{
   position:fixed;
   bottom:0;left:0;right:0;
@@ -97,6 +99,8 @@ a{
   margin-top:4px;
 }
 
+.nav-item i{font-size:26px}
+
 .exit-btn{
   width:100%;
   padding:16px 20px;
@@ -111,30 +115,12 @@ a{
   align-items:center;
   margin-top:20px;
 }
-
-/* پشتیبانی شناور */
-.support-fab{
-  position:fixed;
-  bottom:90px;
-  right:20px;
-  width:60px;
-  height:60px;
-  border-radius:50%;
-  background:#ff007a;
-  color:#fff;
-  font-size:28px;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  box-shadow:0 10px 25px rgba(0,0,0,.4);
-  z-index:1000;
-}
 </style>
 </head>
 
 <body>
 
+<!-- ثبت نام -->
 <div id="register" class="card">
   <h2>Aurix</h2>
   <input id="fullName" placeholder="نام کامل">
@@ -143,6 +129,7 @@ a{
   <button onclick="doRegister()">🔒 ثبت‌نام امن</button>
 </div>
 
+<!-- دریافت کد -->
 <div id="verify" class="card">
   <h2>دریافت و تأیید کد</h2>
   <p id="showPhone" style="text-align:center"></p>
@@ -151,6 +138,7 @@ a{
   <button onclick="verifyCode()">✅ تأیید و ورود</button>
 </div>
 
+<!-- محیط برنامه -->
 <div id="gameContainer">
   <div id="homePage" class="game-page">
     <h3>🎮 خوش آمدی به Aurix</h3>
@@ -174,22 +162,13 @@ a{
   </div>
 </div>
 
+<!-- نوار پایین -->
 <div id="bottomNav">
   <div class="nav-item" onclick="showPage('homePage')"><span>▶️</span>شروع</div>
-
-  <div class="nav-item" onclick="showPage('walletPage')">
-    <svg width="26" height="26" viewBox="0 0 24 24" fill="black">
-      <path d="M21 7H3c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zM3 9h18v6H3V9z"/>
-      <circle cx="16.5" cy="12" r="1.5"/>
-    </svg>
-    <span>کیف پول</span>
-  </div>
-
+  <div class="nav-item" onclick="showPage('walletPage')"><i class="fas fa-wallet"></i><span>کیف پول</span></div>
   <div class="nav-item" onclick="showPage('accountPage')"><span>👤</span>حساب</div>
   <div class="nav-item" onclick="showPage('settingsPage')"><span>⚙️</span>تنظیمات</div>
 </div>
-
-<div id="supportFab" class="support-fab" onclick="window.open('https://t.me/Aurix_2026','_blank')">💬</div>
 
 <script>
 /* ✅ ۳۰ کد تأیید */
@@ -209,8 +188,17 @@ window.onload=()=>{
     verify.style.display="none";
     gameContainer.style.display="block";
     bottomNav.style.display="flex";
-    supportFab.style.display="flex";
+
+    accName.innerText="نام: "+localStorage.getItem("aurix_name");
+    accPhone.innerText="شماره: "+localStorage.getItem("aurix_phone");
+    accEmail.innerText="ایمیل: "+localStorage.getItem("aurix_email");
+
     showPage("homePage");
+  } else {
+    bottomNav.style.display="none";
+    gameContainer.style.display="none";
+    verify.style.display="none";
+    register.style.display="block";
   }
 };
 
@@ -221,18 +209,25 @@ function doRegister(){
   }
   register.style.display="none";
   verify.style.display="block";
+  bottomNav.style.display="none";
+  showPhone.innerText="📱 "+phoneNumber.value;
 }
 
 function verifyCode(){
-  if(!validCodes.includes(codeInput.value.trim().toUpperCase())){
+  const code=codeInput.value.trim().toUpperCase();
+  if(!validCodes.includes(code)){
     alert("❌ کد نامعتبر است");
     return;
   }
+
   localStorage.setItem("aurix_logged","true");
+  localStorage.setItem("aurix_name",fullName.value);
+  localStorage.setItem("aurix_phone",phoneNumber.value);
+  localStorage.setItem("aurix_email",emailAddress.value);
+
   verify.style.display="none";
   gameContainer.style.display="block";
   bottomNav.style.display="flex";
-  supportFab.style.display="flex";
   showPage("homePage");
 }
 
