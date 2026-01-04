@@ -85,25 +85,22 @@ a{
   justify-content:space-around;
   align-items:center;
   border-top:1px solid #ddd;
-  padding-bottom:env(safe-area-inset-bottom);
   z-index:1000;
 }
 
 .nav-item{
   text-align:center;
   cursor:pointer;
-  font-size:14.5px; /* کمی بزرگ‌تر */
+  font-size:14.5px;
 }
 
 .nav-item span{
   display:block;
-  font-size:13px; /* کمی بزرگ‌تر */
+  font-size:13px;
   margin-top:5px;
 }
 
-.nav-item i{
-  font-size:18px; /* آیکن‌ها کمی بزرگ‌تر */
-}
+.nav-item i{font-size:18px}
 
 .exit-btn{
   width:100%;
@@ -143,6 +140,7 @@ a{
 
 <body>
 
+<!-- ثبت نام -->
 <div id="register" class="card">
   <h2>Aurix</h2>
   <input id="fullName" placeholder="نام کامل">
@@ -151,6 +149,7 @@ a{
   <button onclick="doRegister()">🔒 ثبت‌نام امن</button>
 </div>
 
+<!-- تایید کد -->
 <div id="verify" class="card">
   <h2>دریافت و تأیید کد</h2>
   <p id="showPhone" style="text-align:center"></p>
@@ -168,9 +167,37 @@ a{
     </div>
   </div>
 
+  <!-- کیف پول -->
   <div id="walletPage" class="game-page">
     <h3>💰 کیف پول</h3>
-    <h1>1250 ⭐</h1>
+    <h1 id="balanceText">0 ⭐</h1>
+
+    <button onclick="openGateway()" style="
+      margin-top:20px;
+      background:#00c853;
+      border-radius:18px;
+      font-size:16px;
+    ">
+      ➕ افزایش موجودی
+    </button>
+  </div>
+
+  <!-- درگاه نمایشی -->
+  <div id="gatewayPage" class="game-page">
+    <h3>💳 پرداخت امن Aurix</h3>
+    <p>مبلغ انتخابی:</p>
+
+    <button onclick="pay(100)">100 ⭐</button>
+    <button onclick="pay(500)" style="margin-top:10px">500 ⭐</button>
+    <button onclick="pay(1000)" style="margin-top:10px">1000 ⭐</button>
+
+    <button onclick="showPage('walletPage')" style="
+      margin-top:16px;
+      background:#eee;
+      color:#000;
+    ">
+      انصراف
+    </button>
   </div>
 
   <div id="accountPage" class="game-page">
@@ -181,6 +208,7 @@ a{
     <h3>⚙️ تنظیمات</h3>
     <button class="exit-btn" onclick="logout()">خروج <span>↪</span></button>
   </div>
+
 </div>
 
 <div id="bottomNav">
@@ -201,8 +229,17 @@ const validCodes=[
 "AURIX-TITAN","AURIX-OMEGA"
 ];
 
+let balance = parseInt(localStorage.getItem("aurix_balance") || "0");
+
+function updateBalance(){
+  balanceText.innerText = balance + " ⭐";
+  localStorage.setItem("aurix_balance", balance);
+}
+
 window.onload=()=>{
   bottomNav.style.display="none";
+  updateBalance();
+
   if(localStorage.getItem("aurix_logged")==="true"){
     register.style.display="none";
     verify.style.display="none";
@@ -221,7 +258,6 @@ function doRegister(){
   }
   register.style.display="none";
   verify.style.display="block";
-  bottomNav.style.display="none";
   showPhone.innerText="📱 "+phoneNumber.value;
 }
 
@@ -240,6 +276,17 @@ function verifyCode(){
 function showPage(id){
   document.querySelectorAll(".game-page").forEach(p=>p.style.display="none");
   document.getElementById(id).style.display="block";
+}
+
+function openGateway(){
+  showPage("gatewayPage");
+}
+
+function pay(amount){
+  balance += amount;
+  updateBalance();
+  alert("✅ پرداخت با موفقیت انجام شد");
+  showPage("walletPage");
 }
 
 function logout(){
