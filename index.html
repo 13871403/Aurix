@@ -18,7 +18,6 @@ body{
     url("https://i.imgur.com/VYMs5FH.jpeg");
   background-size:cover;
   background-position:center;
-  background-repeat:no-repeat;
 }
 
 .card{
@@ -85,7 +84,6 @@ a{
   justify-content:space-around;
   align-items:center;
   border-top:1px solid #ddd;
-  z-index:1000;
 }
 
 .nav-item{
@@ -98,23 +96,6 @@ a{
   display:block;
   font-size:13px;
   margin-top:5px;
-}
-
-.nav-item i{font-size:18px}
-
-.exit-btn{
-  width:100%;
-  padding:16px 20px;
-  background:#000;
-  color:#fff;
-  border:none;
-  border-radius:18px;
-  font-size:18px;
-  font-weight:600;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-top:20px;
 }
 
 .support-float{
@@ -131,16 +112,12 @@ a{
   align-items:center;
   justify-content:center;
   cursor:pointer;
-  z-index:999;
 }
-
-.support-float i{font-size:24px}
 </style>
 </head>
 
 <body>
 
-<!-- ثبت نام -->
 <div id="register" class="card">
   <h2>Aurix</h2>
   <input id="fullName" placeholder="نام کامل">
@@ -149,13 +126,12 @@ a{
   <button onclick="doRegister()">🔒 ثبت‌نام امن</button>
 </div>
 
-<!-- تایید کد -->
 <div id="verify" class="card">
   <h2>دریافت و تأیید کد</h2>
-  <p id="showPhone" style="text-align:center"></p>
-  <a href="https://t.me/Aurix2025_bot" target="_blank">🤖 ورود به ربات دریافت کد</a>
+  <p id="showPhone"></p>
+  <a href="https://t.me/Aurix2025_bot" target="_blank">🤖 دریافت کد</a>
   <input id="codeInput" placeholder="کد دریافتی">
-  <button onclick="verifyCode()">✅ تأیید و ورود</button>
+  <button onclick="verifyCode()">✅ ورود</button>
 </div>
 
 <div id="gameContainer">
@@ -167,54 +143,30 @@ a{
     </div>
   </div>
 
-  <!-- کیف پول -->
   <div id="walletPage" class="game-page">
     <h3>💰 کیف پول</h3>
-    <h1 id="balanceText">0 ⭐</h1>
-
-    <button onclick="openGateway()" style="
-      margin-top:20px;
-      background:#00c853;
-      border-radius:18px;
-      font-size:16px;
-    ">
-      ➕ افزایش موجودی
-    </button>
+    <h1 id="balanceText">0 تومان</h1>
+    <button onclick="openGateway()" style="margin-top:20px;background:#00c853">➕ افزایش موجودی</button>
   </div>
 
-  <!-- درگاه نمایشی -->
   <div id="gatewayPage" class="game-page">
-    <h3>💳 پرداخت امن Aurix</h3>
-    <p>مبلغ انتخابی:</p>
-
-    <button onclick="pay(100)">100 ⭐</button>
-    <button onclick="pay(500)" style="margin-top:10px">500 ⭐</button>
-    <button onclick="pay(1000)" style="margin-top:10px">1000 ⭐</button>
-
-    <button onclick="showPage('walletPage')" style="
-      margin-top:16px;
-      background:#eee;
-      color:#000;
-    ">
-      انصراف
-    </button>
-  </div>
-
-  <div id="accountPage" class="game-page">
-    <h3>👤 حساب کاربری</h3>
+    <h3>💳 پرداخت نمایشی</h3>
+    <button onclick="pay(10000)">10,000 تومان</button>
+    <button onclick="pay(50000)" style="margin-top:10px">50,000 تومان</button>
+    <button onclick="pay(100000)" style="margin-top:10px">100,000 تومان</button>
+    <button onclick="showPage('walletPage')" style="margin-top:16px;background:#eee;color:#000">انصراف</button>
   </div>
 
   <div id="settingsPage" class="game-page">
     <h3>⚙️ تنظیمات</h3>
-    <button class="exit-btn" onclick="logout()">خروج <span>↪</span></button>
+    <button onclick="logout()" style="background:#000;color:#fff">خروج</button>
   </div>
 
 </div>
 
 <div id="bottomNav">
   <div class="nav-item" onclick="showPage('homePage')">▶️<span>شروع</span></div>
-  <div class="nav-item" onclick="showPage('walletPage')"><i class="fas fa-wallet"></i><span>کیف پول</span></div>
-  <div class="nav-item" onclick="showPage('accountPage')">👤<span>حساب</span></div>
+  <div class="nav-item" onclick="showPage('walletPage')">💰<span>کیف پول</span></div>
   <div class="nav-item" onclick="showPage('settingsPage')">⚙️<span>تنظیمات</span></div>
 </div>
 
@@ -229,43 +181,32 @@ const validCodes=[
 "AURIX-TITAN","AURIX-OMEGA"
 ];
 
-let balance = parseInt(localStorage.getItem("aurix_balance") || "0");
+let balance = parseInt(localStorage.getItem("aurix_balance")||"0");
 
 function updateBalance(){
-  balanceText.innerText = balance + " ⭐";
-  localStorage.setItem("aurix_balance", balance);
+  balanceText.innerText = balance.toLocaleString()+" تومان";
+  localStorage.setItem("aurix_balance",balance);
 }
 
 window.onload=()=>{
-  bottomNav.style.display="none";
   updateBalance();
-
   if(localStorage.getItem("aurix_logged")==="true"){
     register.style.display="none";
-    verify.style.display="none";
     gameContainer.style.display="block";
     bottomNav.style.display="flex";
     showPage("homePage");
-  } else {
-    register.style.display="block";
   }
 };
 
 function doRegister(){
-  if(!fullName.value||!phoneNumber.value||!emailAddress.value){
-    alert("همه فیلدها را پر کنید");
-    return;
-  }
+  if(!fullName.value||!phoneNumber.value||!emailAddress.value) return alert("همه فیلدها الزامی است");
   register.style.display="none";
   verify.style.display="block";
-  showPhone.innerText="📱 "+phoneNumber.value;
+  showPhone.innerText=phoneNumber.value;
 }
 
 function verifyCode(){
-  if(!validCodes.includes(codeInput.value.trim().toUpperCase())){
-    alert("❌ کد نامعتبر است");
-    return;
-  }
+  if(!validCodes.includes(codeInput.value.trim().toUpperCase())) return alert("کد نامعتبر");
   localStorage.setItem("aurix_logged","true");
   verify.style.display="none";
   gameContainer.style.display="block";
@@ -278,25 +219,10 @@ function showPage(id){
   document.getElementById(id).style.display="block";
 }
 
-function openGateway(){
-  showPage("gatewayPage");
-}
-
-function pay(amount){
-  balance += amount;
-  updateBalance();
-  alert("✅ پرداخت با موفقیت انجام شد");
-  showPage("walletPage");
-}
-
-function logout(){
-  localStorage.clear();
-  location.reload();
-}
-
-function openSupport(){
-  window.open("https://t.me/Aurix_2026","_blank");
-}
+function openGateway(){showPage("gatewayPage")}
+function pay(a){balance+=a;updateBalance();alert("پرداخت موفق");showPage("walletPage")}
+function logout(){localStorage.clear();location.reload()}
+function openSupport(){window.open("https://t.me/Aurix_2026","_blank")}
 </script>
 
 </body>
