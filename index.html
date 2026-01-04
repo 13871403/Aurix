@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 <style>
-/* === CSS بدون تغییر === */
 body{
   margin:0;
   font-family:sans-serif;
@@ -55,6 +54,12 @@ button{
   background:linear-gradient(90deg,#ffcc00,#ff00ff);
 }
 
+.login-btn{
+  margin-top:10px;
+  background:#eee;
+  color:#000;
+}
+
 a{
   display:block;
   text-align:center;
@@ -65,26 +70,113 @@ a{
 }
 
 #verify,#gameContainer,#bottomNav{display:none;}
+
+.game-page{
+  max-width:380px;
+  margin:24px auto;
+  padding:20px;
+  border-radius:20px;
+  background:#fff;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+  text-align:center;
+  padding-bottom:80px;
+  box-sizing:border-box;
+}
+
+#bottomNav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  height:64px;
+  background:#fff;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  border-top:1px solid #ddd;
+  z-index:1000;
+}
+
+.nav-item{
+  text-align:center;
+  cursor:pointer;
+  font-size:14.5px;
+}
+
+.nav-item span{
+  display:block;
+  font-size:13px;
+  margin-top:5px;
+}
+
+.exit-btn{
+  width:100%;
+  padding:16px 20px;
+  background:#000;
+  color:#fff;
+  border:none;
+  border-radius:18px;
+  font-size:18px;
+  font-weight:600;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:20px;
+}
+
+.support-float{
+  position:fixed;
+  bottom:90px;
+  right:20px;
+  width:56px;
+  height:56px;
+  background:#0088cc;
+  color:#fff;
+  border-radius:50%;
+  box-shadow:0 10px 25px rgba(0,0,0,.35);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  z-index:999;
+}
+
+.profile-img{
+  width:110px;
+  height:110px;
+  border-radius:50%;
+  object-fit:cover;
+  margin:10px auto;
+  display:block;
+  border:3px solid #eee;
+}
+
+input[type="file"]{display:none;}
+
+.upload-btn{
+  display:block;
+  margin:12px auto;
+  padding:12px;
+  border-radius:14px;
+  background:#f3f3f3;
+  font-weight:bold;
+  cursor:pointer;
+  text-align:center;
+}
 </style>
 </head>
 
 <body>
 
-<!-- ===== ثبت نام ===== -->
 <div id="register" class="card">
   <h2>Aurix</h2>
   <input id="fullName" placeholder="نام کامل">
   <input id="phoneNumber" placeholder="شماره موبایل">
   <input id="emailAddress" placeholder="ایمیل">
-  <button onclick="doRegister()">🔒 ثبت‌نام امن</button>
-
-  <!-- ✅ دکمه ورود -->
-  <button onclick="goLogin()" style="margin-top:10px;background:#eee;color:#000">
-    🔑 ورود
-  </button>
+  <button onclick="doRegister()">🔒 ثبت‌نام</button>
+  <button class="login-btn" onclick="doLogin()">🔑 ورود</button>
 </div>
 
-<!-- ===== تأیید ===== -->
 <div id="verify" class="card">
   <h2>دریافت و تأیید کد</h2>
   <p id="showPhone" style="text-align:center"></p>
@@ -93,13 +185,58 @@ a{
   <button onclick="verifyCode()">✅ تأیید و ورود</button>
 </div>
 
-<!-- ===== برنامه ===== -->
-<div id="gameContainer"></div>
-<div id="bottomNav"></div>
+<div id="gameContainer">
+
+  <div id="homePage" class="game-page">
+    <h3>🎮 خوش آمدی به Aurix</h3>
+    <div class="support-float" onclick="openSupport()">
+      <i class="fas fa-headset"></i>
+    </div>
+  </div>
+
+  <div id="walletPage" class="game-page">
+    <h3>💰 کیف پول</h3>
+    <h1 id="balanceText">0 تومان</h1>
+    <button onclick="openGateway()" style="margin-top:20px;background:#00c853;border-radius:18px;font-size:16px;">
+      ➕ افزایش موجودی
+    </button>
+  </div>
+
+  <div id="gatewayPage" class="game-page">
+    <h3>💳 پرداخت امن Aurix</h3>
+    <button onclick="pay(100)">100 تومان</button>
+    <button onclick="pay(500)">500 تومان</button>
+    <button onclick="pay(1000)">1000 تومان</button>
+    <button onclick="showPage('walletPage')" style="background:#eee;color:#000;">انصراف</button>
+  </div>
+
+  <div id="accountPage" class="game-page">
+    <h3>👤 حساب کاربری</h3>
+    <img id="profileImg" class="profile-img" src="https://i.imgur.com/8Km9tLL.png">
+    <label for="avatarInput" class="upload-btn">📷 تغییر تصویر</label>
+    <input id="avatarInput" type="file" accept="image/*" onchange="changeAvatar(event)">
+    <input id="usernameInput" placeholder="نام کاربری">
+    <button onclick="saveUsername()">💾 ذخیره</button>
+    <p id="currentUsername"></p>
+  </div>
+
+  <div id="settingsPage" class="game-page">
+    <h3>⚙️ تنظیمات</h3>
+    <button class="exit-btn" onclick="logout()">خروج <span>↪</span></button>
+  </div>
+
+</div>
+
+<div id="bottomNav">
+  <div class="nav-item" onclick="showPage('homePage')">▶️<span>شروع</span></div>
+  <div class="nav-item" onclick="showPage('walletPage')"><span>کیف پول</span></div>
+  <div class="nav-item" onclick="showPage('accountPage')">👤<span>حساب</span></div>
+  <div class="nav-item" onclick="showPage('settingsPage')">⚙️<span>تنظیمات</span></div>
+</div>
 
 <script>
-/* === ۳۰ کد بدون تغییر === */
-const validCodes=[
+/* ===== 30 کد ثبت‌نام ===== */
+const validCodes = [
 "AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AURIX-ECHO",
 "AURIX-FOXTROT","AURIX-GOLF","AURIX-HOTEL","AURIX-INDIA","AURIX-JULIET",
 "AURIX-KILO","AURIX-LIMA","AURIX-MIKE","AURIX-NOVEMBER","AURIX-OSCAR",
@@ -109,74 +246,103 @@ const validCodes=[
 "AURIX-TITAN","AURIX-OMEGA"
 ];
 
-/* === ثبت نام === */
+let balance = parseInt(localStorage.getItem("aurix_balance") || "0");
+
+function updateBalance(){
+  balanceText.innerText = balance + " تومان";
+  localStorage.setItem("aurix_balance", balance);
+}
+
+window.onload=()=>{
+  updateBalance();
+  if(localStorage.getItem("aurix_logged")==="true"){
+    register.style.display="none";
+    gameContainer.style.display="block";
+    bottomNav.style.display="flex";
+    showPage("homePage");
+  }
+};
+
 function doRegister(){
-  if(!fullName.value || !phoneNumber.value || !emailAddress.value){
+  const name=fullName.value.trim();
+  const phone=phoneNumber.value.trim();
+  const email=emailAddress.value.trim();
+
+  if(!name||!phone||!email){
     alert("همه فیلدها را پر کنید");
     return;
   }
 
-  const users = JSON.parse(localStorage.getItem("aurix_users") || "[]");
-
-  const exists = users.find(u =>
-    u.phone === phoneNumber.value || u.email === emailAddress.value
-  );
-
-  if(exists){
-    alert("❌ این اطلاعات قبلاً ثبت شده است");
+  if(localStorage.getItem("aurix_user")){
+    alert("❌ این اطلاعات قبلاً ثبت شده");
     return;
   }
 
-  users.push({
-    name: fullName.value,
-    phone: phoneNumber.value,
-    email: emailAddress.value
-  });
-
-  localStorage.setItem("aurix_users", JSON.stringify(users));
-
+  localStorage.setItem("aurix_temp_user", JSON.stringify({name,phone,email}));
   register.style.display="none";
   verify.style.display="block";
-  showPhone.innerText="📱 "+phoneNumber.value;
+  showPhone.innerText="📱 "+phone;
 }
 
-/* === ورود === */
-function goLogin(){
-  if(!phoneNumber.value || !emailAddress.value){
-    alert("شماره و ایمیل را وارد کنید");
+function verifyCode(){
+  const code = codeInput.value.trim().toUpperCase();
+
+  if(!validCodes.includes(code)){
+    alert("❌ کد ثبت‌نام نامعتبر است");
     return;
   }
 
-  const users = JSON.parse(localStorage.getItem("aurix_users") || "[]");
+  let used = JSON.parse(localStorage.getItem("aurix_used_codes") || "[]");
+  if(used.includes(code)){
+    alert("❌ این کد قبلاً استفاده شده");
+    return;
+  }
 
-  const user = users.find(u =>
-    u.phone === phoneNumber.value && u.email === emailAddress.value
-  );
+  used.push(code);
+  localStorage.setItem("aurix_used_codes", JSON.stringify(used));
+
+  localStorage.setItem("aurix_user", localStorage.getItem("aurix_temp_user"));
+  localStorage.setItem("aurix_logged","true");
+  localStorage.removeItem("aurix_temp_user");
+
+  verify.style.display="none";
+  gameContainer.style.display="block";
+  bottomNav.style.display="flex";
+  showPage("homePage");
+}
+
+function doLogin(){
+  const phone=phoneNumber.value.trim();
+  const email=emailAddress.value.trim();
+  const user=JSON.parse(localStorage.getItem("aurix_user"));
 
   if(!user){
-    alert("❌ ثبت‌نامی با این اطلاعات وجود ندارد");
+    alert("❌ لطفاً ابتدا ثبت‌نام کنید");
     return;
   }
 
-  localStorage.setItem("aurix_logged","true");
-  location.reload();
-}
-
-/* === تأیید کد === */
-function verifyCode(){
-  if(!validCodes.includes(codeInput.value.trim().toUpperCase())){
-    alert("❌ کد نامعتبر است");
-    return;
+  if(user.phone===phone && user.email===email){
+    localStorage.setItem("aurix_logged","true");
+    register.style.display="none";
+    gameContainer.style.display="block";
+    bottomNav.style.display="flex";
+    showPage("homePage");
+  }else{
+    alert("❌ اطلاعات ورود نادرست است");
   }
-  localStorage.setItem("aurix_logged","true");
-  location.reload();
 }
 
-/* === خروج فقط لاگین === */
-function logout(){
-  localStorage.removeItem("aurix_logged");
-  location.reload();
+function showPage(id){
+  document.querySelectorAll(".game-page").forEach(p=>p.style.display="none");
+  document.getElementById(id).style.display="block";
 }
+
+function openGateway(){showPage("gatewayPage");}
+function pay(a){balance+=a;updateBalance();showPage("walletPage");}
+function saveUsername(){localStorage.setItem("aurix_username",usernameInput.value);}
+function changeAvatar(e){const r=new FileReader();r.onload=()=>profileImg.src=r.result;r.readAsDataURL(e.target.files[0]);}
+function logout(){localStorage.removeItem("aurix_logged");location.reload();}
+function openSupport(){window.open("https://t.me/Aurix_2026","_blank");}
 </script>
 
 </body>
