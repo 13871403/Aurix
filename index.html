@@ -80,7 +80,6 @@ a{
   position:fixed;
   bottom:0;left:0;right:0;
   background:#fff;
-  display:flex;
   justify-content:space-around;
   padding:14px 0;
   box-shadow:0 -5px 20px rgba(0,0,0,.2);
@@ -115,10 +114,10 @@ a{
   margin-top:20px;
 }
 
-/* ✅ پشتیبانی دایره‌ای واقعی */
+/* پشتیبانی شناور فقط صفحه شروع */
 .support-float{
   position:fixed;
-  bottom:90px;      /* بالای نوار پایین */
+  bottom:90px;
   right:20px;
   width:56px;
   height:56px;
@@ -133,9 +132,7 @@ a{
   z-index:999;
 }
 
-.support-float i{
-  font-size:24px;
-}
+.support-float i{font-size:24px}
 </style>
 </head>
 
@@ -161,8 +158,6 @@ a{
 
   <div id="homePage" class="game-page">
     <h3>🎮 خوش آمدی به Aurix</h3>
-
-    <!-- ✅ فقط همین صفحه -->
     <div class="support-float" onclick="openSupport()">
       <i class="fab fa-telegram-plane"></i>
     </div>
@@ -175,9 +170,6 @@ a{
 
   <div id="accountPage" class="game-page">
     <h3>👤 حساب کاربری</h3>
-    <p id="accName"></p>
-    <p id="accPhone"></p>
-    <p id="accEmail"></p>
   </div>
 
   <div id="settingsPage" class="game-page">
@@ -194,17 +186,11 @@ a{
 </div>
 
 <script>
-const validCodes=[
-"AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AURIX-ECHO",
-"AURIX-FOXTROT","AURIX-GOLF","AURIX-HOTEL","AURIX-INDIA","AURIX-JULIET",
-"AURIX-KILO","AURIX-LIMA","AURIX-MIKE","AURIX-NOVEMBER","AURIX-OSCAR",
-"AURIX-PAPA","AURIX-QUEBEC","AURIX-ROMEO","AURIX-SIERRA","AURIX-TANGO",
-"AURIX-UNIFORM","AURIX-VICTOR","AURIX-WHISKEY","AURIX-XRAY",
-"AURIX-YANKEE","AURIX-ZULU","AURIX-PHOENIX","AURIX-DRAGON",
-"AURIX-TITAN","AURIX-OMEGA"
-];
+const validCodes=["AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AURIX-ECHO","AURIX-FOXTROT","AURIX-GOLF","AURIX-HOTEL","AURIX-INDIA","AURIX-JULIET","AURIX-KILO","AURIX-LIMA","AURIX-MIKE","AURIX-NOVEMBER","AURIX-OSCAR","AURIX-PAPA","AURIX-QUEBEC","AURIX-ROMEO","AURIX-SIERRA","AURIX-TANGO","AURIX-UNIFORM","AURIX-VICTOR","AURIX-WHISKEY","AURIX-XRAY","AURIX-YANKEE","AURIX-ZULU","AURIX-PHOENIX","AURIX-DRAGON","AURIX-TITAN","AURIX-OMEGA"];
 
 window.onload=()=>{
+  bottomNav.style.display="none";
+
   if(localStorage.getItem("aurix_logged")==="true"){
     register.style.display="none";
     verify.style.display="none";
@@ -223,6 +209,7 @@ function doRegister(){
   }
   register.style.display="none";
   verify.style.display="block";
+  bottomNav.style.display="none";
   showPhone.innerText="📱 "+phoneNumber.value;
 }
 
