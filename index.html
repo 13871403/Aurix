@@ -53,7 +53,13 @@ button{
   cursor:pointer;
   background:linear-gradient(90deg,#ffcc00,#ff00ff);
 }
+.card button {
+  margin-top: 12px; /* فاصله عمومی برای همه دکمه‌ها */
+}
 
+.card button.login-btn {
+  margin-top: 16px; /* فاصله بیشتر برای دکمه ورود */
+}
 a{
   display:block;
   text-align:center;
@@ -172,7 +178,7 @@ input[type="file"]{display:none;}
   <input id="phoneNumber" placeholder="شماره موبایل">
   <input id="emailAddress" placeholder="ایمیل">
   <button onclick="doRegister()">🔒 ثبت‌نام امن</button>
-<button type="button">🔑 ورود</button>
+<button type="button" class="login-btn">🔑 ورود</button>
 </div>
 
 <div id="verify" class="card">
