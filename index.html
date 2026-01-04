@@ -66,7 +66,7 @@ a{
 
 .game-page{
   max-width:380px;
-  margin:40px auto 120px;
+  margin:40px auto 140px;
   padding:20px;
   border-radius:20px;
   background:#fff;
@@ -75,26 +75,38 @@ a{
   text-align:center;
 }
 
+/* ===== نوار پایین (اصلاح شده مثل روبیکا) ===== */
 #bottomNav{
   position:fixed;
   bottom:0;left:0;right:0;
   background:#fff;
+  display:flex;
   justify-content:space-around;
-  padding:14px 0;
-  box-shadow:0 -5px 20px rgba(0,0,0,.2);
+  padding:18px 0;
+  box-shadow:0 -6px 25px rgba(0,0,0,.2);
+  z-index:1000;
 }
 
 .nav-item{
+  flex:1;
   text-align:center;
-  font-size:14px;
   cursor:pointer;
+  font-size:15px;
+  padding:6px 0;
+}
+
+.nav-item i,
+.nav-item span:first-child{
+  font-size:30px;
 }
 
 .nav-item span{
   display:block;
-  font-size:12px;
-  margin-top:4px;
+  font-size:13px;
+  margin-top:6px;
 }
+
+/* ============================================ */
 
 .exit-btn{
   width:100%;
@@ -113,10 +125,10 @@ a{
 
 .support-float{
   position:fixed;
-  bottom:90px;
+  bottom:100px;
   right:20px;
-  width:56px;
-  height:56px;
+  width:58px;
+  height:58px;
   background:#0088cc;
   color:#fff;
   border-radius:50%;
@@ -128,7 +140,7 @@ a{
   z-index:999;
 }
 
-.support-float i{font-size:24px}
+.support-float i{font-size:26px}
 </style>
 </head>
 
