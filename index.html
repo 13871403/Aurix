@@ -135,6 +135,17 @@ a{
 }
 
 .support-float i{font-size:24px}
+
+/* ===== حساب کاربری ===== */
+.profile-img{
+  width:110px;
+  height:110px;
+  border-radius:50%;
+  object-fit:cover;
+  margin:10px auto;
+  display:block;
+  border:3px solid #eee;
+}
 </style>
 </head>
 
@@ -168,7 +179,6 @@ a{
   <div id="walletPage" class="game-page">
     <h3>💰 کیف پول</h3>
     <h1 id="balanceText">0 تومان</h1>
-
     <button onclick="openGateway()" style="margin-top:20px;background:#00c853;border-radius:18px;font-size:16px;">
       ➕ افزایش موجودی
     </button>
@@ -177,18 +187,24 @@ a{
   <div id="gatewayPage" class="game-page">
     <h3>💳 پرداخت امن Aurix</h3>
     <p>مبلغ انتخابی:</p>
-
     <button onclick="pay(100)">100 تومان</button>
     <button onclick="pay(500)" style="margin-top:10px">500 تومان</button>
     <button onclick="pay(1000)" style="margin-top:10px">1000 تومان</button>
-
-    <button onclick="showPage('walletPage')" style="margin-top:16px;background:#eee;color:#000;">
-      انصراف
-    </button>
+    <button onclick="showPage('walletPage')" style="margin-top:16px;background:#eee;color:#000;">انصراف</button>
   </div>
 
+  <!-- حساب کاربری -->
   <div id="accountPage" class="game-page">
     <h3>👤 حساب کاربری</h3>
+
+    <img id="profileImg" class="profile-img" src="https://i.imgur.com/8Km9tLL.png">
+
+    <input type="file" accept="image/*" onchange="changeAvatar(event)">
+
+    <input id="usernameInput" placeholder="نام کاربری">
+    <button onclick="saveUsername()">💾 ذخیره نام کاربری</button>
+
+    <p id="currentUsername" style="margin-top:10px;font-weight:bold"></p>
   </div>
 
   <div id="settingsPage" class="game-page">
@@ -226,6 +242,12 @@ function updateBalance(){
 window.onload=()=>{
   bottomNav.style.display="none";
   updateBalance();
+
+  const savedName = localStorage.getItem("aurix_username");
+  if(savedName) currentUsername.innerText = "نام کاربری: " + savedName;
+
+  const savedAvatar = localStorage.getItem("aurix_avatar");
+  if(savedAvatar) profileImg.src = savedAvatar;
 
   if(localStorage.getItem("aurix_logged")==="true"){
     register.style.display="none";
@@ -272,6 +294,22 @@ function pay(amount){
   updateBalance();
   alert("✅ پرداخت با موفقیت انجام شد");
   showPage("walletPage");
+}
+
+function saveUsername(){
+  if(!usernameInput.value) return;
+  localStorage.setItem("aurix_username", usernameInput.value);
+  currentUsername.innerText = "نام کاربری: " + usernameInput.value;
+}
+
+function changeAvatar(e){
+  const file = e.target.files[0];
+  const reader = new FileReader();
+  reader.onload = () => {
+    profileImg.src = reader.result;
+    localStorage.setItem("aurix_avatar", reader.result);
+  };
+  reader.readAsDataURL(file);
 }
 
 function logout(){
