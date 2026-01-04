@@ -19,6 +19,7 @@ body{
   background-size:cover;
   background-position:center;
   background-repeat:no-repeat;
+  overflow-x:hidden; /* ⬅️ جلوگیری از اسکرول افقی */
 }
 
 .card{
@@ -39,6 +40,7 @@ input{
   border-radius:14px;
   border:1px solid #ddd;
   font-size:15px;
+  box-sizing:border-box;
 }
 
 button{
@@ -72,6 +74,7 @@ a{
   box-shadow:0 10px 30px rgba(0,0,0,.25);
   text-align:center;
   padding-bottom:80px;
+  box-sizing:border-box;
 }
 
 #bottomNav{
@@ -146,6 +149,22 @@ a{
   display:block;
   border:3px solid #eee;
 }
+
+/* ⬇️ حل مشکل اصلی */
+input[type="file"]{
+  display:none;
+}
+
+.upload-btn{
+  display:block;
+  margin:12px auto;
+  padding:12px;
+  border-radius:14px;
+  background:#f3f3f3;
+  font-weight:bold;
+  cursor:pointer;
+  text-align:center;
+}
 </style>
 </head>
 
@@ -193,13 +212,13 @@ a{
     <button onclick="showPage('walletPage')" style="margin-top:16px;background:#eee;color:#000;">انصراف</button>
   </div>
 
-  <!-- حساب کاربری -->
   <div id="accountPage" class="game-page">
     <h3>👤 حساب کاربری</h3>
 
     <img id="profileImg" class="profile-img" src="https://i.imgur.com/8Km9tLL.png">
 
-    <input type="file" accept="image/*" onchange="changeAvatar(event)">
+    <label for="avatarInput" class="upload-btn">📷 تغییر تصویر پروفایل</label>
+    <input id="avatarInput" type="file" accept="image/*" onchange="changeAvatar(event)">
 
     <input id="usernameInput" placeholder="نام کاربری">
     <button onclick="saveUsername()">💾 ذخیره نام کاربری</button>
@@ -304,6 +323,7 @@ function saveUsername(){
 
 function changeAvatar(e){
   const file = e.target.files[0];
+  if(!file) return;
   const reader = new FileReader();
   reader.onload = () => {
     profileImg.src = reader.result;
