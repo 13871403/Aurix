@@ -74,6 +74,7 @@ a{
   display:none;
   box-shadow:0 10px 30px rgba(0,0,0,.25);
   text-align:center;
+  position:relative;
 }
 
 /* نوار پایین */
@@ -115,6 +116,25 @@ a{
   align-items:center;
   margin-top:20px;
 }
+
+/* ✅ پشتیبانی شناور فقط صفحه شروع */
+.support-float{
+  position:absolute;
+  bottom:20px;
+  right:20px;
+  background:#0088cc;
+  color:#fff;
+  padding:14px 18px;
+  border-radius:999px;
+  font-size:14px;
+  font-weight:bold;
+  box-shadow:0 10px 25px rgba(0,0,0,.3);
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.support-float i{font-size:18px}
 </style>
 </head>
 
@@ -142,6 +162,12 @@ a{
 <div id="gameContainer">
   <div id="homePage" class="game-page">
     <h3>🎮 خوش آمدی به Aurix</h3>
+
+    <!-- پشتیبانی فقط همین‌جا -->
+    <div class="support-float" onclick="openSupport()">
+      <i class="fab fa-telegram-plane"></i>
+      پشتیبانی تلگرام
+    </div>
   </div>
 
   <div id="walletPage" class="game-page">
@@ -171,7 +197,6 @@ a{
 </div>
 
 <script>
-/* ✅ ۳۰ کد تأیید */
 const validCodes=[
 "AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AURIX-ECHO",
 "AURIX-FOXTROT","AURIX-GOLF","AURIX-HOTEL","AURIX-INDIA","AURIX-JULIET",
@@ -239,6 +264,10 @@ function showPage(id){
 function logout(){
   localStorage.clear();
   location.reload();
+}
+
+function openSupport(){
+  window.open("https://t.me/Aurix_2026","_blank");
 }
 </script>
 
