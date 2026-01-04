@@ -80,6 +80,7 @@ a{
   position:fixed;
   bottom:0;left:0;right:0;
   background:#fff;
+  display:flex;
   justify-content:space-around;
   padding:14px 0;
   box-shadow:0 -5px 20px rgba(0,0,0,.2);
@@ -114,7 +115,7 @@ a{
   margin-top:20px;
 }
 
-/* پشتیبانی شناور فقط صفحه شروع */
+/* پشتیبانی دایره‌ای */
 .support-float{
   position:fixed;
   bottom:90px;
@@ -125,7 +126,7 @@ a{
   color:#fff;
   border-radius:50%;
   box-shadow:0 10px 25px rgba(0,0,0,.35);
-  display:flex;
+  display:none;
   align-items:center;
   justify-content:center;
   cursor:pointer;
@@ -158,9 +159,6 @@ a{
 
   <div id="homePage" class="game-page">
     <h3>🎮 خوش آمدی به Aurix</h3>
-    <div class="support-float" onclick="openSupport()">
-      <i class="fab fa-telegram-plane"></i>
-    </div>
   </div>
 
   <div id="walletPage" class="game-page">
@@ -178,6 +176,11 @@ a{
   </div>
 </div>
 
+<!-- دکمه پشتیبانی -->
+<div id="supportBtn" class="support-float" onclick="openSupport()">
+  <i class="fab fa-telegram-plane"></i>
+</div>
+
 <div id="bottomNav">
   <div class="nav-item" onclick="showPage('homePage')"><span>▶️</span>شروع</div>
   <div class="nav-item" onclick="showPage('walletPage')"><i class="fas fa-wallet"></i><span>کیف پول</span></div>
@@ -190,6 +193,7 @@ const validCodes=["AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AUR
 
 window.onload=()=>{
   bottomNav.style.display="none";
+  supportBtn.style.display="none";
 
   if(localStorage.getItem("aurix_logged")==="true"){
     register.style.display="none";
@@ -210,6 +214,7 @@ function doRegister(){
   register.style.display="none";
   verify.style.display="block";
   bottomNav.style.display="none";
+  supportBtn.style.display="none";
   showPhone.innerText="📱 "+phoneNumber.value;
 }
 
@@ -228,6 +233,8 @@ function verifyCode(){
 function showPage(id){
   document.querySelectorAll(".game-page").forEach(p=>p.style.display="none");
   document.getElementById(id).style.display="block";
+
+  supportBtn.style.display = (id === "homePage") ? "flex" : "none";
 }
 
 function logout(){
