@@ -169,7 +169,7 @@ input[type="file"]{display:none;}
 
 <body>
 
-<!-- 🔵 پاپ‌آپ خوش‌آمدگویی (اضافه شده) -->
+<!-- 🔵 پاپ‌آپ خوش‌آمدگویی -->
 <div id="welcomePopup" style="
 display:none;
 position:fixed;
@@ -278,7 +278,20 @@ function updateBalance(){
   localStorage.setItem("aurix_balance", balance);
 }
 
-/* 🔵 توابع خوش‌آمدگویی (اضافه شده) */
+/* 🔴 اضافه شده – لود نام و آواتار */
+function loadAccountData(){
+  const u = localStorage.getItem("aurix_username");
+  if(u){
+    usernameInput.value = u;
+    currentUsername.innerText = "نام کاربری: " + u;
+  }
+  const a = localStorage.getItem("aurix_avatar");
+  if(a){
+    profileImg.src = a;
+  }
+}
+
+/* خوش‌آمدگویی */
 function showWelcomeIfNewUser(){
   if(!localStorage.getItem("aurix_welcome_shown")){
     document.getElementById("welcomePopup").style.display="flex";
@@ -292,6 +305,7 @@ function closeWelcome(){
 window.onload=()=>{
   bottomNav.style.display="none";
   updateBalance();
+  loadAccountData(); // 👈 فقط اضافه شده
 
   if(localStorage.getItem("aurix_logged")==="true"){
     register.style.display="none";
@@ -299,7 +313,7 @@ window.onload=()=>{
     gameContainer.style.display="block";
     bottomNav.style.display="flex";
     showPage("homePage");
-    showWelcomeIfNewUser(); // 👈 این خط اضافه شده
+    showWelcomeIfNewUser();
   } else {
     register.style.display="block";
   }
@@ -325,7 +339,7 @@ function verifyCode(){
   gameContainer.style.display="block";
   bottomNav.style.display="flex";
   showPage("homePage");
-  showWelcomeIfNewUser(); // 👈 اینم اضافه شده
+  showWelcomeIfNewUser();
 }
 
 function showPage(id){
@@ -352,7 +366,10 @@ function changeAvatar(e){
   const file = e.target.files[0];
   if(!file) return;
   const reader = new FileReader();
-  reader.onload=()=>{ profileImg.src=reader.result; localStorage.setItem("aurix_avatar",reader.result); };
+  reader.onload=()=>{
+    profileImg.src=reader.result;
+    localStorage.setItem("aurix_avatar",reader.result);
+  };
   reader.readAsDataURL(file);
 }
 
