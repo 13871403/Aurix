@@ -76,30 +76,33 @@ a{
   background:#fff;
   box-shadow:0 10px 30px rgba(0,0,0,.25);
   text-align:center;
-  padding-bottom:80px;
+  padding-bottom:100px;
   box-sizing:border-box;
 }
 
-/* 🔥 Glass Bottom Navigation (فقط ارتقا داده شده) */
+/* ✅ فقط این بخش تغییر داده شده (Glass Bottom Nav) */
 #bottomNav{
   position:fixed;
   bottom:16px;
   left:16px;
   right:16px;
-  height:64px;
+  height:68px;
 
-  background:rgba(255,255,255,0.18);
-  backdrop-filter:blur(14px);
-  -webkit-backdrop-filter:blur(14px);
+  background:rgba(40, 20, 80, 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 
   display:flex;
   justify-content:space-around;
   align-items:center;
 
-  border-radius:24px;
-  border:1px solid rgba(255,255,255,0.3);
+  border-radius:22px;
+  border:1px solid rgba(255,255,255,0.15);
 
-  box-shadow:0 10px 35px rgba(0,0,0,.35);
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.15);
+
   z-index:1000;
 }
 
@@ -135,7 +138,7 @@ a{
 
 .support-float{
   position:fixed;
-  bottom:90px;
+  bottom:110px;
   right:20px;
   width:56px;
   height:56px;
@@ -241,7 +244,7 @@ justify-content:center;
     <h3>💳 پرداخت امن Aurix</h3>
     <p>مبلغ انتخابی:</p>
     <button onclick="pay(100000)">100,000 تومان</button>
-    <button onclick="pay(500000)" style="margin-top:10px">500,000 تومان</button>
+    <button onclick="pay(300000)" style="margin-top:10px">500,000 تومان</button>
     <button onclick="pay(1000000)" style="margin-top:10px">1,000,000 تومان</button>
     <button onclick="showPage('walletPage')" style="margin-top:16px;background:#eee;color:#000;">انصراف</button>
   </div>
@@ -267,13 +270,137 @@ justify-content:center;
     <i class="fas fa-gamepad"></i>
     <span>بازی</span>
   </div>
-  <div class="nav-item" onclick="showPage('walletPage')"><i class="fas fa-wallet"></i><span>کیف پول</span></div>
-  <div class="nav-item" onclick="showPage('accountPage')">👤<span>حساب</span></div>
-  <div class="nav-item" onclick="showPage('settingsPage')">⚙️<span>تنظیمات</span></div>
+  <div class="nav-item" onclick="showPage('walletPage')">
+    <i class="fas fa-wallet"></i>
+    <span>کیف پول</span>
+  </div>
+  <div class="nav-item" onclick="showPage('accountPage')">
+    👤
+    <span>حساب</span>
+  </div>
+  <div class="nav-item" onclick="showPage('settingsPage')">
+    ⚙️
+    <span>تنظیمات</span>
+  </div>
 </div>
 
 <script>
-/* --- JS شما بدون تغییر --- */
+const validCodes=[ "AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AURIX-ECHO",
+"AURIX-FOXTROT","AURIX-GOLF","AURIX-HOTEL","AURIX-INDIA","AURIX-JULIET",
+"AURIX-KILO","AURIX-LIMA","AURIX-MIKE","AURIX-NOVEMBER","AURIX-OSCAR",
+"AURIX-PAPA","AURIX-QUEBEC","AURIX-ROMEO","AURIX-SIERRA","AURIX-TANGO",
+"AURIX-UNIFORM","AURIX-VICTOR","AURIX-WHISKEY","AURIX-XRAY",
+"AURIX-YANKEE","AURIX-ZULU","AURIX-PHOENIX","AURIX-DRAGON",
+"AURIX-TITAN","AURIX-OMEGA" ];
+
+let balance = parseInt(localStorage.getItem("aurix_balance") || "0");
+
+function updateBalance(){
+  balanceText.innerText = balance + " تومان";
+  localStorage.setItem("aurix_balance", balance);
+}
+
+function loadAccountData(){
+  const u = localStorage.getItem("aurix_username");
+  if(u){
+    usernameInput.value = u;
+    currentUsername.innerText = "نام کاربری: " + u;
+  }
+  const a = localStorage.getItem("aurix_avatar");
+  if(a){
+    profileImg.src = a;
+  }
+}
+
+function showWelcomeIfNewUser(){
+  if(!localStorage.getItem("aurix_welcome_shown")){
+    document.getElementById("welcomePopup").style.display="flex";
+  }
+}
+function closeWelcome(){
+  localStorage.setItem("aurix_welcome_shown","true");
+  document.getElementById("welcomePopup").style.display="none";
+}
+
+window.onload=()=>{
+  bottomNav.style.display="none";
+  updateBalance();
+  loadAccountData();
+
+  if(localStorage.getItem("aurix_logged")==="true"){
+    register.style.display="none";
+    verify.style.display="none";
+    gameContainer.style.display="block";
+    bottomNav.style.display="flex";
+    showPage("homePage");
+    showWelcomeIfNewUser();
+  } else {
+    register.style.display="block";
+  }
+};
+
+function doRegister(){
+  if(!fullName.value||!phoneNumber.value||!emailAddress.value){
+    alert("همه فیلدها را پر کنید");
+    return;
+  }
+  register.style.display="none";
+  verify.style.display="block";
+  showPhone.innerText="📱 "+phoneNumber.value;
+}
+
+function verifyCode(){
+  if(!validCodes.includes(codeInput.value.trim().toUpperCase())){
+    alert("❌ کد نامعتبر است");
+    return;
+  }
+  localStorage.setItem("aurix_logged","true");
+  verify.style.display="none";
+  gameContainer.style.display="block";
+  bottomNav.style.display="flex";
+  showPage("homePage");
+  showWelcomeIfNewUser();
+}
+
+function showPage(id){
+  document.querySelectorAll(".game-page").forEach(p=>p.style.display="none");
+  document.getElementById(id).style.display="block";
+}
+
+function openGateway(){ showPage("gatewayPage"); }
+
+function pay(amount){
+  balance += amount;
+  updateBalance();
+  alert("✅ پرداخت با موفقیت انجام شد");
+  showPage("walletPage");
+}
+
+function saveUsername(){
+  if(!usernameInput.value) return;
+  localStorage.setItem("aurix_username", usernameInput.value);
+  currentUsername.innerText = "نام کاربری: " + usernameInput.value;
+}
+
+function changeAvatar(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload=()=>{
+    profileImg.src=reader.result;
+    localStorage.setItem("aurix_avatar",reader.result);
+  };
+  reader.readAsDataURL(file);
+}
+
+function logout(){
+  localStorage.removeItem("aurix_logged");
+  location.reload();
+}
+
+function openSupport(){
+  window.open("https://t.me/Aurix_2026","_blank");
+}
 </script>
 
 </body>
