@@ -12,14 +12,13 @@ body{
   margin:0;
   font-family:sans-serif;
   direction:rtl;
-  min-height:100vh;
+  min-height:100dvh;
   background-image:
     linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
     url("https://i.imgur.com/VYMs5FH.jpeg");
   background-size:cover;
   background-position:center;
   background-repeat:no-repeat;
-  background-attachment:fixed;
 }
 
 .card{
@@ -66,47 +65,41 @@ a{
 
 .game-page{
   max-width:380px;
-  margin:40px auto 140px;
+  margin:24px auto;
   padding:20px;
   border-radius:20px;
   background:#fff;
-  display:none;
   box-shadow:0 10px 30px rgba(0,0,0,.25);
   text-align:center;
+  padding-bottom:80px; /* فقط به اندازه نوار پایین */
 }
 
-/* ===== نوار پایین (اصلاح شده مثل روبیکا) ===== */
 #bottomNav{
   position:fixed;
-  bottom:0;left:0;right:0;
+  bottom:0;
+  left:0;
+  right:0;
+  height:64px;
   background:#fff;
   display:flex;
   justify-content:space-around;
-  padding:18px 0;
-  box-shadow:0 -6px 25px rgba(0,0,0,.2);
+  align-items:center;
+  border-top:1px solid #ddd;
+  padding-bottom:env(safe-area-inset-bottom);
   z-index:1000;
 }
 
 .nav-item{
-  flex:1;
   text-align:center;
+  font-size:13px;
   cursor:pointer;
-  font-size:15px;
-  padding:6px 0;
-}
-
-.nav-item i,
-.nav-item span:first-child{
-  font-size:30px;
 }
 
 .nav-item span{
   display:block;
-  font-size:13px;
-  margin-top:6px;
+  font-size:12px;
+  margin-top:4px;
 }
-
-/* ============================================ */
 
 .exit-btn{
   width:100%;
@@ -125,10 +118,10 @@ a{
 
 .support-float{
   position:fixed;
-  bottom:100px;
+  bottom:90px;
   right:20px;
-  width:58px;
-  height:58px;
+  width:56px;
+  height:56px;
   background:#0088cc;
   color:#fff;
   border-radius:50%;
@@ -140,7 +133,7 @@ a{
   z-index:999;
 }
 
-.support-float i{font-size:26px}
+.support-float i{font-size:24px}
 </style>
 </head>
 
@@ -187,10 +180,10 @@ a{
 </div>
 
 <div id="bottomNav">
-  <div class="nav-item" onclick="showPage('homePage')"><span>▶️</span>شروع</div>
+  <div class="nav-item" onclick="showPage('homePage')">▶️<span>شروع</span></div>
   <div class="nav-item" onclick="showPage('walletPage')"><i class="fas fa-wallet"></i><span>کیف پول</span></div>
-  <div class="nav-item" onclick="showPage('accountPage')"><span>👤</span>حساب</div>
-  <div class="nav-item" onclick="showPage('settingsPage')"><span>⚙️</span>تنظیمات</div>
+  <div class="nav-item" onclick="showPage('accountPage')">👤<span>حساب</span></div>
+  <div class="nav-item" onclick="showPage('settingsPage')">⚙️<span>تنظیمات</span></div>
 </div>
 
 <script>
