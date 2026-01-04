@@ -343,23 +343,35 @@ function closeWelcome(){
   document.getElementById("welcomePopup").style.display="none";  
 }  
   
-window.onload=()=>{  
-  bottomNav.style.display="none";  
-  updateBalance();  
-  loadAccountData();  
-  
-  if(localStorage.getItem("aurix_logged")==="true"){  
-    register.style.display="none";  
-    verify.style.display="none";  
-    gameContainer.style.display="block";  
-    bottomNav.style.display="flex";  
-topNav.style.display = "flex";  
-    showPage("homePage");  
-    showWelcomeIfNewUser();  
-  } else {  
-    register.style.display="block";  
-topNav.style.display = "none";  
-  }  
+window.onload = () => {
+  const walletPage = document.getElementById("walletPage");  // گرفتن عنصر walletPage
+
+  bottomNav.style.display = "none";
+  updateBalance();
+  loadAccountData();
+
+  if (localStorage.getItem("aurix_logged") === "true") {
+    register.style.display = "none";
+    verify.style.display = "none";
+    gameContainer.style.display = "block";
+    bottomNav.style.display = "flex";
+    topNav.style.display = "flex";
+    showPage("homePage");
+
+    if (walletPage) {  // اگر walletPage وجود داشت
+      // اضافه کردن استایل شیشه‌ای به کیف پول
+      walletPage.style.background = "rgba(255, 255, 255, 0.35)";
+      walletPage.style.backdropFilter = "blur(12px)";
+      walletPage.style.webkitBackdropFilter = "blur(12px)";
+      walletPage.style.borderRadius = "20px";
+      walletPage.style.zIndex = "20"; // اطمینان از اولویت لایه
+    }
+
+    showWelcomeIfNewUser();
+  } else {
+    register.style.display = "block";
+    topNav.style.display = "none";
+  }
 };  
   
 function doRegister(){  
