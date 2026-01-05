@@ -131,6 +131,9 @@ text-align:center;
 cursor:pointer;
 font-size:14.5px;
 color:#fff;
+display:flex;
+flex-direction:column;
+align-items:center;
 }
 
 .nav-item span{
@@ -420,12 +423,12 @@ display: none;
   font-size: 14px;
 }
 
-/* ✅ استایل برای آیکون جدید اورینو */
+/* ✅ استایل برای آیکون اورینو */
 .urino-icon {
   width: 26px;
   height: 26px;
   object-fit: contain;
-  filter: brightness(0) invert(1); /* سفید کردن آیکون */
+  display: block;
   margin-bottom: 2px;
 }
 
@@ -677,19 +680,21 @@ document.addEventListener('wheel', function(e) {
   }
 }, { passive: false });
 
-// تابع برای بروزرسانی لینک آیکون
-function updateUrinoIcon(newUrl) {
-  const img = document.querySelector('.urino-icon');
+// تابع چک کردن لود شدن آیکون اورینو
+function checkUrinoIconLoad() {
+  const urinoImg = document.querySelector('.urino-icon');
   const fallback = document.getElementById('urinoFallback');
   
-  if (img && newUrl) {
-    img.src = newUrl;
-    img.style.display = 'block';
-    fallback.style.display = 'none';
+  if (urinoImg && urinoImg.complete && urinoImg.naturalHeight === 0) {
+    // اگر عکس لود نشد، fallback را نشان بده
+    urinoImg.style.display = 'none';
+    if (fallback) fallback.style.display = 'flex';
+  } else if (urinoImg && urinoImg.complete) {
+    // اگر عکس لود شد، fallback را مخفی کن
+    if (fallback) fallback.style.display = 'none';
   }
 }
 
-// چک کردن لود شدن آیکون
 window.onload = () => {
   bottomNav.style.display = "none";
   updateBalance();
@@ -716,19 +721,14 @@ window.onload = () => {
   document.documentElement.style.zoom = "1";
   
   // چک کردن لود شدن آیکون اورینو
-  setTimeout(() => {
-    const urinoImg = document.querySelector('.urino-icon');
-    const fallback = document.getElementById('urinoFallback');
-    
-    if (urinoImg && urinoImg.complete && urinoImg.naturalHeight === 0) {
-      // اگر عکس لود نشد، fallback را نشان بده
-      urinoImg.style.display = 'none';
-      if (fallback) fallback.style.display = 'flex';
-    } else if (urinoImg && urinoImg.complete) {
-      // اگر عکس لود شد، fallback را مخفی کن
-      if (fallback) fallback.style.display = 'none';
-    }
-  }, 1000);
+  setTimeout(checkUrinoIconLoad, 1000);
+  
+  // اضافه کردن event listener برای لود مجدد آیکون
+  const urinoImg = document.querySelector('.urino-icon');
+  if (urinoImg) {
+    urinoImg.addEventListener('load', checkUrinoIconLoad);
+    urinoImg.addEventListener('error', checkUrinoIconLoad);
+  }
 };  
   
 function doRegister(){  
