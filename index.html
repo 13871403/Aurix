@@ -358,13 +358,11 @@ window.onload = () => {
     topNav.style.display = "flex";
     showPage("homePage");
 
-    if (walletPage) {  // اگر walletPage وجود داشت
-      // اضافه کردن استایل شیشه‌ای به کیف پول
-      walletPage.style.background = "rgba(255, 255, 255, 0.35)";
-      walletPage.style.backdropFilter = "blur(12px)";
-      walletPage.style.webkitBackdropFilter = "blur(12px)";
-      walletPage.style.borderRadius = "20px";
-      walletPage.style.zIndex = "20"; // اطمینان از اولویت لایه
+    if (localStorage.getItem("wallet_shiny") === "true") {
+      // اگر در localStorage وضعیت شیشه‌ای بودن ذخیره شده بود، اینجا دوباره شیشه‌ای می‌شود
+      if (walletPage) {
+        walletPage.classList.add("wallet-glass");  // اضافه کردن کلاس شیشه‌ای
+      }
     }
 
     showWelcomeIfNewUser();
@@ -372,7 +370,16 @@ window.onload = () => {
     register.style.display = "block";
     topNav.style.display = "none";
   }
-};  
+};
+
+// هنگام شیشه‌ای کردن صفحه کیف پول، باید وضعیت شیشه‌ای بودن را ذخیره کنیم
+function enableWalletGlass() {
+  const walletPage = document.getElementById("walletPage");
+  if (walletPage) {
+    walletPage.classList.add("wallet-glass");  // اضافه کردن کلاس شیشه‌ای
+    localStorage.setItem("wallet_shiny", "true");  // ذخیره وضعیت شیشه‌ای بودن در localStorage
+  }
+} 
   
 function doRegister(){  
   if(!fullName.value||!phoneNumber.value||!emailAddress.value){  
