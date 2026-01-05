@@ -480,6 +480,212 @@ display: none;
   margin-top: 0;
   line-height: 1.2;
 }
+
+/* ========== استایل‌های جدید برای walletPage ========== */
+#walletPage {
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(25px) !important;
+  -webkit-backdrop-filter: blur(25px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+  padding: 20px 20px 30px !important;
+  margin-top: 70px !important;
+  margin-bottom: 90px !important;
+  border-radius: 28px !important;
+  min-height: calc(100vh - 160px) !important;
+}
+
+.wallet-balance-card {
+  background: linear-gradient(135deg, rgba(94, 61, 147, 0.9), rgba(123, 97, 255, 0.85));
+  border-radius: 24px;
+  padding: 25px 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 12px 30px rgba(94, 61, 147, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  text-align: center;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.wallet-balance-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 1%, transparent 20%);
+  opacity: 0.6;
+}
+
+.wallet-balance-label {
+  font-size: 16px;
+  margin-bottom: 10px;
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+.wallet-balance-amount {
+  font-size: 48px;
+  font-weight: 800;
+  margin: 15px 0;
+  direction: ltr;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  letter-spacing: 1px;
+}
+
+.wallet-balance-unit {
+  font-size: 18px;
+  font-weight: 600;
+  opacity: 0.9;
+  margin-right: 5px;
+}
+
+.wallet-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 35px;
+  padding: 0 10px;
+}
+
+.wallet-action-btn {
+  flex: 1;
+  max-width: 100px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  padding: 18px 5px;
+  margin: 0 8px;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+}
+
+.wallet-action-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.wallet-action-btn i {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #5e3d93;
+}
+
+.wallet-action-text {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.wallet-transactions-title {
+  text-align: right;
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #333;
+  padding-right: 10px;
+}
+
+.wallet-transaction-list {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 5px 15px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.wallet-transaction-item {
+  display: flex;
+  align-items: center;
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  direction: rtl;
+}
+
+.wallet-transaction-item:last-child {
+  border-bottom: none;
+}
+
+.wallet-transaction-icon {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #e6e6ff, #f0f0ff);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 15px;
+  flex-shrink: 0;
+}
+
+.wallet-transaction-icon i {
+  font-size: 22px;
+  color: #5e3d93;
+}
+
+.wallet-transaction-details {
+  flex: 1;
+}
+
+.wallet-transaction-title {
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 5px;
+  color: #222;
+}
+
+.wallet-transaction-time {
+  font-size: 13px;
+  color: #666;
+}
+
+.wallet-transaction-amount {
+  font-weight: 800;
+  font-size: 17px;
+  direction: ltr;
+  text-align: left;
+  min-width: 90px;
+}
+
+.wallet-transaction-amount.positive {
+  color: #2e7d32;
+}
+
+.wallet-transaction-amount.negative {
+  color: #d32f2f;
+}
+
+.wallet-charge-btn {
+  background: linear-gradient(135deg, #00c853, #64dd17) !important;
+  color: white !important;
+  font-weight: 700 !important;
+  border: none !important;
+  margin-top: 10px !important;
+  box-shadow: 0 6px 20px rgba(0, 200, 83, 0.3) !important;
+  padding: 18px !important;
+  border-radius: 18px !important;
+  font-size: 16px !important;
+  width: 100% !important;
+}
+
+.wallet-charge-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 25px rgba(0, 200, 83, 0.4) !important;
+}
 </style>
 </head>  
 <body>  
@@ -555,11 +761,36 @@ justify-content:center;
     </div>  
   </div>  
   <div id="walletPage" class="game-page wallet-glass">  
-    <h3>💰 کیف پول</h3>  
-    <h1 id="balanceText">0 تومان</h1>  
-    <button onclick="openGateway()" style="margin-top:20px;background:#00c853;border-radius:18px;font-size:16px;">  
-      ➕ افزایش موجودی  
-    </button>  
+    <div class="wallet-balance-card">
+      <div class="wallet-balance-label">موجودی کیف پول</div>
+      <div class="wallet-balance-amount" id="balanceText">0</div>
+      <div class="wallet-balance-unit">تومان</div>
+    </div>
+    
+    <div class="wallet-actions">
+      <div class="wallet-action-btn" onclick="openGateway()">
+        <i class="fas fa-plus-circle"></i>
+        <span class="wallet-action-text">شارژ</span>
+      </div>
+      <div class="wallet-action-btn" onclick="walletWithdraw()">
+        <i class="fas fa-download"></i>
+        <span class="wallet-action-text">برداشت</span>
+      </div>
+      <div class="wallet-action-btn" onclick="walletReport()">
+        <i class="fas fa-chart-bar"></i>
+        <span class="wallet-action-text">گزارش</span>
+      </div>
+    </div>
+    
+    <h3 class="wallet-transactions-title">تراکنش‌های اخیر</h3>
+    
+    <div class="wallet-transaction-list" id="walletTransactionList">
+      <!-- تراکنش‌ها توسط جاوااسکریپت پر می‌شوند -->
+    </div>
+    
+    <button class="wallet-charge-btn" onclick="openGateway()">
+      <i class="fas fa-bolt"></i> افزایش سریع موجودی
+    </button>
   </div>  
   <div id="gatewayPage" class="game-page">  
     <h3>💳 پرداخت امن Aurix</h3>  
@@ -630,9 +861,94 @@ const validCodes=[ "AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AU
 let balance = parseInt(localStorage.getItem("aurix_balance") || "0");  
   
 function updateBalance(){  
-  balanceText.innerText = balance + " تومان";  
+  balanceText.innerText = balance.toLocaleString('fa-IR');
+  const walletBalanceAmount = document.querySelector('.wallet-balance-amount');
+  if (walletBalanceAmount) {
+    walletBalanceAmount.innerText = balance.toLocaleString('fa-IR');
+  }
   localStorage.setItem("aurix_balance", balance);  
 }  
+
+function loadWalletTransactions() {
+  const transactions = JSON.parse(localStorage.getItem("aurix_transactions")) || [];
+  const container = document.getElementById('walletTransactionList');
+  
+  if (!container) return;
+  
+  if (transactions.length === 0) {
+    container.innerHTML = `
+      <div style="text-align: center; padding: 40px 20px; color: #666; font-size: 15px;">
+        <i class="fas fa-receipt" style="font-size: 40px; margin-bottom: 15px; opacity: 0.5;"></i>
+        <div>هیچ تراکنشی یافت نشد</div>
+      </div>
+    `;
+    return;
+  }
+  
+  container.innerHTML = '';
+  
+  transactions.slice(-10).reverse().forEach(trans => {
+    const item = document.createElement('div');
+    item.className = 'wallet-transaction-item';
+    
+    const icons = {
+      'charge': 'fas fa-plus-circle',
+      'withdraw': 'fas fa-download',
+      'game': 'fas fa-gamepad',
+      'win': 'fas fa-trophy',
+      'bonus': 'fas fa-gift'
+    };
+    
+    const titles = {
+      'charge': 'شارژ کیف پول',
+      'withdraw': 'برداشت وجه',
+      'game': 'هزینه بازی',
+      'win': 'برنده شدن در بازی',
+      'bonus': 'هدیه و پاداش'
+    };
+    
+    const icon = icons[trans.type] || 'fas fa-exchange-alt';
+    const title = titles[trans.type] || 'تراکنش';
+    
+    item.innerHTML = `
+      <div class="wallet-transaction-icon">
+        <i class="${icon}"></i>
+      </div>
+      <div class="wallet-transaction-details">
+        <div class="wallet-transaction-title">${title}</div>
+        <div class="wallet-transaction-time">${trans.time}</div>
+      </div>
+      <div class="wallet-transaction-amount ${trans.amount > 0 ? 'positive' : 'negative'}">
+        ${trans.amount > 0 ? '+' : ''}${trans.amount.toLocaleString('fa-IR')}
+      </div>
+    `;
+    
+    container.appendChild(item);
+  });
+}
+
+function addTransaction(type, amount) {
+  const transactions = JSON.parse(localStorage.getItem("aurix_transactions")) || [];
+  
+  const now = new Date();
+  const persianTime = now.toLocaleDateString('fa-IR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+  
+  transactions.push({
+    type: type,
+    amount: amount,
+    time: persianTime,
+    timestamp: now.getTime()
+  });
+  
+  localStorage.setItem("aurix_transactions", JSON.stringify(transactions));
+  loadWalletTransactions();
+}
   
 function loadAccountData(){  
   const u = localStorage.getItem("aurix_username");  
@@ -704,142 +1020,4 @@ document.addEventListener('gestureend', function(e) {
 // جلوگیری از double-tap zoom
 let lastTouchEnd = 0;
 document.addEventListener('touchend', function(event) {
-  const now = (new Date()).getTime();
-  if (now - lastTouchEnd <= 300) {
-    event.preventDefault();
-  }
-  lastTouchEnd = now;
-}, false);
-
-// جلوگیری از pinch zoom
-document.addEventListener('wheel', function(e) {
-  if (e.ctrlKey) {
-    e.preventDefault();
-  }
-}, { passive: false });
-
-// تابع چک کردن لود شدن آیکون اورینو
-function checkUrinoIconLoad() {
-  const urinoImg = document.querySelector('.urino-icon');
-  const fallback = document.getElementById('urinoFallback');
-  
-  if (urinoImg && urinoImg.complete && urinoImg.naturalHeight === 0) {
-    // اگر عکس لود نشد، fallback را نشان بده
-    urinoImg.style.display = 'none';
-    if (fallback) fallback.style.display = 'flex';
-  } else if (urinoImg && urinoImg.complete) {
-    // اگر عکس لود شد، fallback را مخفی کن
-    if (fallback) fallback.style.display = 'none';
-  }
-}
-
-window.onload = () => {
-  bottomNav.style.display = "none";
-  updateBalance();
-  loadAccountData();
-
-  if (localStorage.getItem("aurix_logged") === "true") {
-    register.style.display = "none";
-    verify.style.display = "none";
-    gameContainer.style.display = "block";
-    bottomNav.style.display = "flex";
-    topNav.style.display = "flex";
-    showPage("homePage");
-    
-    applyWalletGlassStyle();
-    
-    showWelcomeIfNewUser();
-  } else {
-    register.style.display = "block";
-    topNav.style.display = "none";
-  }
-  
-  // تنظیم مجدد اندازه‌ها پس از لود
-  document.body.style.zoom = "1";
-  document.documentElement.style.zoom = "1";
-  
-  // چک کردن لود شدن آیکون اورینو
-  setTimeout(checkUrinoIconLoad, 1000);
-  
-  // اضافه کردن event listener برای لود مجدد آیکون
-  const urinoImg = document.querySelector('.urino-icon');
-  if (urinoImg) {
-    urinoImg.addEventListener('load', checkUrinoIconLoad);
-    urinoImg.addEventListener('error', checkUrinoIconLoad);
-  }
-};  
-  
-function doRegister(){  
-  if(!fullName.value||!phoneNumber.value||!emailAddress.value){  
-    alert("همه فیلدها را پر کنید");  
-    return;  
-  }  
-  register.style.display="none";  
-  verify.style.display="block";  
-  showPhone.innerText="📱 "+phoneNumber.value;  
-}  
-  
-function verifyCode(){  
-  if(!validCodes.includes(codeInput.value.trim().toUpperCase())){  
-    alert("❌ کد نامعتبر است");  
-    return;  
-  }  
-  localStorage.setItem("aurix_logged","true");  
-  verify.style.display="none";  
-  gameContainer.style.display="block";  
-  bottomNav.style.display="flex";  
-  topNav.style.display = "flex";
-  
-  applyWalletGlassStyle();
-  
-  showPage("homePage");  
-  showWelcomeIfNewUser();  
-}  
-  
-function showPage(id){  
-  document.querySelectorAll(".game-page").forEach(p=>p.style.display="none");  
-  document.getElementById(id).style.display="block";  
-  topNav.style.display = "flex";  
-  
-  if (id === 'walletPage') {
-    applyWalletGlassStyle();
-  }
-}  
-  
-function openGateway(){ showPage("gatewayPage"); }  
-  
-function pay(amount){  
-  balance += amount;  
-  updateBalance();  
-  alert("✅ پرداخت با موفقیت انجام شد");  
-  showPage("walletPage");  
-}  
-  
-function saveUsername(){  
-  if(!usernameInput.value) return;  
-  localStorage.setItem("aurix_username", usernameInput.value);  
-  currentUsername.innerText = "نام کاربری: " + usernameInput.value;  
-}  
-  
-function changeAvatar(e){  
-  const file = e.target.files[0];  
-  if(!file) return;  
-  const reader = new FileReader();  
-  reader.onload=()=>{  
-    profileImg.src=reader.result;  
-    localStorage.setItem("aurix_avatar",reader.result);  
-  };  
-  reader.readAsDataURL(file);  
-}  
-  
-function logout(){  
-  localStorage.removeItem("aurix_logged");  
-  location.reload();  
-}  
-  
-function openSupport(){  
-  window.open("https://t.me/Aurix_2026","_blank");  
-}  
-</script>  
-</body>  
-    </html>
+ 
