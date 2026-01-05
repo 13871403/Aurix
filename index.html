@@ -442,6 +442,44 @@ display: none;
   font-size: 20px;
   margin-bottom: 2px;
 }
+
+/* ✅ اصلاح هم‌ترازی آیکون اورینو در نوار پایین */
+#bottomNav .nav-item img.urino-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  display: block;
+  margin-bottom: 5px;
+  vertical-align: middle;
+}
+
+/* ✅ اطمینان از هم‌ترازی عمودی کل آیتم */
+#bottomNav .nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+/* ✅ ثابت‌سازی ارتفاع و تراز آیتم‌ها */
+#bottomNav .nav-item i,
+#bottomNav .nav-item img.urino-icon,
+#bottomNav .nav-item .urino-icon-fallback {
+  height: 18px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+/* ✅ یکسان‌سازی فاصله متن زیر آیکون */
+#bottomNav .nav-item span {
+  font-size: 13px;
+  margin-top: 0;
+  line-height: 1.2;
+}
 </style>
 </head>  
 <body>  
@@ -804,4 +842,4 @@ function openSupport(){
 }  
 </script>  
 </body>  
-  </html>
+    </html>
