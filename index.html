@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>  
 <html lang="fa">  
 <head>  
@@ -419,6 +420,15 @@ display: none;
   color: #555;
   font-size: 14px;
 }
+
+/* ✅ استایل برای آیکون جدید اورینو */
+.urino-icon {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  margin-bottom: 2px;
+}
 </style>
 </head>  
 <body>  
@@ -532,12 +542,13 @@ justify-content:center;
     <i class="fas fa-wallet"></i>  
     <span>کیف پول</span>  
   </div>  
+  <!-- ✅ تغییر آیکون اورینو به لینک جدید -->
   <div class="nav-item" onclick="showPage('accountPage')">  
-    👤  
+    <img src="https://i.ibb.co/6cJZRT1H/image.png" class="urino-icon" alt="اورینو">  
     <span>اورینو</span>  
   </div>  
   <div class="nav-item" onclick="showPage('settingsPage')">  
-    ⚙️  
+    <i class="fas fa-cog"></i>  
     <span>تنظیمات</span>  
   </div>  
 </div>  
