@@ -419,6 +419,339 @@ display: none;
   color: #555;
   font-size: 14px;
 }
+
+/* ✅ استایل جدید برای صفحه روبینو (شبکه اجتماعی) */
+.rubino-page {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 0;
+  background: #f5f5f5;
+  min-height: 100vh;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.rubino-header {
+  background: linear-gradient(135deg, #8a2be2, #5e3d93);
+  color: white;
+  padding: 20px 15px;
+  border-radius: 0 0 25px 25px;
+  position: relative;
+}
+
+.rubino-header .profile-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.rubino-header .profile-pic {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 3px solid white;
+  object-fit: cover;
+}
+
+.rubino-header .profile-name {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.rubino-header .profile-username {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.rubino-stats {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  padding: 15px 0;
+}
+
+.rubino-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.rubino-stat .number {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.rubino-stat .label {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.rubino-tabs {
+  display: flex;
+  background: white;
+  border-radius: 15px;
+  margin: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.rubino-tab {
+  flex: 1;
+  text-align: center;
+  padding: 15px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.rubino-tab.active {
+  background: #8a2be2;
+  color: white;
+}
+
+.rubino-content {
+  padding: 15px;
+}
+
+.rubino-post {
+  background: white;
+  border-radius: 15px;
+  margin-bottom: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  gap: 10px;
+}
+
+.post-header .post-profile-pic {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.post-header .post-user {
+  flex: 1;
+}
+
+.post-header .post-username {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.post-header .post-time {
+  font-size: 12px;
+  color: #888;
+}
+
+.post-content {
+  padding: 0 15px 15px 15px;
+}
+
+.post-text {
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+.post-image {
+  width: 100%;
+  border-radius: 10px;
+  margin-top: 10px;
+  max-height: 400px;
+  object-fit: cover;
+}
+
+.post-actions {
+  display: flex;
+  justify-content: space-around;
+  padding: 15px;
+  border-top: 1px solid #eee;
+}
+
+.post-action {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: #666;
+  font-weight: 600;
+}
+
+.post-action i {
+  font-size: 20px;
+}
+
+.post-action.liked {
+  color: #e74c3c;
+}
+
+.post-action.commented {
+  color: #3498db;
+}
+
+.post-action.shared {
+  color: #2ecc71;
+}
+
+.rubino-upload-btn {
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #8a2be2, #5e3d93);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(138, 43, 226, 0.4);
+  cursor: pointer;
+  z-index: 999;
+  transition: all 0.3s;
+}
+
+.rubino-upload-btn:hover {
+  transform: scale(1.1);
+}
+
+.rubino-live-btn {
+  position: fixed;
+  bottom: 90px;
+  left: 20px;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+  cursor: pointer;
+  z-index: 999;
+  transition: all 0.3s;
+}
+
+.rubino-live-btn:hover {
+  transform: scale(1.1);
+}
+
+.story-section {
+  padding: 15px;
+  background: white;
+  margin-bottom: 15px;
+  border-radius: 15px;
+}
+
+.stories {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;
+  padding: 10px 0;
+}
+
+.story {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 70px;
+  cursor: pointer;
+}
+
+.story .story-pic {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  padding: 3px;
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  margin-bottom: 5px;
+}
+
+.story .story-pic img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid white;
+  object-fit: cover;
+}
+
+.story .story-name {
+  font-size: 12px;
+  text-align: center;
+}
+
+.add-story {
+  position: relative;
+}
+
+.add-story .story-pic {
+  background: #ddd !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-story .plus-icon {
+  font-size: 24px;
+  color: #666;
+}
+
+.explore-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+.explore-item {
+  aspect-ratio: 1;
+  overflow: hidden;
+}
+
+.explore-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #e74c3c;
+  color: white;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 10px;
+}
+
+.rubino-search {
+  padding: 15px;
+  background: white;
+  margin-bottom: 15px;
+  border-radius: 15px;
+}
+
+.rubino-search input {
+  width: 100%;
+  padding: 12px 20px;
+  border-radius: 25px;
+  border: 1px solid #ddd;
+  background: #f9f9f9;
+  font-size: 14px;
+}
+
+.rubino-search input:focus {
+  outline: none;
+  border-color: #8a2be2;
+}
 </style>
 </head>  
 <body>  
@@ -508,15 +841,181 @@ justify-content:center;
     <button onclick="pay(1000000)" style="margin-top:10px">1,000,000 تومان</button>  
     <button onclick="showPage('walletPage')" style="margin-top:16px;background:#eee;color:#000;">انصراف</button>  
   </div>  
-  <div id="accountPage" class="game-page">  
-    <h3>👤 حساب کاربری</h3>  
-    <img id="profileImg" class="profile-img" src="https://i.imgur.com/8Km9tLL.png">  
-    <label for="avatarInput" class="upload-btn">📷 تغییر تصویر پروفایل</label>  
-    <input id="avatarInput" type="file" accept="image/*" onchange="changeAvatar(event)">  
-    <input id="usernameInput" placeholder="نام کاربری">  
-    <button onclick="saveUsername()">💾 ذخیره نام کاربری</button>  
-    <p id="currentUsername" style="margin-top:10px;font-weight:bold"></p>  
-  </div>  
+  
+  <!-- ✅ صفحه روبینو (شبکه اجتماعی) جایگزین حساب کاربری -->
+  <div id="rubinoPage" class="game-page rubino-page">  
+    <!-- هدر پروفایل -->
+    <div class="rubino-header">
+      <div class="profile-info">
+        <img id="rubinoProfilePic" class="profile-pic" src="https://i.imgur.com/8Km9tLL.png" alt="پروفایل">
+        <div>
+          <div class="profile-name" id="rubinoProfileName">کاربر Aurix</div>
+          <div class="profile-username" id="rubinoUsername">@user_aurix</div>
+        </div>
+      </div>
+      
+      <div class="rubino-stats">
+        <div class="rubino-stat">
+          <div class="number" id="postCount">۱۲</div>
+          <div class="label">پست</div>
+        </div>
+        <div class="rubino-stat">
+          <div class="number" id="followerCount">۴۵۶</div>
+          <div class="label">دنبال‌کننده</div>
+        </div>
+        <div class="rubino-stat">
+          <div class="number" id="followingCount">۲۳۴</div>
+          <div class="label">دنبال‌شده</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- تب‌های صفحه -->
+    <div class="rubino-tabs">
+      <div class="rubino-tab active" onclick="switchRubinoTab('feed')">📰 فید</div>
+      <div class="rubino-tab" onclick="switchRubinoTab('explore')">🔍 اکتشاف</div>
+      <div class="rubino-tab" onclick="switchRubinoTab('notifications')">🔔 اطلاعیه‌ها</div>
+    </div>
+    
+    <!-- محتوای صفحه -->
+    <div class="rubino-content">
+      <!-- بخش استوری‌ها -->
+      <div class="story-section">
+        <div class="stories">
+          <div class="story add-story" onclick="addStory()">
+            <div class="story-pic">
+              <div class="plus-icon">+</div>
+            </div>
+            <div class="story-name">اضافه کردن</div>
+          </div>
+          <div class="story" onclick="viewStory(1)">
+            <div class="story-pic">
+              <img src="https://i.imgur.com/8Km9tLL.png" alt="استوری">
+            </div>
+            <div class="story-name">علی</div>
+          </div>
+          <div class="story" onclick="viewStory(2)">
+            <div class="story-pic">
+              <img src="https://i.imgur.com/XrR3YwJ.jpg" alt="استوری">
+            </div>
+            <div class="story-name">سارا</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- فید پست‌ها -->
+      <div id="rubinoFeed" class="rubino-tab-content">
+        <!-- پست نمونه ۱ -->
+        <div class="rubino-post">
+          <div class="post-header">
+            <img src="https://i.imgur.com/8Km9tLL.png" alt="پروفایل" class="post-profile-pic">
+            <div class="post-user">
+              <div class="post-username">علی احمدی</div>
+              <div class="post-time">۲ ساعت پیش</div>
+            </div>
+          </div>
+          <div class="post-content">
+            <div class="post-text">امروز یک روز فوق‌العاده بود! 🎮 بازی جدید رو تست کردم و واقعاً جذابه. #Aurix #بازی</div>
+            <img src="https://i.imgur.com/XrR3YwJ.jpg" alt="پست" class="post-image">
+          </div>
+          <div class="post-actions">
+            <div class="post-action like-btn" onclick="likePost(this)">
+              <i class="far fa-heart"></i>
+              <span>۱۲۴</span>
+            </div>
+            <div class="post-action" onclick="focusComment()">
+              <i class="far fa-comment"></i>
+              <span>۳۴</span>
+            </div>
+            <div class="post-action" onclick="sharePost()">
+              <i class="far fa-share-square"></i>
+              <span>اشتراک</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- پست نمونه ۲ -->
+        <div class="rubino-post">
+          <div class="post-header">
+            <img src="https://i.imgur.com/XrR3YwJ.jpg" alt="پروفایل" class="post-profile-pic">
+            <div class="post-user">
+              <div class="post-username">سارا محمدی</div>
+              <div class="post-time">۵ ساعت پیش</div>
+            </div>
+          </div>
+          <div class="post-content">
+            <div class="post-text">چه کسی توی بازی Aurix حرفه‌ایه؟ بیایید باهم بازی کنیم! 👾</div>
+          </div>
+          <div class="post-actions">
+            <div class="post-action like-btn" onclick="likePost(this)">
+              <i class="far fa-heart"></i>
+              <span>۸۹</span>
+            </div>
+            <div class="post-action" onclick="focusComment()">
+              <i class="far fa-comment"></i>
+              <span>۲۱</span>
+            </div>
+            <div class="post-action" onclick="sharePost()">
+              <i class="far fa-share-square"></i>
+              <span>اشتراک</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- صفحه اکتشاف -->
+      <div id="rubinoExplore" class="rubino-tab-content" style="display:none;">
+        <div class="rubino-search">
+          <input type="text" placeholder="جستجو در روبینو...">
+        </div>
+        <div class="explore-grid">
+          <div class="explore-item"><img src="https://i.imgur.com/XrR3YwJ.jpg" alt="اکتشاف"></div>
+          <div class="explore-item"><img src="https://i.imgur.com/8Km9tLL.png" alt="اکتشاف"></div>
+          <div class="explore-item"><img src="https://i.imgur.com/XrR3YwJ.jpg" alt="اکتشاف"></div>
+          <div class="explore-item"><img src="https://i.imgur.com/8Km9tLL.png" alt="اکتشاف"></div>
+          <div class="explore-item"><img src="https://i.imgur.com/XrR3YwJ.jpg" alt="اکتشاف"></div>
+          <div class="explore-item"><img src="https://i.imgur.com/8Km9tLL.png" alt="اکتشاف"></div>
+        </div>
+      </div>
+      
+      <!-- صفحه اطلاعیه‌ها -->
+      <div id="rubinoNotifications" class="rubino-tab-content" style="display:none;">
+        <div class="rubino-post">
+          <div class="post-header">
+            <img src="https://i.imgur.com/8Km9tLL.png" alt="پروفایل" class="post-profile-pic">
+            <div class="post-user">
+              <div class="post-username">علی احمدی</div>
+              <div class="post-time">دیروز</div>
+            </div>
+          </div>
+          <div class="post-content">
+            <div class="post-text">پست شما را لایک کرد</div>
+          </div>
+        </div>
+        <div class="rubino-post">
+          <div class="post-header">
+            <img src="https://i.imgur.com/XrR3YwJ.jpg" alt="پروفایل" class="post-profile-pic">
+            <div class="post-user">
+              <div class="post-username">سارا محمدی</div>
+              <div class="post-time">۲ روز پیش</div>
+            </div>
+          </div>
+          <div class="post-content">
+            <div class="post-text">شما را دنبال کرد</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- دکمه‌های شناور -->
+    <div class="rubino-upload-btn" onclick="uploadPost()">
+      <i class="fas fa-plus"></i>
+    </div>
+    <div class="rubino-live-btn" onclick="goLive()">
+      <i class="fas fa-video"></i>
+    </div>
+  </div>
+  
   <div id="settingsPage" class="game-page">  
     <h3>⚙️ تنظیمات</h3>  
     <button class="exit-btn" onclick="logout()">خروج <span>↪</span></button>  
@@ -532,12 +1031,12 @@ justify-content:center;
     <i class="fas fa-wallet"></i>  
     <span>کیف پول</span>  
   </div>  
-  <div class="nav-item" onclick="showPage('accountPage')">  
-    👤  
-    <span>اورینو</span>  
+  <div class="nav-item" onclick="showPage('rubinoPage')">  
+    <i class="fas fa-users"></i>  
+    <span>روبینو</span>  
   </div>  
   <div class="nav-item" onclick="showPage('settingsPage')">  
-    ⚙️  
+    <i class="fas fa-cog"></i>  
     <span>تنظیمات</span>  
   </div>  
 </div>  
@@ -549,7 +1048,7 @@ justify-content:center;
   <h3>منوی Aurix</h3>
   <button class="menu-item" onclick="showPage('homePage'); closeSideMenu();">🏠 صفحه اصلی</button>
   <button class="menu-item" onclick="showPage('walletPage'); closeSideMenu();">💰 کیف پول</button>
-  <button class="menu-item" onclick="showPage('accountPage'); closeSideMenu();">👤 حساب کاربری</button>
+  <button class="menu-item" onclick="showPage('rubinoPage'); closeSideMenu();">👥 روبینو</button>
   <button class="menu-item" onclick="showPage('settingsPage'); closeSideMenu();">⚙️ تنظیمات</button>
   <button class="menu-item" onclick="openSupport(); closeSideMenu();">📞 پشتیبانی</button>
   <button class="menu-item" onclick="logout(); closeSideMenu();">🚪 خروج از حساب</button>
@@ -561,6 +1060,7 @@ const validCodes=[ "AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AU
 "AURIX-KILO","AURIX-LIMA","AURIX-MIKE","AURIX-NOVEMBER","AURIX-OSCAR",  
 "AURIX-PAPA","AURIX-QUEBEC","AURIX-ROMEO","AURIX-SIERRA","AURIX-TANGO",  
 "AURIX-UNIFORM","AURIX-VICTOR","AURIX-WHISKEY","AURIX-XRAY",  
+"AURIX-YANKEE","AURIX-ZULU
 "AURIX-YANKEE","AURIX-ZULU","AURIX-PHOENIX","AURIX-DRAGON",  
 "AURIX-TITAN","AURIX-OMEGA" ];  
   
@@ -655,10 +1155,93 @@ document.addEventListener('wheel', function(e) {
   }
 }, { passive: false });
 
+// توابع روبینو
+let currentRubinoTab = 'feed';
+
+function switchRubinoTab(tabName) {
+  currentRubinoTab = tabName;
+  
+  // غیرفعال کردن همه تب‌ها
+  document.querySelectorAll('.rubino-tab').forEach(tab => {
+    tab.classList.remove('active');
+  });
+  
+  // فعال کردن تب انتخاب شده
+  document.querySelectorAll('.rubino-tab').forEach(tab => {
+    if (tab.textContent.includes(tabName === 'feed' ? 'فید' : 
+                                 tabName === 'explore' ? 'اکتشاف' : 'اطلاعیه‌ها')) {
+      tab.classList.add('active');
+    }
+  });
+  
+  // نمایش محتوای تب انتخاب شده
+  document.getElementById('rubinoFeed').style.display = 'none';
+  document.getElementById('rubinoExplore').style.display = 'none';
+  document.getElementById('rubinoNotifications').style.display = 'none';
+  
+  document.getElementById('rubino' + capitalizeFirstLetter(tabName)).style.display = 'block';
+}
+
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function likePost(button) {
+  const heartIcon = button.querySelector('i');
+  const likeCount = button.querySelector('span');
+  
+  if (heartIcon.classList.contains('far')) {
+    heartIcon.classList.remove('far');
+    heartIcon.classList.add('fas');
+    button.classList.add('liked');
+    likeCount.textContent = (parseInt(likeCount.textContent) + 1).toString();
+  } else {
+    heartIcon.classList.remove('fas');
+    heartIcon.classList.add('far');
+    button.classList.remove('liked');
+    likeCount.textContent = (parseInt(likeCount.textContent) - 1).toString();
+  }
+}
+
+function focusComment() {
+  alert('📝 بخش کامنت‌ها به زودی اضافه خواهد شد!');
+}
+
+function sharePost() {
+  alert('🔗 اشتراک‌گذاری پست با موفقیت انجام شد!');
+}
+
+function addStory() {
+  alert('📸 قابلیت اضافه کردن استوری به زودی فعال می‌شود!');
+}
+
+function viewStory(storyId) {
+  alert('👁️‍🗨️ در حال مشاهده استوری...');
+}
+
+function uploadPost() {
+  alert('➕ قابلیت آپلود پست به زودی فعال می‌شود!');
+}
+
+function goLive() {
+  alert('🎥 قابلیت پخش زنده به زودی فعال می‌شود!');
+}
+
+// بارگذاری اطلاعات روبینو
+function loadRubinoData() {
+  const username = localStorage.getItem("aurix_username") || "کاربر Aurix";
+  const avatar = localStorage.getItem("aurix_avatar") || "https://i.imgur.com/8Km9tLL.png";
+  
+  document.getElementById('rubinoProfileName').textContent = username;
+  document.getElementById('rubinoProfilePic').src = avatar;
+  document.getElementById('rubinoUsername').textContent = "@" + (username.replace(/\s+/g, '_').toLowerCase() || 'user_aurix');
+}
+
 window.onload = () => {
   bottomNav.style.display = "none";
   updateBalance();
   loadAccountData();
+  loadRubinoData();
 
   if (localStorage.getItem("aurix_logged") === "true") {
     register.style.display = "none";
@@ -716,6 +1299,12 @@ function showPage(id){
   if (id === 'walletPage') {
     applyWalletGlassStyle();
   }
+  
+  if (id === 'rubinoPage') {
+    // بارگذاری مجدد اطلاعات روبینو
+    loadRubinoData();
+    switchRubinoTab('feed');
+  }
 }  
   
 function openGateway(){ showPage("gatewayPage"); }  
@@ -754,4 +1343,4 @@ function openSupport(){
 }  
 </script>  
 </body>  
-</html>
+  </html>
