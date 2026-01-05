@@ -554,8 +554,8 @@ justify-content:center;
   </div>  
   <!-- ✅ تغییر آیکون اورینو به لینک جدید -->
   <div class="nav-item" onclick="showPage('accountPage')">  
-    <img src="https://i.imgur.com/LfZ5fyr.jpg" class="urino-icon" alt="اورینو" onerror="this.style.display='none'; document.getElementById('urinoFallback').style.display='flex';">  
-    <div id="urinoFallback" class="urino-icon-fallback">👤</div>  
+    <img src="https://i.postimg.cc/6pkGqL35/1767620832618-019b8e68-ac0c-7ce2-9452-43fa19dc3d22.png" class="urino-icon" alt="اورینو" onerror="this.style.display='none'; document.getElementById('urinoFallback').style.display='flex';">  
+    <div id="urinoFallback" class="urino-icon-fallback" style="display:none;">👤</div>  
     <span>اورینو</span>  
   </div>  
   <div class="nav-item" onclick="showPage('settingsPage')">  
@@ -689,7 +689,7 @@ function updateUrinoIcon(newUrl) {
   }
 }
 
-// تست لینک‌های مختلف برای آیکون
+// چک کردن لود شدن آیکون
 window.onload = () => {
   bottomNav.style.display = "none";
   updateBalance();
@@ -715,29 +715,20 @@ window.onload = () => {
   document.body.style.zoom = "1";
   document.documentElement.style.zoom = "1";
   
-  // تست چند فرمت مختلف برای لینک عکس
-  const testUrls = [
-    "https://i.imgur.com/LfZ5fyr.jpg",
-    "https://i.imgur.com/LfZ5fyr.png",
-    "https://i.imgur.com/LfZ5fyr.jpeg"
-  ];
-  
-  // تست تدریجی لینک‌ها
+  // چک کردن لود شدن آیکون اورینو
   setTimeout(() => {
-    const currentImg = document.querySelector('.urino-icon');
-    if (currentImg && currentImg.naturalHeight === 0) {
-      // اگر عکس فعلی لود نشد، فرمت‌های دیگر را تست کن
-      testUrls.forEach((url, index) => {
-        if (index > 0) { // اولین لینک قبلاً تست شده
-          setTimeout(() => {
-            if (document.querySelector('.urino-icon').naturalHeight === 0) {
-              updateUrinoIcon(url);
-            }
-          }, 1000 * index);
-        }
-      });
+    const urinoImg = document.querySelector('.urino-icon');
+    const fallback = document.getElementById('urinoFallback');
+    
+    if (urinoImg && urinoImg.complete && urinoImg.naturalHeight === 0) {
+      // اگر عکس لود نشد، fallback را نشان بده
+      urinoImg.style.display = 'none';
+      if (fallback) fallback.style.display = 'flex';
+    } else if (urinoImg && urinoImg.complete) {
+      // اگر عکس لود شد، fallback را مخفی کن
+      if (fallback) fallback.style.display = 'none';
     }
-  }, 2000);
+  }, 1000);
 };  
   
 function doRegister(){  
@@ -813,4 +804,4 @@ function openSupport(){
 }  
 </script>  
 </body>  
-</html>
+  </html>
