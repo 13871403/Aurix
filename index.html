@@ -1,500 +1,757 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>روبینو - کسب درآمد</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            color: #fff;
-            min-height: 100vh;
-            padding-bottom: 80px;
-        }
-        
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            margin-bottom: 20px;
-        }
-        
-        .header h1 {
-            font-size: 24px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .header h1 i {
-            color: #FFD700;
-        }
-        
-        .profile-icon {
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-        
-        .balance-card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .balance-title {
-            font-size: 16px;
-            opacity: 0.9;
-            margin-bottom: 5px;
-        }
-        
-        .balance-amount {
-            font-size: 42px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .balance-amount span {
-            font-size: 20px;
-            opacity: 0.8;
-        }
-        
-        .withdraw-btn {
-            background: #FFD700;
-            color: #333;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 12px;
-            font-weight: bold;
-            font-size: 16px;
-            width: 100%;
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .withdraw-btn:hover {
-            background: #FFC800;
-            transform: translateY(-2px);
-        }
-        
-        .section-title {
-            font-size: 18px;
-            margin: 25px 0 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .tasks-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        
-        .task-card {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            transition: 0.3s;
-            cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        .task-card:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-5px);
-        }
-        
-        .task-icon {
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 15px;
-            font-size: 24px;
-        }
-        
-        .task-title {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-        
-        .task-reward {
-            color: #FFD700;
-            font-weight: bold;
-            font-size: 18px;
-        }
-        
-        .daily-bonus {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        
-        .bonus-icon {
-            width: 60px;
-            height: 60px;
-            background: rgba(255, 215, 0, 0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            color: #FFD700;
-        }
-        
-        .bonus-info h3 {
-            font-size: 18px;
-            margin-bottom: 5px;
-        }
-        
-        .bonus-info p {
-            opacity: 0.8;
-            margin-bottom: 10px;
-        }
-        
-        .claim-btn {
-            background: #00C851;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        
-        .claim-btn:hover {
-            background: #00B248;
-        }
-        
-        .history-title {
-            font-size: 18px;
-            margin: 25px 0 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .history-item {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .history-item i {
-            color: #00C851;
-        }
-        
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(30, 30, 40, 0.95);
-            backdrop-filter: blur(10px);
-            display: flex;
-            justify-content: space-around;
-            padding: 15px 10px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: rgba(255, 255, 255, 0.6);
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        
-        .nav-item.active {
-            color: #6a11cb;
-        }
-        
-        .nav-item i {
-            font-size: 22px;
-            margin-bottom: 5px;
-        }
-        
-        .nav-item span {
-            font-size: 12px;
-        }
-        
-        .nav-item:hover {
-            color: #fff;
-        }
-        
-        .coin-animation {
-            animation: coinSpin 2s infinite;
-        }
-        
-        @keyframes coinSpin {
-            0% { transform: rotateY(0); }
-            100% { transform: rotateY(360deg); }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1><i class="fas fa-coins"></i> روبینو</h1>
-            <div class="profile-icon">
-                <i class="fas fa-user"></i>
-            </div>
-        </div>
-        
-        <div class="balance-card">
-            <div class="balance-title">موجودی شما</div>
-            <div class="balance-amount">
-                <i class="fas fa-coins coin-animation"></i>
-                ۱۲,۵۰۰ <span>سکه</span>
-            </div>
-            <button class="withdraw-btn">
-                <i class="fas fa-wallet"></i>
-                درخواست تسویه
-            </button>
-        </div>
-        
-        <h2 class="section-title"><i class="fas fa-tasks"></i> وظایف روزانه</h2>
-        
-        <div class="tasks-grid">
-            <div class="task-card" onclick="completeTask(1)">
-                <div class="task-icon">
-                    <i class="fas fa-play-circle"></i>
-                </div>
-                <div class="task-title">تماشای ویدیو</div>
-                <div class="task-reward">+۵۰ سکه</div>
-            </div>
-            
-            <div class="task-card" onclick="completeTask(2)">
-                <div class="task-icon">
-                    <i class="fas fa-gamepad"></i>
-                </div>
-                <div class="task-title">بازی کردن</div>
-                <div class="task-reward">+۱۰۰ سکه</div>
-            </div>
-            
-            <div class="task-card" onclick="completeTask(3)">
-                <div class="task-icon">
-                    <i class="fas fa-user-plus"></i>
-                </div>
-                <div class="task-title">دعوت دوست</div>
-                <div class="task-reward">+۵۰۰ سکه</div>
-            </div>
-            
-            <div class="task-card" onclick="completeTask(4)">
-                <div class="task-icon">
-                    <i class="fas fa-shopping-cart"></i>
-                </div>
-                <div class="task-title">خرید از فروشگاه</div>
-                <div class="task-reward">+۲۰۰ سکه</div>
-            </div>
-        </div>
-        
-        <div class="daily-bonus">
-            <div class="bonus-icon">
-                <i class="fas fa-gift"></i>
-            </div>
-            <div class="bonus-info">
-                <h3>جایزه روزانه</h3>
-                <p>هر روز با ورود به روبینو جایزه بگیرید!</p>
-                <button class="claim-btn" onclick="claimDailyBonus()">
-                    <i class="fas fa-gift"></i> دریافت ۲۰۰ سکه
-                </button>
-            </div>
-        </div>
-        
-        <h2 class="history-title"><i class="fas fa-history"></i> تاریخچه تراکنش‌ها</h2>
-        
-        <div class="history-list">
-            <div class="history-item">
-                <div>
-                    <div>تماشای ویدیو</div>
-                    <small>امروس - ۱۴:۳۰</small>
-                </div>
-                <div style="color: #00C851;">
-                    <i class="fas fa-plus-circle"></i> +۵۰ سکه
-                </div>
-            </div>
-            
-            <div class="history-item">
-                <div>
-                    <div>دعوت دوست</div>
-                    <small>دیروز - ۱۱:۱۵</small>
-                </div>
-                <div style="color: #00C851;">
-                    <i class="fas fa-plus-circle"></i> +۵۰۰ سکه
-                </div>
-            </div>
-            
-            <div class="history-item">
-                <div>
-                    <div>تسویه حساب</div>
-                    <small>۲ روز پیش - ۰۹:۲۰</small>
-                </div>
-                <div style="color: #FF4444;">
-                    <i class="fas fa-minus-circle"></i> -۵۰۰۰ سکه
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="bottom-nav">
-        <div class="nav-item active">
-            <i class="fas fa-coins"></i>
-            <span>روبینو</span>
-        </div>
-        <div class="nav-item" onclick="window.location.href='#'">
-            <i class="fas fa-home"></i>
-            <span>خانه</span>
-        </div>
-        <div class="nav-item" onclick="window.location.href='#'">
-            <i class="fas fa-store"></i>
-            <span>فروشگاه</span>
-        </div>
-        <div class="nav-item" onclick="window.location.href='#'">
-            <i class="fas fa-user"></i>
-            <span>پروفایل</span>
-        </div>
-    </div>
+<!DOCTYPE html>  
+<html lang="fa">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">  
+<title>Aurix</title>  
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">  
+<style>  
+.wallet-glass {
+  background: rgba(255, 255, 255, 0.35) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-radius: 20px !important;
+  z-index: 10 !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25) !important;
+  border: 1px solid rgba(255,255,255,0.2) !important;
+}
 
-    <script>
-        let balance = 12500;
-        
-        function completeTask(taskId) {
-            const rewards = {
-                1: 50,
-                2: 100,
-                3: 500,
-                4: 200
-            };
-            
-            const taskNames = {
-                1: "تماشای ویدیو",
-                2: "بازی کردن",
-                3: "دعوت دوست",
-                4: "خرید از فروشگاه"
-            };
-            
-            const reward = rewards[taskId];
-            balance += reward;
-            
-            // به روز رسانی نمایش موجودی
-            document.querySelector('.balance-amount').innerHTML = `
-                <i class="fas fa-coins coin-animation"></i>
-                ${balance.toLocaleString('fa-IR')} <span>سکه</span>
-            `;
-            
-            // نمایش پیام موفقیت
-            alert(`✅ مبارک! شما ${reward} سکه بابت "${taskNames[taskId]}" دریافت کردید.`);
-            
-            // اضافه کردن به تاریخچه
-            addToHistory(taskNames[taskId], reward);
-        }
-        
-        function claimDailyBonus() {
-            const bonus = 200;
-            balance += bonus;
-            
-            // به روز رسانی نمایش موجودی
-            document.querySelector('.balance-amount').innerHTML = `
-                <i class="fas fa-coins coin-animation"></i>
-                ${balance.toLocaleString('fa-IR')} <span>سکه</span>
-            `;
-            
-            // غیرفعال کردن دکمه
-            const btn = document.querySelector('.claim-btn');
-            btn.innerHTML = '<i class="fas fa-check"></i> دریافت شده';
-            btn.style.background = '#888';
-            btn.disabled = true;
-            
-            // نمایش پیام موفقیت
-            alert(`🎁 جایزه روزانه ${bonus} سکه دریافت شد!`);
-            
-            // اضافه کردن به تاریخچه
-            addToHistory("جایزه روزانه", bonus);
-        }
-        
-        function addToHistory(task, amount) {
-            const historyList = document.querySelector('.history-list');
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('fa-IR', {hour: '2-digit', minute:'2-digit'});
-            
-            const historyItem = document.createElement('div');
-            historyItem.className = 'history-item';
-            historyItem.innerHTML = `
-                <div>
-                    <div>${task}</div>
-                    <small>امروز - ${timeString}</small>
-                </div>
-                <div style="color: #00C851;">
-                    <i class="fas fa-plus-circle"></i> +${amount} سکه
-                </div>
-            `;
-            
-            // اضافه کردن به ابتدای لیست
-            historyList.insertBefore(historyItem, historyList.firstChild);
-        }
-        
-        // انیمیشن برای سکه‌ها
-        document.querySelectorAll('.fa-coins').forEach(coin => {
-            coin.classList.add('coin-animation');
-        });
-        
-        // کلیک روی دکمه تسویه
-        document.querySelector('.withdraw-btn').addEventListener('click', function() {
-            if (balance < 10000) {
-                alert('حداقل موجودی برای تسویه ۱۰,۰۰۰ سکه می‌باشد.');
-            } else {
-                alert('درخواست تسویه شما ثبت شد. تا ۲۴ ساعت آینده پرداخت خواهد شد.');
-            }
-        });
-    </script>
-</body>
-  </html>
+.home-page-clean {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  padding-bottom: 100px !important;
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+body{  
+  margin:0;  
+  font-family:sans-serif;  
+  direction:rtl;  
+  min-height:100dvh;  
+  background-image:  
+    linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),  
+    url("https://i.imgur.com/VYMs5FH.jpeg");  
+  background-size:cover;  
+  background-position:center;  
+  background-repeat:no-repeat;  
+  overflow-x:hidden;  
+  overflow-y: auto;
+  width: 100%;
+  position: relative;
+  /* جلوگیری از کشیدن صفحه */
+  touch-action: pan-y;
+  -ms-touch-action: pan-y;
+  -webkit-user-drag: none;
+  user-drag: none;
+}  
+
+.card{
+max-width:380px;
+margin:80px auto;
+padding:24px;
+border-radius:24px;
+background:#fff;
+box-shadow:0 20px 60px rgba(0,0,0,.35);
+}
+
+h2{text-align:center;margin-bottom:16px}
+
+input{
+width:100%;
+padding:14px;
+margin-bottom:12px;
+border-radius:14px;
+border:1px solid #ddd;
+font-size:15px;
+box-sizing:border-box;
+}
+
+button{
+width:100%;
+padding:18px;
+border:none;
+border-radius:999px;
+font-size:17px;
+font-weight:bold;
+cursor:pointer;
+background:linear-gradient(90deg,#ffcc00,#ff00ff);
+}
+
+.card button { margin-top:12px; }
+.card button.login-btn { margin-top:16px; }
+
+a{
+display:block;
+text-align:center;
+margin:12px 0;
+font-weight:bold;
+color:#5a00ff;
+text-decoration:none;
+}
+
+#verify,#gameContainer,#bottomNav{display:none;}
+
+.game-page{
+max-width:380px;
+margin:24px auto;
+padding:20px;
+border-radius:20px;
+background:#fff;
+box-shadow:0 10px 30px rgba(0,0,0,.25);
+text-align:center;
+padding-bottom:100px;
+box-sizing:border-box;
+}
+
+#bottomNav{
+position:fixed;
+bottom:16px;
+left:16px;
+right:16px;
+height:68px;
+background:rgba(40, 20, 80, 0.55);
+backdrop-filter: blur(14px);
+-webkit-backdrop-filter: blur(14px);
+display:flex;
+justify-content:space-around;
+align-items:center;
+border-radius:22px;
+border:1px solid rgba(255,255,255,0.15);
+box-shadow:0 10px 30px rgba(0,0,0,0.35),
+inset 0 1px 0 rgba(255,255,255,0.15);
+z-index:1000;
+}
+
+.nav-item{
+text-align:center;
+cursor:pointer;
+font-size:14.5px;
+color:#fff;
+}
+
+.nav-item span{
+display:block;
+font-size:13px;
+margin-top:5px;
+}
+
+.nav-item i{font-size:18px}
+
+.exit-btn{
+width:100%;
+padding:16px 20px;
+background:#000;
+color:#fff;
+border:none;
+border-radius:18px;
+font-size:18px;
+font-weight:600;
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-top:20px;
+}
+
+.support-float{
+position:fixed;
+bottom:110px;
+right:20px;
+width:56px;
+height:56px;
+background:#0088cc;
+color:#fff;
+border-radius:50%;
+box-shadow:0 10px 25px rgba(0,0,0,.35);
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+z-index:999;
+}
+
+.support-float i{font-size:24px}
+
+.profile-img{
+width:110px;
+height:110px;
+border-radius:50%;
+object-fit:cover;
+margin:10px auto;
+display:block;
+border:3px solid #eee;
+}
+
+input[type="file"]{display:none;}
+
+.upload-btn{
+display:block;
+margin:12px auto;
+padding:12px;
+border-radius:14px;
+background:#f3f3f3;
+font-weight:bold;
+cursor:pointer;
+text-align:center;
+}
+
+#topNav {
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+background-color: #5e3d93;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 10px 20px;
+z-index: 1000;
+color: white;
+width: 100%;
+box-sizing: border-box;
+}
+
+#topNav .nav-item {
+cursor: pointer;
+font-size: 20px;
+margin: 0;
+padding: 0;
+}
+
+#topNav .logo {
+font-size: 30px;
+font-weight: 600;
+font-family: 'Poppins', sans-serif;
+color: white;
+letter-spacing: 2px;
+margin: 0;
+padding: 0;
+}
+
+#topNav .logo span {
+font-size: 30px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  /* جلوگیری از zoom */
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+.card, .game-page, #topNav, #bottomNav {
+  max-width: 100%;
+}
+
+/* منوی کناری */
+#sideMenu {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 280px;
+  height: 100%;
+  background: rgba(94, 61, 147, 0.98);
+  backdrop-filter: blur(10px);
+  z-index: 2000;
+  padding: 80px 20px 20px 20px;
+  color: white;
+  direction: rtl;
+  box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+  transition: right 0.3s ease;
+}
+
+#sideMenu.active {
+  right: 0;
+}
+
+#sideMenu .menu-item {
+  padding: 15px;
+  background: rgba(255,255,255,0.1);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 16px;
+  text-align: right;
+  margin-bottom: 10px;
+  cursor: pointer;
+  width: 100%;
+}
+
+#sideMenu .menu-item:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+#sideMenu .close-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+#sideMenu h3 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 22px;
+}
+
+#overlay {
+  position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0,0,0,0.5);
+z-index: 1999;
+display: none;
+}
+
+/* ✅ استایل جدید برای دکمه ثبت‌نام شبیه تصویر */
+.register-btn {
+  width: 100%;
+  padding: 18px;
+  border: none;
+  border-radius: 14px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  background: linear-gradient(90deg, #4CAF50, #2E7D32);
+  color: white;
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+  transition: all 0.3s ease;
+}
+
+.register-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+.login-btn {
+  width: 100%;
+  padding: 18px;
+  border: none;
+  border-radius: 14px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  background: linear-gradient(90deg, #2196F3, #0D47A1);
+  color: white;
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+  transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+}
+
+/* ✅ استایل جدید برای کارت ثبت‌نام */
+.register-card {
+  max-width: 380px;
+  margin: 80px auto;
+  padding: 30px 25px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.register-card h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #5e3d93;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.register-card input {
+  width: 100%;
+  padding: 16px 20px;
+  margin-bottom: 18px;
+  border-radius: 14px;
+  border: 2px solid #e0e0e0;
+  font-size: 16px;
+  box-sizing: border-box;
+  background: rgba(255,255,255,0.9);
+  transition: all 0.3s ease;
+}
+
+.register-card input:focus {
+  border-color: #5e3d93;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(94, 61, 147, 0.1);
+}
+
+.register-card input::placeholder {
+  color: #888;
+}
+
+.register-card .input-label {
+  display: block;
+  text-align: right;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #555;
+  font-size: 14px;
+}
+</style>
+</head>  
+<body>  
+<div id="welcomePopup" style="  
+display:none;  
+position:fixed;  
+top:0;left:0;  
+width:100%;height:100%;  
+background:rgba(0,0,0,.6);  
+z-index:9999;  
+align-items:center;  
+justify-content:center;  
+">  
+  <div style="  
+  background:#fff;  
+  width:85%;  
+  max-width:320px;  
+  padding:24px;  
+  border-radius:22px;  
+  text-align:center;  
+  ">  
+    <h3>🎮 خوش آمدی به Aurix</h3>  
+    <p>از حضورت خوشحالیم، آماده بازی هستی؟</p>  
+    <button onclick="closeWelcome()">باشه</button>  
+  </div>  
+</div>  
+
+<div id="topNav">  
+  <div class="nav-item">  
+    <i class="fas fa-shopping-cart"></i>  
+  </div>  
+  <div class="logo">  
+    <span>Aurix</span>  
+  </div>  
+  <div class="nav-item" onclick="openSideMenu()">  
+    <i class="fas fa-bars"></i>  
+  </div>  
+</div>  
+
+<!-- ✅ تغییر کارت ثبت‌نام به استایل جدید -->
+<div id="register" class="register-card">  
+  <h2>Aurix</h2>  
+  
+  <div class="input-label">نام کامل</div>
+  <input id="fullName" placeholder="نام و نام خانوادگی خود را وارد کنید">
+  
+  <div class="input-label">شماره موبایل</div>
+  <input id="phoneNumber" placeholder="مثال: ۰۹۱۲۳۴۵۶۷۸۹" type="tel">
+  
+  <div class="input-label">ایمیل</div>
+  <input id="emailAddress" placeholder="example@gmail.com" type="email">
+  
+  <button class="register-btn" onclick="doRegister()">
+    <i class="fas fa-lock"></i> ثبت‌نام امن
+  </button>  
+  <button class="login-btn" type="button">
+    <i class="fas fa-key"></i> ورود
+  </button>  
+</div>  
+
+<div id="verify" class="card">  
+  <h2>دریافت و تأیید کد</h2>  
+  <p id="showPhone" style="text-align:center"></p>  
+  <a href="https://t.me/Aurix2025_bot" target="_blank">🤖 ورود به ربات دریافت کد</a>  
+  <input id="codeInput" placeholder="کد دریافتی">  
+  <button onclick="verifyCode()">✅ تأیید و ورود</button>  
+</div>  
+
+<div id="gameContainer">  
+  <div id="homePage" class="game-page home-page-clean">  
+    <div class="support-float" onclick="openSupport()">  
+      <i class="fas fa-headset"></i>  
+    </div>  
+  </div>  
+  <div id="walletPage" class="game-page wallet-glass">  
+    <h3>💰 کیف پول</h3>  
+    <h1 id="balanceText">0 تومان</h1>  
+    <button onclick="openGateway()" style="margin-top:20px;background:#00c853;border-radius:18px;font-size:16px;">  
+      ➕ افزایش موجودی  
+    </button>  
+  </div>  
+  <div id="gatewayPage" class="game-page">  
+    <h3>💳 پرداخت امن Aurix</h3>  
+    <p>مبلغ انتخابی:</p>  
+    <button onclick="pay(100000)">100,000 تومان</button>  
+    <button onclick="pay(300000)" style="margin-top:10px">500,000 تومان</button>  
+    <button onclick="pay(1000000)" style="margin-top:10px">1,000,000 تومان</button>  
+    <button onclick="showPage('walletPage')" style="margin-top:16px;background:#eee;color:#000;">انصراف</button>  
+  </div>  
+  <div id="accountPage" class="game-page">  
+    <h3>👤 حساب کاربری</h3>  
+    <img id="profileImg" class="profile-img" src="https://i.imgur.com/8Km9tLL.png">  
+    <label for="avatarInput" class="upload-btn">📷 تغییر تصویر پروفایل</label>  
+    <input id="avatarInput" type="file" accept="image/*" onchange="changeAvatar(event)">  
+    <input id="usernameInput" placeholder="نام کاربری">  
+    <button onclick="saveUsername()">💾 ذخیره نام کاربری</button>  
+    <p id="currentUsername" style="margin-top:10px;font-weight:bold"></p>  
+  </div>  
+  <div id="settingsPage" class="game-page">  
+    <h3>⚙️ تنظیمات</h3>  
+    <button class="exit-btn" onclick="logout()">خروج <span>↪</span></button>  
+  </div>  
+</div>  
+
+<div id="bottomNav">  
+  <div class="nav-item" onclick="showPage('homePage')">  
+    <i class="fas fa-gamepad"></i>  
+    <span>بازی</span>  
+  </div>  
+  <div class="nav-item" onclick="showPage('walletPage')">  
+    <i class="fas fa-wallet"></i>  
+    <span>کیف پول</span>  
+  </div>  
+  <div class="nav-item" onclick="showPage('accountPage')">  
+    👤  
+    <span>اورینو</span>  
+  </div>  
+  <div class="nav-item" onclick="showPage('settingsPage')">  
+    ⚙️  
+    <span>تنظیمات</span>  
+  </div>  
+</div>  
+
+<!-- منوی کناری -->
+<div id="overlay" onclick="closeSideMenu()"></div>
+<div id="sideMenu">
+  <button class="close-btn" onclick="closeSideMenu()">×</button>
+  <h3>منوی Aurix</h3>
+  <button class="menu-item" onclick="showPage('homePage'); closeSideMenu();">🏠 صفحه اصلی</button>
+  <button class="menu-item" onclick="showPage('walletPage'); closeSideMenu();">💰 کیف پول</button>
+  <button class="menu-item" onclick="showPage('accountPage'); closeSideMenu();">👤 حساب کاربری</button>
+  <button class="menu-item" onclick="showPage('settingsPage'); closeSideMenu();">⚙️ تنظیمات</button>
+  <button class="menu-item" onclick="openSupport(); closeSideMenu();">📞 پشتیبانی</button>
+  <button class="menu-item" onclick="logout(); closeSideMenu();">🚪 خروج از حساب</button>
+</div>
+
+<script>  
+const validCodes=[ "AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AURIX-ECHO",  
+"AURIX-FOXTROT","AURIX-GOLF","AURIX-HOTEL","AURIX-INDIA","AURIX-JULIET",  
+"AURIX-KILO","AURIX-LIMA","AURIX-MIKE","AURIX-NOVEMBER","AURIX-OSCAR",  
+"AURIX-PAPA","AURIX-QUEBEC","AURIX-ROMEO","AURIX-SIERRA","AURIX-TANGO",  
+"AURIX-UNIFORM","AURIX-VICTOR","AURIX-WHISKEY","AURIX-XRAY",  
+"AURIX-YANKEE","AURIX-ZULU","AURIX-PHOENIX","AURIX-DRAGON",  
+"AURIX-TITAN","AURIX-OMEGA" ];  
+  
+let balance = parseInt(localStorage.getItem("aurix_balance") || "0");  
+  
+function updateBalance(){  
+  balanceText.innerText = balance + " تومان";  
+  localStorage.setItem("aurix_balance", balance);  
+}  
+  
+function loadAccountData(){  
+  const u = localStorage.getItem("aurix_username");  
+  if(u){  
+    usernameInput.value = u;  
+    currentUsername.innerText = "نام کاربری: " + u;  
+  }  
+  const a = localStorage.getItem("aurix_avatar");  
+  if(a){  
+    profileImg.src = a;  
+  }  
+}  
+  
+function showWelcomeIfNewUser(){  
+  if(!localStorage.getItem("aurix_welcome_shown")){  
+    document.getElementById("welcomePopup").style.display="flex";  
+  }  
+}  
+
+function closeWelcome(){  
+  localStorage.setItem("aurix_welcome_shown","true");  
+  document.getElementById("welcomePopup").style.display="none";  
+}  
+  
+function applyWalletGlassStyle() {
+  const walletPage = document.getElementById("walletPage");
+  if (walletPage) {
+    walletPage.classList.add('wallet-glass');
+    setTimeout(() => {
+      walletPage.style.background = "rgba(255, 255, 255, 0.35)";
+      walletPage.style.backdropFilter = "blur(12px)";
+      walletPage.style.webkitBackdropFilter = "blur(12px)";
+      walletPage.style.borderRadius = "20px";
+      walletPage.style.zIndex = "10";
+    }, 10);
+  }
+}
+
+// توابع منوی کناری
+function openSideMenu() {
+  document.getElementById('sideMenu').classList.add('active');
+  document.getElementById('overlay').style.display = 'block';
+}
+
+function closeSideMenu() {
+  document.getElementById('sideMenu').classList.remove('active');
+  document.getElementById('overlay').style.display = 'none';
+}
+
+// جلوگیری از zoom و کشیدن صفحه
+document.addEventListener('touchstart', function(event) {
+  if (event.touches.length > 1) {
+    event.preventDefault();
+  }
+}, { passive: false });
+
+document.addEventListener('gesturestart', function(e) {
+  e.preventDefault();
+});
+
+document.addEventListener('gesturechange', function(e) {
+  e.preventDefault();
+});
+
+document.addEventListener('gestureend', function(e) {
+  e.preventDefault();
+});
+
+// جلوگیری از double-tap zoom
+let lastTouchEnd = 0;
+document.addEventListener('touchend', function(event) {
+  const now = (new Date()).getTime();
+  if (now - lastTouchEnd <= 300) {
+    event.preventDefault();
+  }
+  lastTouchEnd = now;
+}, false);
+
+// جلوگیری از pinch zoom
+document.addEventListener('wheel', function(e) {
+  if (e.ctrlKey) {
+    e.preventDefault();
+  }
+}, { passive: false });
+
+window.onload = () => {
+  bottomNav.style.display = "none";
+  updateBalance();
+  loadAccountData();
+
+  if (localStorage.getItem("aurix_logged") === "true") {
+    register.style.display = "none";
+    verify.style.display = "none";
+    gameContainer.style.display = "block";
+    bottomNav.style.display = "flex";
+    topNav.style.display = "flex";
+    showPage("homePage");
+    
+    applyWalletGlassStyle();
+    
+    showWelcomeIfNewUser();
+  } else {
+    register.style.display = "block";
+    topNav.style.display = "none";
+  }
+  
+  // تنظیم مجدد اندازه‌ها پس از لود
+  document.body.style.zoom = "1";
+  document.documentElement.style.zoom = "1";
+};  
+  
+function doRegister(){  
+  if(!fullName.value||!phoneNumber.value||!emailAddress.value){  
+    alert("همه فیلدها را پر کنید");  
+    return;  
+  }  
+  register.style.display="none";  
+  verify.style.display="block";  
+  showPhone.innerText="📱 "+phoneNumber.value;  
+}  
+  
+function verifyCode(){  
+  if(!validCodes.includes(codeInput.value.trim().toUpperCase())){  
+    alert("❌ کد نامعتبر است");  
+    return;  
+  }  
+  localStorage.setItem("aurix_logged","true");  
+  verify.style.display="none";  
+  gameContainer.style.display="block";  
+  bottomNav.style.display="flex";  
+  topNav.style.display = "flex";
+  
+  applyWalletGlassStyle();
+  
+  showPage("homePage");  
+  showWelcomeIfNewUser();  
+}  
+  
+function showPage(id){  
+  document.querySelectorAll(".game-page").forEach(p=>p.style.display="none");  
+  document.getElementById(id).style.display="block";  
+  topNav.style.display = "flex";  
+  
+  if (id === 'walletPage') {
+    applyWalletGlassStyle();
+  }
+}  
+  
+function openGateway(){ showPage("gatewayPage"); }  
+  
+function pay(amount){  
+  balance += amount;  
+  updateBalance();  
+  alert("✅ پرداخت با موفقیت انجام شد");  
+  showPage("walletPage");  
+}  
+  
+function saveUsername(){  
+  if(!usernameInput.value) return;  
+  localStorage.setItem("aurix_username", usernameInput.value);  
+  currentUsername.innerText = "نام کاربری: " + usernameInput.value;  
+}  
+  
+function changeAvatar(e){  
+  const file = e.target.files[0];  
+  if(!file) return;  
+  const reader = new FileReader();  
+  reader.onload=()=>{  
+    profileImg.src=reader.result;  
+    localStorage.setItem("aurix_avatar",reader.result);  
+  };  
+  reader.readAsDataURL(file);  
+}  
+  
+function logout(){  
+  localStorage.removeItem("aurix_logged");  
+  location.reload();  
+}  
+  
+function openSupport(){  
+  window.open("https://t.me/Aurix_2026","_blank");  
+}  
+</script>  
+</body>  
+</html>
