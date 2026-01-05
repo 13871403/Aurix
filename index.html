@@ -16,7 +16,6 @@
   border: 1px solid rgba(255,255,255,0.2) !important;
 }
 
-/* ✅ کلاس جدید برای صفحه بازی - بدون کارت سفید */
 .home-page-clean {
   background: transparent !important;
   box-shadow: none !important;
@@ -26,6 +25,100 @@
   padding-bottom: 100px !important;
   padding-top: 0 !important;
   margin-top: 0 !important;
+}
+
+#sidebarMenu {
+  position: fixed;
+  top: 0;
+  right: -300px;
+  width: 280px;
+  height: 100%;
+  background: rgba(94, 61, 147, 0.98);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  z-index: 2000;
+  transition: right 0.3s ease;
+  padding: 20px;
+  box-shadow: -5px 0 25px rgba(0,0,0,0.3);
+  direction: rtl;
+  overflow-y: auto;
+  color: white;
+}
+
+#sidebarMenu.active {
+  right: 0;
+}
+
+.sidebar-header {
+  text-align: center;
+  padding: 25px 0;
+  border-bottom: 2px solid rgba(255,255,255,0.2);
+  margin-bottom: 25px;
+}
+
+.sidebar-header h3 {
+  color: white;
+  font-size: 26px;
+  margin: 0;
+  font-weight: 600;
+}
+
+.sidebar-item {
+  padding: 18px 20px;
+  margin: 12px 0;
+  background: rgba(255,255,255,0.1);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-right: 4px solid #ffcc00;
+}
+
+.sidebar-item:hover {
+  background: rgba(255,255,255,0.25);
+  transform: translateX(-8px);
+}
+
+.sidebar-item span {
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.sidebar-item i {
+  font-size: 20px;
+  color: #ffcc00;
+}
+
+.sidebar-item:hover i {
+  color: white;
+}
+
+#sidebarOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  z-index: 1999;
+  display: none;
+}
+
+.sidebar-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.2);
+  margin: 25px 0;
+}
+
+.sidebar-footer {
+  text-align: center;
+  padding-top: 20px;
+  margin-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  font-size: 14px;
+  color: rgba(255,255,255,0.7);
 }
 
 body{  
@@ -98,7 +191,6 @@ padding-bottom:100px;
 box-sizing:border-box;
 }
 
-/* ✅ فقط این بخش تغییر داده شده (Glass Bottom Nav) */
 #bottomNav{
 position:fixed;
 bottom:16px;
@@ -196,7 +288,6 @@ cursor:pointer;
 text-align:center;
 }
 
-/* برای نوار بالای صفحه */
 #topNav {
 position: fixed;
 top: 0;
@@ -228,10 +319,8 @@ letter-spacing: 2px;
 font-size: 30px;
 }
 </style>
-
 </head>  
 <body>  
-<!-- 🔵 پاپ‌آپ خوش‌آمدگویی -->  
 <div id="welcomePopup" style="  
 display:none;  
 position:fixed;  
@@ -255,7 +344,57 @@ justify-content:center;
     <button onclick="closeWelcome()">باشه</button>  
   </div>  
 </div>  
-<!-- نوار بالای صفحه -->  
+
+<div id="sidebarOverlay" onclick="closeSidebar()"></div>
+<div id="sidebarMenu">
+  <div class="sidebar-header">
+    <h3>🌀 Aurix Menu</h3>
+  </div>
+  
+  <div class="sidebar-item" onclick="showPage('homePage'); closeSidebar();">
+    <span>🏠 صفحه اصلی</span>
+    <i class="fas fa-home"></i>
+  </div>
+  
+  <div class="sidebar-item" onclick="showPage('walletPage'); closeSidebar();">
+    <span>💰 کیف پول</span>
+    <i class="fas fa-wallet"></i>
+  </div>
+  
+  <div class="sidebar-item" onclick="showPage('accountPage'); closeSidebar();">
+    <span>👤 حساب کاربری</span>
+    <i class="fas fa-user"></i>
+  </div>
+  
+  <div class="sidebar-item" onclick="showPage('settingsPage'); closeSidebar();">
+    <span>⚙️ تنظیمات</span>
+    <i class="fas fa-cog"></i>
+  </div>
+  
+  <div class="sidebar-divider"></div>
+  
+  <div class="sidebar-item" onclick="openSupport(); closeSidebar();">
+    <span>📞 پشتیبانی</span>
+    <i class="fas fa-headset"></i>
+  </div>
+  
+  <div class="sidebar-item" onclick="window.open('https://t.me/Aurix2025_bot', '_blank'); closeSidebar();">
+    <span>🤖 ربات تلگرام</span>
+    <i class="fab fa-telegram"></i>
+  </div>
+  
+  <div class="sidebar-divider"></div>
+  
+  <div class="sidebar-item" onclick="logout(); closeSidebar();">
+    <span>🚪 خروج از حساب</span>
+    <i class="fas fa-sign-out-alt"></i>
+  </div>
+  
+  <div class="sidebar-footer">
+    Aurix v1.0 © 2024
+  </div>
+</div>
+
 <div id="topNav">  
   <div class="nav-item">  
     <i class="fas fa-shopping-cart"></i>  
@@ -263,7 +402,7 @@ justify-content:center;
   <div class="logo">  
     <span>Aurix</span>  
   </div>  
-  <div class="nav-item">  
+  <div class="nav-item" onclick="openSidebar()">  
     <i class="fas fa-bars"></i>  
   </div>  
 </div>  
@@ -283,7 +422,6 @@ justify-content:center;
   <button onclick="verifyCode()">✅ تأیید و ورود</button>  
 </div>  
 <div id="gameContainer">  
-  <!-- ✅ اینجا کلاس home-page-clean اضافه شده -->
   <div id="homePage" class="game-page home-page-clean">  
     <div class="support-float" onclick="openSupport()">  
       <i class="fas fa-headset"></i>  
@@ -373,8 +511,17 @@ function closeWelcome(){
   localStorage.setItem("aurix_welcome_shown","true");  
   document.getElementById("welcomePopup").style.display="none";  
 }  
+
+function openSidebar() {
+  document.getElementById('sidebarMenu').classList.add('active');
+  document.getElementById('sidebarOverlay').style.display = 'block';
+}
+
+function closeSidebar() {
+  document.getElementById('sidebarMenu').classList.remove('active');
+  document.getElementById('sidebarOverlay').style.display = 'none';
+}
   
-// ✅ تابع جدید برای اعمال استایل شیشه‌ای بر روی کیف پول
 function applyWalletGlassStyle() {
   const walletPage = document.getElementById("walletPage");
   if (walletPage) {
