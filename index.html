@@ -1,4 +1,5 @@
-<!DOCTYPE html>  <html lang="fa">  
+<!DOCTYPE html>  
+<html lang="fa">  
 <head>  
 <meta charset="UTF-8">  
 <meta name="viewport" content="width=device-width, initial-scale=1.0">  
@@ -213,7 +214,10 @@ font-size: 30px;
 }
 </style>
 
-</head>  <body>  <!-- 🔵 پاپ‌آپ خوش‌آمدگویی -->  <div id="welcomePopup" style="  
+</head>  
+<body>  
+<!-- 🔵 پاپ‌آپ خوش‌آمدگویی -->  
+<div id="welcomePopup" style="  
 display:none;  
 position:fixed;  
 top:0;left:0;  
@@ -235,7 +239,9 @@ justify-content:center;
     <p>از حضورت خوشحالیم، آماده بازی هستی؟</p>  
     <button onclick="closeWelcome()">باشه</button>  
   </div>  
-</div>  <!-- نوار بالای صفحه -->  <div id="topNav">  
+</div>  
+<!-- نوار بالای صفحه -->  
+<div id="topNav">  
   <div class="nav-item">  
     <i class="fas fa-shopping-cart"></i>  
   </div>  
@@ -245,38 +251,44 @@ justify-content:center;
   <div class="nav-item">  
     <i class="fas fa-bars"></i>  
   </div>  
-</div>  <div id="register" class="card">  
+</div>  
+<div id="register" class="card">  
   <h2>Aurix</h2>  
   <input id="fullName" placeholder="نام کامل">  
   <input id="phoneNumber" placeholder="شماره موبایل">  
   <input id="emailAddress" placeholder="ایمیل">  
   <button onclick="doRegister()">🔒 ثبت‌نام امن</button>  
   <button type="button" class="login-btn">🔑 ورود</button>  
-</div>  <div id="verify" class="card">  
+</div>  
+<div id="verify" class="card">  
   <h2>دریافت و تأیید کد</h2>  
   <p id="showPhone" style="text-align:center"></p>  
   <a href="https://t.me/Aurix2025_bot" target="_blank">🤖 ورود به ربات دریافت کد</a>  
   <input id="codeInput" placeholder="کد دریافتی">  
   <button onclick="verifyCode()">✅ تأیید و ورود</button>  
-</div>  <div id="gameContainer">  
+</div>  
+<div id="gameContainer">  
   <div id="homePage" class="game-page">  
     <div class="support-float" onclick="openSupport()">  
       <i class="fas fa-headset"></i>  
     </div>  
-  </div>    <div id="walletPage" class="game-page wallet-glass">  
+  </div>  
+  <div id="walletPage" class="game-page wallet-glass">  
     <h3>💰 کیف پول</h3>  
     <h1 id="balanceText">0 تومان</h1>  
     <button onclick="openGateway()" style="margin-top:20px;background:#00c853;border-radius:18px;font-size:16px;">  
       ➕ افزایش موجودی  
     </button>  
-  </div>    <div id="gatewayPage" class="game-page">  
+  </div>  
+  <div id="gatewayPage" class="game-page">  
     <h3>💳 پرداخت امن Aurix</h3>  
     <p>مبلغ انتخابی:</p>  
     <button onclick="pay(100000)">100,000 تومان</button>  
     <button onclick="pay(300000)" style="margin-top:10px">500,000 تومان</button>  
     <button onclick="pay(1000000)" style="margin-top:10px">1,000,000 تومان</button>  
     <button onclick="showPage('walletPage')" style="margin-top:16px;background:#eee;color:#000;">انصراف</button>  
-  </div>    <div id="accountPage" class="game-page">  
+  </div>  
+  <div id="accountPage" class="game-page">  
     <h3>👤 حساب کاربری</h3>  
     <img id="profileImg" class="profile-img" src="https://i.imgur.com/8Km9tLL.png">  
     <label for="avatarInput" class="upload-btn">📷 تغییر تصویر پروفایل</label>  
@@ -284,11 +296,13 @@ justify-content:center;
     <input id="usernameInput" placeholder="نام کاربری">  
     <button onclick="saveUsername()">💾 ذخیره نام کاربری</button>  
     <p id="currentUsername" style="margin-top:10px;font-weight:bold"></p>  
-  </div>    <div id="settingsPage" class="game-page">  
+  </div>  
+  <div id="settingsPage" class="game-page">  
     <h3>⚙️ تنظیمات</h3>  
     <button class="exit-btn" onclick="logout()">خروج <span>↪</span></button>  
   </div>  
-</div>  <div id="bottomNav">  
+</div>  
+<div id="bottomNav">  
   <div class="nav-item" onclick="showPage('homePage')">  
     <i class="fas fa-gamepad"></i>  
     <span>بازی</span>  
@@ -305,7 +319,8 @@ justify-content:center;
     ⚙️  
     <span>تنظیمات</span>  
   </div>  
-</div>  <script>  
+</div>  
+<script>  
 const validCodes=[ "AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AURIX-ECHO",  
 "AURIX-FOXTROT","AURIX-GOLF","AURIX-HOTEL","AURIX-INDIA","AURIX-JULIET",  
 "AURIX-KILO","AURIX-LIMA","AURIX-MIKE","AURIX-NOVEMBER","AURIX-OSCAR",  
@@ -343,9 +358,15 @@ function closeWelcome(){
   document.getElementById("welcomePopup").style.display="none";  
 }  
   
-window.onload = () => {
-  const walletPage = document.getElementById("walletPage");  // گرفتن عنصر walletPage
+// ✅ تابع جدید برای اعمال استایل شیشه‌ای بر روی کیف پول
+function applyWalletGlassStyle() {
+  const walletPage = document.getElementById("walletPage");
+  if (walletPage) {
+    walletPage.classList.add('wallet-glass');
+  }
+}
 
+window.onload = () => {
   bottomNav.style.display = "none";
   updateBalance();
   loadAccountData();
@@ -357,16 +378,10 @@ window.onload = () => {
     bottomNav.style.display = "flex";
     topNav.style.display = "flex";
     showPage("homePage");
-
-    if (walletPage) {  // اگر walletPage وجود داشت
-      // اضافه کردن استایل شیشه‌ای به کیف پول
-      walletPage.style.background = "rgba(255, 255, 255, 0.35)";
-      walletPage.style.backdropFilter = "blur(12px)";
-      walletPage.style.webkitBackdropFilter = "blur(12px)";
-      walletPage.style.borderRadius = "20px";
-      walletPage.style.zIndex = "20"; // اطمینان از اولویت لایه
-    }
-
+    
+    // ✅ اطمینان از اعمال استایل شیشه‌ای در بارگذاری اولیه
+    applyWalletGlassStyle();
+    
     showWelcomeIfNewUser();
   } else {
     register.style.display = "block";
@@ -393,6 +408,11 @@ function verifyCode(){
   verify.style.display="none";  
   gameContainer.style.display="block";  
   bottomNav.style.display="flex";  
+  topNav.style.display = "flex"; // ✅ اضافه شد
+  
+  // ✅ اعمال استایل شیشه‌ای پس از تأیید کد
+  applyWalletGlassStyle();
+  
   showPage("homePage");  
   showWelcomeIfNewUser();  
 }  
@@ -400,7 +420,12 @@ function verifyCode(){
 function showPage(id){  
   document.querySelectorAll(".game-page").forEach(p=>p.style.display="none");  
   document.getElementById(id).style.display="block";  
-topNav.style.display = "flex";  
+  topNav.style.display = "flex";  
+  
+  // ✅ همیشه استایل شیشه‌ای را بر روی کیف پول اعمال کن
+  if (id === 'walletPage') {
+    applyWalletGlassStyle();
+  }
 }  
   
 function openGateway(){ showPage("gatewayPage"); }  
@@ -437,5 +462,6 @@ function logout(){
 function openSupport(){  
   window.open("https://t.me/Aurix_2026","_blank");  
 }  
-</script>  </body>  
-</html>  
+</script>  
+</body>  
+  </html>
