@@ -309,6 +309,106 @@ html, body {
   z-index: 1999;
   display: none;
 }
+
+/* ✅ استایل جدید برای دکمه ثبت‌نام شبیه تصویر */
+.register-btn {
+  width: 100%;
+  padding: 18px;
+  border: none;
+  border-radius: 14px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  background: linear-gradient(90deg, #4CAF50, #2E7D32);
+  color: white;
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+  transition: all 0.3s ease;
+}
+
+.register-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+.login-btn {
+  width: 100%;
+  padding: 18px;
+  border: none;
+  border-radius: 14px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  background: linear-gradient(90deg, #2196F3, #0D47A1);
+  color: white;
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+  transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+}
+
+/* ✅ استایل جدید برای کارت ثبت‌نام */
+.register-card {
+  max-width: 380px;
+  margin: 80px auto;
+  padding: 30px 25px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.register-card h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #5e3d93;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.register-card input {
+  width: 100%;
+  padding: 16px 20px;
+  margin-bottom: 18px;
+  border-radius: 14px;
+  border: 2px solid #e0e0e0;
+  font-size: 16px;
+  box-sizing: border-box;
+  background: rgba(255,255,255,0.9);
+  transition: all 0.3s ease;
+}
+
+.register-card input:focus {
+  border-color: #5e3d93;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(94, 61, 147, 0.1);
+}
+
+.register-card input::placeholder {
+  color: #888;
+}
+
+.register-card .input-label {
+  display: block;
+  text-align: right;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #555;
+  font-size: 14px;
+}
 </style>
 </head>  
 <body>  
@@ -348,13 +448,25 @@ justify-content:center;
   </div>  
 </div>  
 
-<div id="register" class="card">  
+<!-- ✅ تغییر کارت ثبت‌نام به استایل جدید -->
+<div id="register" class="register-card">  
   <h2>Aurix</h2>  
-  <input id="fullName" placeholder="نام کامل">  
-  <input id="phoneNumber" placeholder="شماره موبایل">  
-  <input id="emailAddress" placeholder="ایمیل">  
-  <button onclick="doRegister()">🔒 ثبت‌نام امن</button>  
-  <button type="button" class="login-btn">🔑 ورود</button>  
+  
+  <div class="input-label">نام کامل</div>
+  <input id="fullName" placeholder="نام و نام خانوادگی خود را وارد کنید">
+  
+  <div class="input-label">شماره موبایل</div>
+  <input id="phoneNumber" placeholder="مثال: ۰۹۱۲۳۴۵۶۷۸۹" type="tel">
+  
+  <div class="input-label">ایمیل</div>
+  <input id="emailAddress" placeholder="example@gmail.com" type="email">
+  
+  <button class="register-btn" onclick="doRegister()">
+    <i class="fas fa-lock"></i> ثبت‌نام امن
+  </button>  
+  <button class="login-btn" type="button">
+    <i class="fas fa-key"></i> ورود
+  </button>  
 </div>  
 
 <div id="verify" class="card">  
