@@ -15,6 +15,19 @@
   box-shadow: 0 10px 30px rgba(0,0,0,0.25) !important;
   border: 1px solid rgba(255,255,255,0.2) !important;
 }
+
+/* ✅ کلاس جدید برای صفحه بازی - بدون کارت سفید */
+.home-page-clean {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  padding-bottom: 100px !important;
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
 body{  
   margin:0;  
   font-family:sans-serif;  
@@ -270,7 +283,8 @@ justify-content:center;
   <button onclick="verifyCode()">✅ تأیید و ورود</button>  
 </div>  
 <div id="gameContainer">  
-  <div id="homePage" class="game-page">  
+  <!-- ✅ اینجا کلاس home-page-clean اضافه شده -->
+  <div id="homePage" class="game-page home-page-clean">  
     <div class="support-float" onclick="openSupport()">  
       <i class="fas fa-headset"></i>  
     </div>  
@@ -365,7 +379,6 @@ function applyWalletGlassStyle() {
   const walletPage = document.getElementById("walletPage");
   if (walletPage) {
     walletPage.classList.add('wallet-glass');
-    // همچنین به صورت inline هم تنظیم می‌کنیم تا مطمئن شویم
     setTimeout(() => {
       walletPage.style.background = "rgba(255, 255, 255, 0.35)";
       walletPage.style.backdropFilter = "blur(12px)";
@@ -389,7 +402,6 @@ window.onload = () => {
     topNav.style.display = "flex";
     showPage("homePage");
     
-    // ✅ اطمینان از اعمال استایل شیشه‌ای در بارگذاری اولیه
     applyWalletGlassStyle();
     
     showWelcomeIfNewUser();
@@ -418,9 +430,8 @@ function verifyCode(){
   verify.style.display="none";  
   gameContainer.style.display="block";  
   bottomNav.style.display="flex";  
-  topNav.style.display = "flex"; // ✅ اضافه شد
+  topNav.style.display = "flex";
   
-  // ✅ اعمال استایل شیشه‌ای پس از تأیید کد
   applyWalletGlassStyle();
   
   showPage("homePage");  
@@ -432,7 +443,6 @@ function showPage(id){
   document.getElementById(id).style.display="block";  
   topNav.style.display = "flex";  
   
-  // ✅ همیشه استایل شیشه‌ای را بر روی کیف پول اعمال کن
   if (id === 'walletPage') {
     applyWalletGlassStyle();
   }
@@ -474,4 +484,4 @@ function openSupport(){
 }  
 </script>  
 </body>  
-  </html>
+</html>
