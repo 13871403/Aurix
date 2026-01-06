@@ -1124,14 +1124,24 @@ function openGateway(){
 }  
   
 function pay(amount){  
-  balance += amount;  
-  updateWalletBalance();  
-  alert("✅ پرداخت با موفقیت انجام شد");  
+  // 1. خواندن مقدار فعلی از localStorage
+  let currentBalance = parseInt(localStorage.getItem("aurix_balance") || "0");
+  
+  // 2. اضافه کردن مبلغ جدید
+  currentBalance += amount;
+  
+  // 3. ذخیره کردن در localStorage
+  localStorage.setItem("aurix_balance", currentBalance);
+  
+  // 4. 🔥 **مهم: به‌روزرسانی نمایش موجودی در صفحه**
+  updateWalletBalance();
+  
+  alert("✅ پرداخت " + amount.toLocaleString('fa-IR') + " تومان با موفقیت انجام شد");  
   showPage("walletPage");
   
-  // اضافه کردن تراکنش شارژ
+  // 5. اضافه کردن تراکنش شارژ
   addTransaction("شارژ حساب", amount);
-}  
+}
   
 function saveUsername(){  
   const usernameInput = document.getElementById("usernameInput");
