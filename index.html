@@ -849,12 +849,12 @@ function updateBalance(){
 }  
   
 function loadAccountData(){  
-  const u = localStorage.getItem("aurix_username");  
+  const u = localStorage.getItem("aurix_username") || sessionStorage.getItem("aurix_username");
   if(u){  
     usernameInput.value = u;  
     currentUsername.innerText = "نام کاربری: " + u;  
   }  
-  const a = localStorage.getItem("aurix_avatar");  
+  const a = localStorage.getItem("aurix_avatar") || sessionStorage.getItem("aurix_avatar");
   if(a){  
     profileImg.src = a;  
   }  
@@ -868,6 +868,7 @@ function showWelcomeIfNewUser(){
 
 function closeWelcome(){  
   localStorage.setItem("aurix_welcome_shown","true");  
+  sessionStorage.setItem("aurix_welcome_shown","true");
   document.getElementById("welcomePopup").style.display="none";  
 }  
   
@@ -951,9 +952,13 @@ window.onload = () => {
   bottomNav.style.display = "none";
   updateBalance();
   loadAccountData();
-  updateWalletBalance(); // بروزرسانی موجودی کیف پول جدید
+  updateWalletBalance();
 
-  if (localStorage.getItem("aurix_logged") === "true") {
+  // چک کردن هم localStorage و هم sessionStorage
+  const isLoggedIn = localStorage.getItem("aurix_logged") === "true" || 
+                     sessionStorage.getItem("aurix_session") === "active";
+
+  if (isLoggedIn) {
     register.style.display = "none";
     verify.style.display = "none";
     gameContainer.style.display = "block";
@@ -967,6 +972,9 @@ window.onload = () => {
   } else {
     register.style.display = "block";
     topNav.style.display = "none";
+    verify.style.display = "none";
+    gameContainer.style.display = "none";
+    bottomNav.style.display = "none";
   }
   
   // تنظیم مجدد اندازه‌ها پس از لود
@@ -992,6 +1000,7 @@ function doRegister(){
   register.style.display="none";  
   verify.style.display="block";  
   showPhone.innerText="📱 "+phoneNumber.value;  
+  topNav.style.display = "none";
 }  
   
 function verifyCode(){  
@@ -1000,6 +1009,7 @@ function verifyCode(){
     return;  
   }  
   localStorage.setItem("aurix_logged","true");  
+  sessionStorage.setItem("aurix_session", "active");
   verify.style.display="none";  
   gameContainer.style.display="block";  
   bottomNav.style.display="flex";  
@@ -1014,10 +1024,18 @@ function verifyCode(){
 function showPage(id){  
   document.querySelectorAll(".game-page").forEach(p=>p.style.display="none");  
   document.getElementById(id).style.display="block";  
-  topNav.style.display = "flex";  
+  
+  // نوار بالا فقط در صفحات اصلی نمایش داده شود
+  if (id === 'homePage' || id === 'walletPage' || id === 'accountPage' || id === 'settingsPage' || id === 'gatewayPage') {
+    topNav.style.display = "flex";
+    bottomNav.style.display = "flex";
+  } else {
+    topNav.style.display = "none";
+    bottomNav.style.display = "none";
+  }
   
   if (id === 'walletPage') {
-    applyWalletGlassStyle();
+applyWalletGlassStyle();
   }
 }  
   
