@@ -670,16 +670,23 @@ justify-content:center;
     <div class="support-float" onclick="openSupport()">  
       <i class="fas fa-headset"></i>  
     </div>  
-<div id="walletPage" class="game-page wallet-glass">
-
-  <!-- کارت موجودی -->
-  <div class="wallet-balance-card">
-    <div class="wallet-title">کیف پول 💰</div>
-    <div class="wallet-balance" id="balanceText">0</div>
-    <div class="wallet-unit">تومان</div>
-  </div>
-
-  <!-- دکمه‌های عملیاتی -->
+  </div>  
+  <div id="walletPage" class="game-page wallet-glass">  
+    <h3>💰 کیف پول</h3>  
+    <h1 id="balanceText">0 تومان</h1>  
+    <button onclick="openGateway()" style="margin-top:20px;background:#00c853;border-radius:18px;font-size:16px;">  
+      ➕ افزایش موجودی  
+    </button>  
+  </div>  
+  <div id="gatewayPage" class="game-page">  
+    <h3>💳 پرداخت امن Aurix</h3>  
+    <p>مبلغ انتخابی:</p>  
+    <button onclick="pay(100000)">100,000 تومان</button>  
+    <button onclick="pay(300000)" style="margin-top:10px">500,000 تومان</button>  
+    <button onclick="pay(1000000)" style="margin-top:10px">1,000,000 تومان</button>  
+    <button onclick="showPage('walletPage')" style="margin-top:16px;background:#eee;color:#000;">انصراف</button>  
+  </div>  
+ <!-- دکمه‌های عملیاتی -->
   <div class="wallet-actions">
     <div class="wallet-action">
       <div class="wallet-action-btn" onclick="openGateway()">➕</div>
@@ -718,8 +725,7 @@ justify-content:center;
     </div>
 
   </div>
- 
-  </div>  
+</div>
   <div id="accountPage" class="game-page">  
     <h3>👤 حساب کاربری</h3>  
     <img id="profileImg" class="profile-img" src="https://i.imgur.com/8Km9tLL.png">  
@@ -993,4 +999,4 @@ function openSupport(){
 }  
 </script>  
 </body>  
-  </html>
+</html>
