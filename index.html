@@ -849,7 +849,6 @@ function saveUserData() {
   if (username) {
     localStorage.setItem("aurix_username", username);
     localStorage.setItem("aurix_account_data_saved", "true");
-    console.log("نام کاربری ذخیره شد:", username);
   }
 }
 
@@ -862,19 +861,168 @@ function loadAccountData(){
   if(u && usernameInput && currentUsername){  
     usernameInput.value = u;  
     currentUsername.innerText = "نام کاربری: " + u;  
-    console.log("نام کاربری بارگذاری شد:", u);
   }  
   
   const a = localStorage.getItem("aurix_avatar");
   const profileImg = document.getElementById("profileImg");
   if(a && profileImg){  
     profileImg.src = a;  
-    console.log("آواتار بارگذاری شد");
   }  
+}  
+  
+function showWelcomeIfNewUser(){  
+  if(!localStorage.getItem("aurix_welcome_shown")){  
+    document.getElementById("welcomePopup").style.display="flex";  
+  }  
+}  
+
+function closeWelcome(){  
+  localStorage.setItem("aurix_welcome_shown","true");  
+  document.getElementById("welcomePopup").style.display="none";  
+}  
+  
+function applyWalletGlassStyle() {
+  const walletPage = document.getElementById("walletPage");
+  if (walletPage) {
+    walletPage.classList.add('wallet-glass');
+  }
 }
+
+// توابع منوی کناری
+function openSideMenu() {
+  document.getElementById('sideMenu').classList.add('active');
+  document.getElementById('overlay').style.display = 'block';
+}
+
+function closeSideMenu() {
+  document.getElementById('sideMenu').classList.remove('active');
+  document.getElementById('overlay').style.display = 'none';
+}
+
+// جلوگیری از zoom و کشیدن صفحه
+document.addEventListener('touchstart', function(event) {
+  if (event.touches.length > 1) {
+    event.preventDefault();
+  }
+}, { passive: false });
+
+document.addEventListener('gesturestart', function(e) {
+  e.preventDefault();
+});
+
+document.addEventListener('gesturechange', function(e) {
+  e.preventDefault();
+});
+
+document.addEventListener('gestureend', function(e) {
+  e.preventDefault();
+});
+
+// جلوگیری از double-tap zoom
+let lastTouchEnd = 0;
+document.addEventListener('touchend', function(event) {
+  const now = (new Date()).getTime();
+  if (now - lastTouchEnd <= 300) {
+    event.preventDefault();
+  }
+  lastTouchEnd = now;
+}, false);
+
+// جلوگیری از pinch zoom
+document.addEventListener('wheel', function(e) {
+  if (e.ctrlKey) {
+    e.preventDefault();
+  }
+}, { passive: false });
+
+// تابع چک کردن لود شدن آیکون اورینو
+function checkUrinoIconLoad() {
+  const urinoImg = document.querySelector('.urino-icon');
+  const fallback = document.getElementById('urinoFallback');
+  
+  if (urinoImg && urinoImg.complete && urinoImg.naturalHeight === 0) {
+    urinoImg.style.display = 'none';
+    if (fallback) fallback.style.display = 'flex';
+  } else if (urinoImg && urinoImg.complete) {
+    if (fallback) fallback.style.display = 'none';
+  }
+}
+
+// 🔧 **اصلاح 3: تابع ورود**
+function doLogin() {
+  // اگر قبلا لاگین کرده، مستقیما وارد شو
+  if (localStorage.getItem("aurix_logged") === "true") {
+    document.getElementById("verify").style.display="none";  
+    document.getElementById("gameContainer").style.display="block";  
+    document.getElementById("bottomNav").style.display="flex";  
+    document.getElementById("topNav").style.display = "flex";
+    showPage("homePage");
+    return;
+  }
+  
+  // در غیر این صورت به صفحه ورود کد برو
+  doRegister();
+}
+
+// 🔧 **اصلاح 4: چک کردن وضعیت لاگین در لود صفحه**
+window.onload = () => {
+  const bottomNav = document.getElementById("bottomNav");
+  const register = document.getElementById("register");
+  const verify = document.getElementById("verify");
+  const gameContainer = document.getElementById("gameContainer");
+  const topNav = document.getElementById("topNav");
+  
+  bottomNav.style.display = "none";
+  topNav.style.display = "none";
+  
+  updateWalletBalance();
+  loadAccountData(); // بارگذاری اطلاعات حساب کاربری
+
+  // 🔧 **اصلاح اصلی: چک کردن لاگین با localStorage**
+  const isLoggedIn = localStorage.getItem("aurix_logged") === "true";
+
+  if (isLoggedIn) {
+    register.style.display = "none";
+    verify.style.display = "none";
+    gameContainer.style.display = "block";
+    bottomNav.style.display = "flex";
+    topNav.style.display = "flex";
+    showPage("homePage");
+    
+    applyWalletGlassStyle();
+    
+    showWelcomeIfNewUser();
+  } else {
+    register.style.display = "block";
+    topNav.style.display = "none";
+    verify.style.display = "none";
+    gameContainer.style.display = "none";
+    bottomNav.style.display = "none";
+  }
+  
+  // تنظیم مجدد اندازه‌ها پس از لود
+  document.body.style.zoom = "1";
+  document.documentElement.style.zoom = "1";
+  
+  // چک کردن لود شدن آیکون اورینو
+  setTimeout(checkUrinoIconLoad, 1000);
+  
+  // اضافه کردن event listener برای لود مجدد آیکون
+  const urinoImg = document.querySelector('.urino-icon');
+  if (urinoImg) {
+    urinoImg.addEventListener('load', checkUrinoIconLoad);
+    urinoImg.addEventListener('error', checkUrinoIconLoad);
+  }
+};  
+  
+function doRegister(){  
+  const fullName = document.getElementById("fullName");
+  const phoneNumber = document.getElementById("phoneNumber");
+  const emailAddress = document.getElementById("emailAddress");
   const register = document.getElementById("register");
   const verify = document.getElementById("verify");
   const topNav = document.getElementById("topNav");
+  const showPhone = document.getElementById("showPhone");
   
   if(!fullName.value||!phoneNumber.value||!emailAddress.value){  
     alert("همه فیلدها را پر کنید");  
@@ -883,7 +1031,7 @@ function loadAccountData(){
   register.style.display="none";  
   verify.style.display="block";  
   showPhone.innerText="📱 "+phoneNumber.value;  
-  topNav.style.display = "none";
+    topNav.style.display = "none";
 }  
   
 function verifyCode(){  
@@ -916,6 +1064,9 @@ function verifyCode(){
 function showPage(id){  
   document.querySelectorAll(".game-page").forEach(p=>p.style.display="none");  
   document.getElementById(id).style.display="block";  
+  
+  const topNav = document.getElementById("topNav");
+  const bottomNav = document.getElementById("bottomNav");
   
   // نوار بالا فقط در صفحات اصلی نمایش داده شود
   if (id === 'homePage' || id === 'walletPage' || id === 'accountPage' || id === 'settingsPage' || id === 'gatewayPage') {
@@ -1191,4 +1342,4 @@ if (usernameInput) {
 }
 </script>
 </body>
-    </html>
+  </html>
