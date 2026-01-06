@@ -479,123 +479,161 @@ display: none;
   font-size: 13px;
   margin-top: 0;
   line-height: 1.2;
-/* کارت موجودی */
+}
+/* 🆕 طراحی جدید walletPage */
+.wallet-modern {
+  background: rgba(255, 255, 255, 0.25) !important;
+  backdrop-filter: blur(25px) !important;
+  -webkit-backdrop-filter: blur(25px) !important;
+  border-radius: 28px !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  padding: 25px !important;
+  margin-top: 20px !important;
+}
+
 .wallet-balance-card {
-  background: rgba(255, 255, 255, 0.35);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border-radius: 15px;
-  padding: 24px;
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  border-radius: 24px;
+  padding: 25px 20px;
+  color: white;
   text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-  margin-bottom: 20px;
+  margin-bottom: 25px;
+  box-shadow: 0 10px 25px rgba(106, 17, 203, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.wallet-title {
-  font-size: 20px;
-  font-weight: bold;
-  color: #fff;
+.wallet-balance-title {
+  font-size: 16px;
+  opacity: 0.9;
+  margin-bottom: 10px;
+  font-weight: 500;
 }
 
-.wallet-balance {
-  font-size: 48px;
+.wallet-balance-amount {
+  font-size: 42px;
   font-weight: 800;
-  color: #fff;
-}
-
-.wallet-unit {
-  font-size: 18px;
-  color: #fff;
-}
-
-/* دکمه‌های عملیاتی */
-.wallet-actions {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 20px;
-}
-
-.wallet-action {
+  margin: 15px 0;
+  direction: ltr;
   text-align: center;
+  letter-spacing: 1px;
 }
 
-.wallet-action-btn {
-  width: 70px;
-  height: 70px;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
+.wallet-balance-unit {
+  font-size: 18px;
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+.wallet-action-buttons {
   display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.wallet-btn {
+  flex: 1;
+  padding: 18px 12px;
+  border-radius: 18px;
+  border: none;
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: 28px;
-  color: #fff;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-  transition: background 0.3s;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  color: white;
 }
 
-.wallet-action-btn:hover {
-  background: rgba(255, 255, 255, 0.5);
+.wallet-btn:hover {
+  transform: translateY(-3px);
 }
 
-/* تراکنش‌ها */
-.wallet-transactions {
-  margin-top: 20px;
-  background: rgba(0, 0, 0, 0.25);
-  border-radius: 15px;
-  padding: 16px;
+.wallet-btn-charge {
+  background: linear-gradient(135deg, #00b09b, #96c93d);
+}
+
+.wallet-btn-withdraw {
+  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+}
+
+.wallet-btn-report {
+  background: linear-gradient(135deg, #8a2be2, #4b0082);
 }
 
 .wallet-transactions-title {
-  font-weight: bold;
-  color: #fff;
-  margin-bottom: 12px;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: right;
+  padding-right: 10px;
 }
 
-.wallet-transaction {
+.wallet-transaction-item {
   display: flex;
   align-items: center;
+  padding: 16px 12px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 18px;
   margin-bottom: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.2s;
 }
 
-.wallet-tx-icon {
-  width: 45px;
-  height: 45px;
-  background: rgba(255, 255, 255, 0.3);
+.wallet-transaction-item:hover {
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateX(-5px);
+}
+
+.wallet-transaction-icon {
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 12px;
-  font-size: 24px;
-  color: #fff;
+  color: white;
+  font-size: 22px;
+  margin-left: 15px;
+  flex-shrink: 0;
 }
 
-.wallet-tx-info {
+.wallet-transaction-details {
   flex: 1;
+  text-align: right;
 }
 
-.wallet-tx-title {
-  font-weight: bold;
-  color: #fff;
+.wallet-transaction-title {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 5px;
+  color: #222;
 }
 
-.wallet-tx-date {
-  font-size: 12px;
-  color: #ddd;
+.wallet-transaction-date {
+  font-size: 13px;
+  color: #666;
 }
 
-.wallet-tx-amount {
-  font-weight: bold;
+.wallet-transaction-amount {
+  font-weight: 800;
+  font-size: 18px;
+  direction: ltr;
+  min-width: 100px;
+  text-align: left;
 }
 
-.wallet-minus {
-  color: #ff5252;
+.wallet-transaction-positive {
+  color: #2ecc71;
 }
 
-.wallet-plus {
-  color: #00e676;
-}
+.wallet-transaction-negative {
+  color: #e74c3c;
 }
 </style>
 </head>  
@@ -671,48 +709,78 @@ justify-content:center;
       <i class="fas fa-headset"></i>  
     </div>  
   </div>  
-  <div id="walletPage" class="game-page wallet-glass">  
-    <h3>💰 کیف پول</h3>  
-    <h1 id="balanceText">0 تومان</h1>  
-    <button 
- <!-- دکمه‌های عملیاتی -->
-  <div class="wallet-actions">
-    <div class="wallet-action">
-      <div class="wallet-action-btn" onclick="openGateway()">➕</div>
-      <div>شارژ</div>
-    </div>
-    <div class="wallet-action">
-      <div class="wallet-action-btn">⬇️</div>
-      <div>برداشت</div>
-    </div>
-    <div class="wallet-action">
-      <div class="wallet-action-btn">📊</div>
-      <div>گزارش</div>
-    </div>
+  <div id="walletPage" class="game-page wallet-modern">  
+  <!-- کارت موجودی -->
+  <div class="wallet-balance-card">
+    <div class="wallet-balance-title">موجودی فعلی</div>
+    <div class="wallet-balance-amount" id="walletBalanceText">0</div>
+    <div class="wallet-balance-unit">تومان</div>
   </div>
 
-  <!-- تراکنش‌ها -->
-  <div class="wallet-transactions">
-    <div class="wallet-transactions-title">آخرین تراکنش‌ها</div>
+  <!-- دکمه‌های عملیاتی -->
+  <div class="wallet-action-buttons">
+    <button class="wallet-btn wallet-btn-charge" onclick="openGateway()">
+      <i class="fas fa-plus-circle" style="font-size: 22px;"></i>
+      <span>شارژ</span>
+    </button>
+    
+    <button class="wallet-btn wallet-btn-withdraw" onclick="withdrawMoney()">
+      <i class="fas fa-arrow-down" style="font-size: 22px;"></i>
+      <span>برداشت</span>
+    </button>
+    
+    <button class="wallet-btn wallet-btn-report" onclick="showReport()">
+      <i class="fas fa-chart-bar" style="font-size: 22px;"></i>
+      <span>گزارش</span>
+    </button>
+  </div>
 
-    <div class="wallet-transaction">
-      <div class="wallet-tx-icon">🛒</div>
-      <div class="wallet-tx-info">
-        <div class="wallet-tx-title">خرید از فروشگاه</div>
-        <div class="wallet-tx-date">۱۴۰۴/۱۰/۱۵ - ۱۸:۳۰</div>
+  <!-- عنوان تراکنش‌ها -->
+  <h3 class="wallet-transactions-title">تراکنش‌های اخیر</h3>
+
+  <!-- لیست تراکنش‌ها -->
+  <div id="walletTransactionsList">
+    <!-- تراکنش ۱ -->
+    <div class="wallet-transaction-item">
+      <div class="wallet-transaction-icon">
+        <i class="fas fa-plus"></i>
       </div>
-      <div class="wallet-tx-amount wallet-minus">-50,000</div>
+      <div class="wallet-transaction-details">
+        <div class="wallet-transaction-title">شارژ حساب</div>
+        <div class="wallet-transaction-date">۱۴۰۳/۱۰/۱۷ - ۱۸:۳۰</div>
+      </div>
+      <div class="wallet-transaction-amount wallet-transaction-positive">
+        +۵۰۰,۰۰۰
+      </div>
     </div>
 
-    <div class="wallet-transaction">
-      <div class="wallet-tx-icon">💳</div>
-      <div class="wallet-tx-info">
-        <div class="wallet-tx-title">شارژ کیف پول</div>
-        <div class="wallet-tx-date">۱۴۰۴/۱۰/۱۴ - ۱۲:۱۰</div>
+    <!-- تراکنش ۲ -->
+    <div class="wallet-transaction-item">
+      <div class="wallet-transaction-icon">
+        <i class="fas fa-shopping-cart"></i>
       </div>
-      <div class="wallet-tx-amount wallet-plus">+200,000</div>
+      <div class="wallet-transaction-details">
+        <div class="wallet-transaction-title">خرید بازی</div>
+        <div class="wallet-transaction-date">۱۴۰۳/۱۰/۱۶ - ۱۴:۲۰</div>
+      </div>
+      <div class="wallet-transaction-amount wallet-transaction-negative">
+        -۷۵,۰۰۰
+      </div>
     </div>
 
+    <!-- تراکنش ۳ -->
+    <div class="wallet-transaction-item">
+      <div class="wallet-transaction-icon">
+        <i class="fas fa-gift"></i>
+      </div>
+      <div class="wallet-transaction-details">
+        <div class="wallet-transaction-title">هدیه ثبت‌نام</div>
+        <div class="wallet-transaction-date">۱۴۰۳/۱۰/۱۵ - ۰۹:۱۵</div>
+      </div>
+      <div class="wallet-transaction-amount wallet-transaction-positive">
+        +۱۰۰,۰۰۰
+      </div>
+    </div>
   </div>
 </div>
   <div id="accountPage" class="game-page">  
@@ -775,9 +843,9 @@ const validCodes=[ "AURIX-ALPHA","AURIX-BRAVO","AURIX-CHARLIE","AURIX-DELTA","AU
   
 let balance = parseInt(localStorage.getItem("aurix_balance") || "0");  
   
+// تابع بروزرسانی موجودی
 function updateBalance(){  
-  balanceText.innerText = balance + " تومان";  
-  localStorage.setItem("aurix_balance", balance);  
+  updateWalletBalance(); // از تابع جدید استفاده می‌کنیم
 }  
   
 function loadAccountData(){  
@@ -883,6 +951,7 @@ window.onload = () => {
   bottomNav.style.display = "none";
   updateBalance();
   loadAccountData();
+  updateWalletBalance(); // بروزرسانی موجودی کیف پول جدید
 
   if (localStorage.getItem("aurix_logged") === "true") {
     register.style.display = "none";
@@ -958,7 +1027,10 @@ function pay(amount){
   balance += amount;  
   updateBalance();  
   alert("✅ پرداخت با موفقیت انجام شد");  
-  showPage("walletPage");  
+  showPage("walletPage");
+  
+  // اضافه کردن تراکنش شارژ
+  addTransaction("شارژ حساب", amount);
 }  
   
 function saveUsername(){  
@@ -985,7 +1057,89 @@ function logout(){
   
 function openSupport(){  
   window.open("https://t.me/Aurix_2026","_blank");  
-}  
-</script>  
-</body>  
-</html>
+}
+
+// =================== 🆕 توابع جدید کیف پول ===================
+// تابع بروزرسانی موجودی در کیف پول جدید
+function updateWalletBalance() {
+  const balance = parseInt(localStorage.getItem("aurix_balance") || "0");
+  const balanceElement = document.getElementById("walletBalanceText");
+  if (balanceElement) {
+    // فرمت عدد با جداکننده هزارگان
+    balanceElement.innerText = balance.toLocaleString('fa-IR');
+  }
+  // بروزرسانی متن قدیمی هم برای سازگاری
+  if (balanceText) {
+    balanceText.innerText = balance + " تومان";
+  }
+  localStorage.setItem("aurix_balance", balance);
+}
+
+// تابع برداشت پول
+function withdrawMoney() {
+  const amount = prompt("مبلغ برداشت را وارد کنید (تومان):");
+  if (!amount || isNaN(amount) || parseInt(amount) <= 0) {
+    alert("مبلغ نامعتبر است");
+    return;
+  }
+  
+  const balance = parseInt(localStorage.getItem("aurix_balance") || "0");
+  if (parseInt(amount) > balance) {
+    alert("موجودی کافی نیست");
+    return;
+  }
+  
+  if (confirm(`آیا از برداشت ${parseInt(amount).toLocaleString('fa-IR')} تومان اطمینان دارید؟`)) {
+    const newBalance = balance - parseInt(amount);
+    localStorage.setItem("aurix_balance", newBalance);
+    updateWalletBalance();
+    alert(`برداشت ${parseInt(amount).toLocaleString('fa-IR')} تومان با موفقیت انجام شد`);
+    
+    // اضافه کردن تراکنش جدید به لیست
+    addTransaction("برداشت از حساب", -parseInt(amount));
+  }
+}
+
+// تابع نمایش گزارش
+function showReport() {
+  alert("گزارش کامل تراکنش‌ها به زودی در این قسمت قرار خواهد گرفت.");
+}
+
+// تابع اضافه کردن تراکنش جدید
+function addTransaction(title, amount) {
+  const transactionsList = document.getElementById("walletTransactionsList");
+  if (!transactionsList) return;
+  
+  const now = new Date();
+  const persianDate = new Date().toLocaleDateString('fa-IR');
+  const time = now.toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+  
+  const transactionItem = document.createElement('div');
+  transactionItem.className = 'wallet-transaction-item';
+  
+  const iconClass = amount > 0 ? 'fa-plus' : 'fa-minus';
+  const amountClass = amount > 0 ? 'wallet-transaction-positive' : 'wallet-transaction-negative';
+  const amountText = amount > 0 ? `+${amount.toLocaleString('fa-IR')}` : `${amount.toLocaleString('fa-IR')}`;
+  
+  transactionItem.innerHTML = `
+    <div class="wallet-transaction-icon">
+      <i class="fas ${iconClass}"></i>
+    </div>
+    <div class="wallet-transaction-details">
+      <div class="wallet-transaction-title">${title}</div>
+      <div class="wallet-transaction-date">${persianDate} - ${time}</div>
+    </div>
+    <div class="wallet-transaction-amount ${amountClass}">
+      ${amountText}
+    </div>
+  `;
+  
+  // اضافه کردن به بالای لیست
+  transactionsList.insertBefore(transactionItem, transactionsList.firstChild);
+  
+  // محدود کردن به ۱۰ تراکنش آخر
+  if (transactionsList.children.length > 10) {
+    transactionsList.removeChild(transactionsList.lastChild);
+  }
+}
+  </script>
