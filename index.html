@@ -479,6 +479,123 @@ display: none;
   font-size: 13px;
   margin-top: 0;
   line-height: 1.2;
+/* کارت موجودی */
+.wallet-balance-card {
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 15px;
+  padding: 24px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  margin-bottom: 20px;
+}
+
+.wallet-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.wallet-balance {
+  font-size: 48px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.wallet-unit {
+  font-size: 18px;
+  color: #fff;
+}
+
+/* دکمه‌های عملیاتی */
+.wallet-actions {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.wallet-action {
+  text-align: center;
+}
+
+.wallet-action-btn {
+  width: 70px;
+  height: 70px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s;
+}
+
+.wallet-action-btn:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* تراکنش‌ها */
+.wallet-transactions {
+  margin-top: 20px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+  padding: 16px;
+}
+
+.wallet-transactions-title {
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 12px;
+}
+
+.wallet-transaction {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.wallet-tx-icon {
+  width: 45px;
+  height: 45px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  font-size: 24px;
+  color: #fff;
+}
+
+.wallet-tx-info {
+  flex: 1;
+}
+
+.wallet-tx-title {
+  font-weight: bold;
+  color: #fff;
+}
+
+.wallet-tx-date {
+  font-size: 12px;
+  color: #ddd;
+}
+
+.wallet-tx-amount {
+  font-weight: bold;
+}
+
+.wallet-minus {
+  color: #ff5252;
+}
+
+.wallet-plus {
+  color: #00e676;
+}
 }
 </style>
 </head>  
@@ -553,21 +670,55 @@ justify-content:center;
     <div class="support-float" onclick="openSupport()">  
       <i class="fas fa-headset"></i>  
     </div>  
-  </div>  
-  <div id="walletPage" class="game-page wallet-glass">  
-    <h3>💰 کیف پول</h3>  
-    <h1 id="balanceText">0 تومان</h1>  
-    <button onclick="openGateway()" style="margin-top:20px;background:#00c853;border-radius:18px;font-size:16px;">  
-      ➕ افزایش موجودی  
-    </button>  
-  </div>  
-  <div id="gatewayPage" class="game-page">  
-    <h3>💳 پرداخت امن Aurix</h3>  
-    <p>مبلغ انتخابی:</p>  
-    <button onclick="pay(100000)">100,000 تومان</button>  
-    <button onclick="pay(300000)" style="margin-top:10px">500,000 تومان</button>  
-    <button onclick="pay(1000000)" style="margin-top:10px">1,000,000 تومان</button>  
-    <button onclick="showPage('walletPage')" style="margin-top:16px;background:#eee;color:#000;">انصراف</button>  
+<div id="walletPage" class="game-page wallet-glass">
+
+  <!-- کارت موجودی -->
+  <div class="wallet-balance-card">
+    <div class="wallet-title">کیف پول 💰</div>
+    <div class="wallet-balance" id="balanceText">0</div>
+    <div class="wallet-unit">تومان</div>
+  </div>
+
+  <!-- دکمه‌های عملیاتی -->
+  <div class="wallet-actions">
+    <div class="wallet-action">
+      <div class="wallet-action-btn" onclick="openGateway()">➕</div>
+      <div>شارژ</div>
+    </div>
+    <div class="wallet-action">
+      <div class="wallet-action-btn">⬇️</div>
+      <div>برداشت</div>
+    </div>
+    <div class="wallet-action">
+      <div class="wallet-action-btn">📊</div>
+      <div>گزارش</div>
+    </div>
+  </div>
+
+  <!-- تراکنش‌ها -->
+  <div class="wallet-transactions">
+    <div class="wallet-transactions-title">آخرین تراکنش‌ها</div>
+
+    <div class="wallet-transaction">
+      <div class="wallet-tx-icon">🛒</div>
+      <div class="wallet-tx-info">
+        <div class="wallet-tx-title">خرید از فروشگاه</div>
+        <div class="wallet-tx-date">۱۴۰۴/۱۰/۱۵ - ۱۸:۳۰</div>
+      </div>
+      <div class="wallet-tx-amount wallet-minus">-50,000</div>
+    </div>
+
+    <div class="wallet-transaction">
+      <div class="wallet-tx-icon">💳</div>
+      <div class="wallet-tx-info">
+        <div class="wallet-tx-title">شارژ کیف پول</div>
+        <div class="wallet-tx-date">۱۴۰۴/۱۰/۱۴ - ۱۲:۱۰</div>
+      </div>
+      <div class="wallet-tx-amount wallet-plus">+200,000</div>
+    </div>
+
+  </div>
+ 
   </div>  
   <div id="accountPage" class="game-page">  
     <h3>👤 حساب کاربری</h3>  
