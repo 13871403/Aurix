@@ -3,1114 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>آوریکس | ورود و ثبت‌نام</title>
+    <title>Aurix - صفحه معرفی</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Vazir', 'Segoe UI', Tahoma, sans-serif;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
-        body {
-            background-color: #f5f5f5;
-            color: #333;
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        .logo {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .logo h1 {
-            color: #ff6b35;
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-        
-        .logo p {
-            color: #666;
-            font-size: 14px;
-        }
-        
-        .tab-container {
-            display: flex;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #ddd;
-        }
-        
-        .tab {
-            flex: 1;
-            text-align: center;
-            padding: 15px;
-            cursor: pointer;
-            font-weight: bold;
-            color: #777;
-            transition: all 0.3s;
-        }
-        
-        .tab.active {
-            color: #ff6b35;
-            border-bottom: 3px solid #ff6b35;
-        }
-        
-        .form-container {
-            background-color: white;
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        
-        .form {
-            display: none;
-        }
-        
-        .form.active {
-            display: block;
-        }
-        
-        .input-group {
-            margin-bottom: 20px;
-        }
-        
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #444;
-        }
-        
-        .input-group input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border 0.3s;
-        }
-        
-        .input-group input:focus {
-            outline: none;
-            border-color: #ff6b35;
-        }
-        
-        .btn {
-            width: 100%;
-            padding: 14px;
-            background-color: #ff6b35;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin-top: 10px;
-        }
-        
-        .btn:hover {
-            background-color: #e55a2b;
-        }
-        
-        .btn-secondary {
-            background-color: #f0f0f0;
-            color: #444;
-        }
-        
-        .btn-secondary:hover {
-            background-color: #e0e0e0;
-        }
-        
-        .separator {
-            text-align: center;
-            margin: 20px 0;
-            position: relative;
-        }
-        
-        .separator span {
-            background-color: white;
-            padding: 0 15px;
-            color: #777;
-            font-size: 14px;
-        }
-        
-        .separator::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background-color: #ddd;
-            z-index: -1;
-        }
-        
-        .link {
-            text-align: center;
-            margin-top: 20px;
-        }
-        
-        .link a {
-            color: #ff6b35;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        
-        .link a:hover {
-            text-decoration: underline;
-        }
-        
-        .code-input {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        
-        .code-input input {
-            width: 60px;
-            height: 60px;
-            text-align: center;
-            font-size: 24px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-        }
-        
-        .code-input input:focus {
-            border-color: #ff6b35;
-            outline: none;
-        }
-        
-        .resend-code {
-            text-align: center;
-            margin-top: 20px;
-        }
-        
-        .resend-code a {
-            color: #ff6b35;
-            text-decoration: none;
-        }
-        
-        @media (max-width: 480px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .form-container {
-                padding: 20px;
-            }
-        }
-    </style>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vazir-font@30.1.0/dist/font-face.css">
-</head>
-<body>
-    <div class="container">
-        <div class="logo">
-            <h1>آوریکس</h1>
-            <p>خدمات درخواست آنلاین تاکسی، غذا و بسته</p>
-        </div>
-        
-        <div class="tab-container">
-            <div class="tab active" onclick="showForm('login-phone')">ورود</div>
-            <div class="tab" onclick="showForm('signup')">ثبت‌نام</div>
-        </div>
-        
-        <div class="form-container">
-            <!-- ورود با شماره موبایل -->
-            <div id="login-phone" class="form active">
-                <h2 style="margin-bottom: 20px; text-align: center;">ورود با شماره موبایل</h2>
-                <div class="input-group">
-                    <label>شماره موبایل</label>
-                    <input type="tel" id="phone" placeholder="09xxxxxxxxx" maxlength="11">
-                </div>
-                <button class="btn" onclick="sendVerificationCode()">ارسال کد تایید</button>
-                
-                <div id="verify-code-section" style="display: none;">
-                    <div class="input-group">
-                        <label>کد تایید</label>
-                        <div class="code-input">
-                            <input type="text" maxlength="1" oninput="moveToNext(this, 1)">
-                            <input type="text" maxlength="1" oninput="moveToNext(this, 2)">
-                            <input type="text" maxlength="1" oninput="moveToNext(this, 3)">
-                            <input type="text" maxlength="1" oninput="moveToNext(this, 4)">
-                            <input type="text" maxlength="1" oninput="moveToNext(this, 5)">
-                        </div>
-                    </div>
-                    <button class="btn" onclick="verifyCode()">ورود</button>
-                    <div class="resend-code">
-                        <a href="#" onclick="sendVerificationCode()">ارسال مجدد کد</a>
-                    </div>
-                </div>
-                
-                <div class="separator">
-                    <span>یا</span>
-                </div>
-                
-                <button class="btn btn-secondary" onclick="showForm('login-email')">ورود با ایمیل</button>
-                
-                <div class="link">
-                    <a href="#" onclick="showForm('forgot-password')">فراموشی رمز عبور</a>
-                </div>
-            </div>
-            
-            <!-- ورود با ایمیل -->
-            <div id="login-email" class="form">
-                <h2 style="margin-bottom: 20px; text-align: center;">ورود با ایمیل</h2>
-                <div class="input-group">
-                    <label>ایمیل</label>
-                    <input type="email" id="email" placeholder="example@domain.com">
-                </div>
-                <div class="input-group">
-                    <label>رمز عبور</label>
-                    <input type="password" id="password">
-                </div>
-                <button class="btn" onclick="loginWithEmail()">ورود به حساب</button>
-                
-                <div class="separator">
-                    <span>یا</span>
-                </div>
-                
-                <button class="btn btn-secondary" onclick="showForm('login-phone')">ورود با شماره موبایل</button>
-                
-                <div class="link">
-                    <a href="#" onclick="showForm('forgot-password')">فراموشی رمز عبور</a>
-                </div>
-            </div>
-            
-            <!-- فراموشی رمز عبور -->
-            <div id="forgot-password" class="form">
-                <h2 style="margin-bottom: 20px; text-align: center;">فراموشی رمز عبور</h2>
-                <div class="input-group">
-                    <label>ایمیل یا شماره موبایل</label>
-                    <input type="text" id="recovery-email" placeholder="ایمیل یا شماره موبایل خود را وارد کنید">
-                </div>
-                <button class="btn" onclick="recoverPassword()">ارسال لینک بازیابی</button>
-                
-                <div class="link">
-                    <a href="#" onclick="showForm('login-phone')">بازگشت به صفحه ورود</a>
-                </div>
-            </div>
-            
-            <!-- ثبت‌نام -->
-            <div id="signup" class="form">
-                <h2 style="margin-bottom: 20px; text-align: center;">ثبت‌نام در آوریکس</h2>
-                <div class="input-group">
-                    <label>نام کامل</label>
-                    <input type="text" id="fullname" placeholder="نام و نام خانوادگی">
-                </div>
-                <div class="input-group">
-                    <label>شماره موبایل</label>
-                    <input type="tel" id="signup-phone" placeholder="09xxxxxxxxx" maxlength="11">
-                </div>
-                <div class="input-group">
-                    <label>ایمیل</label>
-                    <input type="email" id="signup-email" placeholder="example@domain.com">
-                </div>
-                <div class="input-group">
-                    <label>رمز عبور</label>
-                    <input type="password" id="signup-password">
-                </div>
-                <div class="input-group">
-                    <label>تکرار رمز عبور</label>
-                    <input type="password" id="confirm-password">
-                </div>
-                <button class="btn" onclick="signup()">ثبت‌نام</button>
-                
-                <div class="link">
-                    <p>قبلاً حساب دارید؟ <a href="#" onclick="showForm('login-phone')">ورود به حساب</a></p>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <script>
-        function showForm(formId) {
-            // غیرفعال کردن همه فرم‌ها
-            const forms = document.querySelectorAll('.form');
-            forms.forEach(form => {
-                form.classList.remove('active');
-            });
-            
-            // فعال کردن فرم انتخاب شده
-            document.getElementById(formId).classList.add('active');
-            
-            // به‌روزرسانی تب‌ها
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            if (formId === 'login-phone' || formId === 'login-email' || formId === 'forgot-password') {
-                document.querySelectorAll('.tab')[0].classList.add('active');
-            } else {
-                document.querySelectorAll('.tab')[1].classList.add('active');
-            }
-        }
-        
-        function sendVerificationCode() {
-            const phone = document.getElementById('phone').value;
-            if (phone.length !== 11 || !phone.startsWith('09')) {
-                alert('لطفاً شماره موبایل معتبر وارد کنید');
-                return;
-            }
-            
-            // شبیه‌سازی ارسال کد
-            document.getElementById('verify-code-section').style.display = 'block';
-            alert('کد تایید به شماره ' + phone + ' ارسال شد');
-        }
-        
-        function verifyCode() {
-            alert('ورود با موفقیت انجام شد');
-            // در اینجا باید کاربر را به صفحه اصلی هدایت کنید
-        }
-        
-        function loginWithEmail() {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            if (!email || !password) {
-                alert('لطفاً ایمیل و رمز عبور را وارد کنید');
-                return;
-            }
-            
-            alert('ورود با موفقیت انجام شد');
-            // در اینجا باید کاربر را به صفحه اصلی هدایت کنید
-        }
-        
-        function recoverPassword() {
-            const recoveryEmail = document.getElementById('recovery-email').value;
-            
-            if (!recoveryEmail) {
-                alert('لطفاً ایمیل یا شماره موبایل خود را وارد کنید');
-                return;
-            }
-            
-            alert('لینک بازیابی رمز عبور به ' + recoveryEmail + ' ارسال شد');
-        }
-        
-        function signup() {
-            const fullname = document.getElementById('fullname').value;
-            const phone = document.getElementById('signup-phone').value;
-            const email = document.getElementById('signup-email').value;
-            const password = document.getElementById('signup-password').value;
-            const confirmPassword = document.getElementById('confirm-password').value;
-            
-            if (!fullname || !phone || !email || !password || !confirmPassword) {
-                alert('لطفاً تمام فیلدها را پر کنید');
-                return;
-            }
-            
-            if (password !== confirmPassword) {
-                alert('رمز عبور و تکرار آن یکسان نیستند');
-                return;
-            }
-            
-            if (phone.length !== 11 || !phone.startsWith('09')) {
-                alert('لطفاً شماره موبایل معتبر وارد کنید');
-                return;
-            }
-            
-            alert('ثبت‌نام با موفقیت انجام شد');
-            // در اینجا باید کاربر را به صفحه اصلی هدایت کنید
-        }
-        
-        function moveToNext(input, nextIndex) {
-            if (input.value.length === 1) {
-                const inputs = document.querySelectorAll('.code-input input');
-                if (nextIndex < inputs.length) {
-                    inputs[nextIndex].focus();
-                }
-            }
-        }
-    </script>
-</body>
-  </html>
-  <!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>آوریکس | صفحه اصلی</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Vazir', 'Segoe UI', Tahoma, sans-serif;
-        }
-        
         body {
-            background-color: #f5f5f5;
-            color: #333;
-            line-height: 1.6;
-        }
-        
-        .header {
-            background-color: white;
-            padding: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .header-top {
+            background-color: #0046FF; /* رنگ آبی مشابه اسنپ */
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo h1 {
-            color: #ff6b35;
-            font-size: 24px;
-            margin-right: 10px;
-        }
-        
-        .profile-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #ff6b35;
-            color: white;
-            display: flex;
-            align-items: center;
             justify-content: center;
-            font-weight: bold;
-            cursor: pointer;
+            align-items: center;
         }
-        
-        .search-container {
-            position: relative;
-        }
-        
-        .search-input {
-            width: 100%;
-            padding: 12px 45px 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 25px;
-            font-size: 16px;
-            transition: border 0.3s;
-        }
-        
-        .search-input:focus {
-            outline: none;
-            border-color: #ff6b35;
-        }
-        
-        .search-icon {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #777;
-        }
-        
-        .map-container {
-            height: 400px;
-            background-color: #e0e0e0;
-            position: relative;
-            margin-bottom: 20px;
-        }
-        
-        .map {
+
+        .splash-container {
             width: 100%;
             height: 100%;
-            background-color: #a5d6a7;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             position: relative;
         }
-        
-        .user-location {
-            position: absolute;
-            top: 50%;
-            right: 50%;
-            width: 15px;
-            height: 15px;
-            background-color: #ff6b35;
-            border-radius: 50%;
-            border: 3px solid white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.3);
-        }
-        
-        .driver {
-            position: absolute;
-            width: 25px;
-            height: 25px;
-            background-color: #4a90e2;
-            border-radius: 50%;
-            border: 2px solid white;
-            box-shadow: 0 0 8px rgba(0,0,0,0.2);
-        }
-        
-        .restaurant {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background-color: #ff6b35;
-            border-radius: 50%;
-            border: 2px solid white;
-            box-shadow: 0 0 8px rgba(0,0,0,0.2);
-        }
-        
-        .services {
+
+        .logo-container {
+            width: 200px;
+            height: 200px;
             display: flex;
-            justify-content: space-between;
-            padding: 0 15px 20px;
-            flex-wrap: wrap;
-        }
-        
-        .service-card {
-            background-color: white;
-            border-radius: 15px;
-            padding: 20px;
-            width: calc(50% - 10px);
-            margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-        
-        .service-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .service-icon {
-            width: 60px;
-            height: 60px;
-            background-color: #ff6b35;
-            border-radius: 50%;
-            margin: 0 auto 15px;
-            display: flex;
-            align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 24px;
+            align-items: center;
+            animation: fadeInZoom 1.5s ease-out forwards;
         }
-        
-        .service-card:nth-child(2) .service-icon {
-            background-color: #4a90e2;
+
+        .logo {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+            border-radius: 20px;
         }
-        
-        .service-card:nth-child(3) .service-icon {
-            background-color: #50c878;
+
+        .loading-bar {
+            width: 180px;
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            margin-top: 40px;
+            overflow: hidden;
+            position: relative;
         }
-        
-        .service-card:nth-child(4) .service-icon {
-            background-color: #ffaa00;
-        }
-        
-        .service-card h3 {
-            margin-bottom: 10px;
-            font-size: 18px;
-        }
-        
-        .service-card p {
-            color: #666;
-            font-size: 14px;
-        }
-        
-        .filters {
-            display: flex;
-            overflow-x: auto;
-            padding: 15px;
+
+        .loading-progress {
+            width: 0%;
+            height: 100%;
             background-color: white;
-            margin-bottom: 20px;
-            white-space: nowrap;
+            border-radius: 2px;
+            animation: loading 2.5s ease-in-out forwards;
         }
-        
-        .filter-btn {
-            padding: 10px 20px;
-            background-color: #f0f0f0;
-            border-radius: 25px;
-            margin-left: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: none;
-            font-size: 14px;
-        }
-        
-        .filter-btn.active {
-            background-color: #ff6b35;
+
+        .brand-name {
             color: white;
+            font-size: 28px;
+            font-weight: 700;
+            margin-top: 20px;
+            letter-spacing: 1px;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out 0.5s forwards;
         }
-        
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: white;
-            display: flex;
-            justify-content: space-around;
-            padding: 15px 0;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            z-index: 100;
+
+        .tagline {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            margin-top: 10px;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out 0.8s forwards;
         }
-        
-        .nav-item {
-            text-align: center;
-            cursor: pointer;
-            color: #777;
-            transition: color 0.3s;
-            flex: 1;
+
+        /* انیمیشن‌ها */
+        @keyframes fadeInZoom {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
-        
-        .nav-item.active {
-            color: #ff6b35;
+
+        @keyframes loading {
+            0% {
+                width: 0%;
+            }
+            100% {
+                width: 100%;
+            }
         }
-        
-        .nav-icon {
-            font-size: 24px;
-            margin-bottom: 5px;
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
         }
-        
-        .nav-text {
-            font-size: 12px;
-        }
-        
-        @media (max-width: 480px) {
-            .service-card {
-                width: calc(50% - 5px);
+
+        /* استایل برای موبایل */
+        @media (max-width: 768px) {
+            .logo-container {
+                width: 180px;
+                height: 180px;
             }
             
-            .service-card h3 {
-                font-size: 16px;
+            .brand-name {
+                font-size: 24px;
+            }
+            
+            .loading-bar {
+                width: 160px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-container {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .brand-name {
+                font-size: 22px;
+            }
+            
+            .loading-bar {
+                width: 140px;
             }
         }
     </style>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vazir-font@30.1.0/dist/font-face.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="header">
-        <div class="header-top">
-            <div class="logo">
-                <h1>آوریکس</h1>
-            </div>
-            <div class="profile-icon" onclick="goToProfile()">
-                کاربر
-            </div>
+    <div class="splash-container">
+        <div class="logo-container">
+            <img src="https://i.postimg.cc/s2y3fv4B/Screenshot-20260107-110216-Gallery.jpg" alt="لوگوی Aurix" class="logo">
         </div>
         
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="مقصد یا خدمات مورد نظر را جستجو کنید...">
-            <div class="search-icon">
-                <i class="fas fa-search"></i>
-            </div>
-        </div>
-    </div>
-    
-    <div class="filters">
-        <button class="filter-btn active" onclick="filterServices('all')">همه</button>
-        <button class="filter-btn" onclick="filterServices('taxi')">تاکسی</button>
-        <button class="filter-btn" onclick="filterServices('food')">سفارش غذا</button>
-        <button class="filter-btn" onclick="filterServices('parcel')">ارسال بسته</button>
-        <button class="filter-btn" onclick="filterServices('vip')">VIP</button>
-        <button class="filter-btn" onclick="filterServices('restaurant')">رستوران</button>
-        <button class="filter-btn" onclick="filterServices('cafe')">کافه</button>
-    </div>
-    
-    <div class="map-container">
-        <div class="map" id="map">
-            <!-- موقعیت کاربر -->
-            <div class="user-location"></div>
-            
-            <!-- رانندگان نزدیک -->
-            <div class="driver" style="top: 40%; right: 40%;"></div>
-            <div class="driver" style="top: 60%; right: 60%;"></div>
-            <div class="driver" style="top: 30%; right: 70%;"></div>
-            
-            <!-- رستوران‌ها -->
-            <div class="restaurant" style="top: 50%; right: 30%;"></div>
-            <div class="restaurant" style="top: 70%; right: 20%;"></div>
-        </div>
-    </div>
-    
-    <div class="services">
-        <div class="service-card" onclick="requestTaxi()">
-            <div class="service-icon">
-                <i class="fas fa-taxi"></i>
-            </div>
-            <h3>درخواست تاکسی</h3>
-            <p>سریع، مطمئن و با قیمت مناسب</p>
-        </div>
+        <div class="brand-name">Aurix</div>
+        <div class="tagline">سرویس هوشمند حمل و نقل</div>
         
-        <div class="service-card" onclick="orderFood()">
-            <div class="service-icon">
-                <i class="fas fa-utensils"></i>
-            </div>
-            <h3>سفارش غذا</h3>
-            <p>از بهترین رستوران‌های شهر</p>
-        </div>
-        
-        <div class="service-card" onclick="sendParcel()">
-            <div class="service-icon">
-                <i class="fas fa-box"></i>
-            </div>
-            <h3>ارسال بسته</h3>
-            <p>ارسال سریع بسته و مرسولات</p>
-        </div>
-        
-        <div class="service-card" onclick="showAllServices()">
-            <div class="service-icon">
-                <i class="fas fa-bolt"></i>
-            </div>
-            <h3>سرویس ویژه</h3>
-            <p>خودروهای لوکس و درجه یک</p>
-        </div>
-    </div>
-    
-    <div class="bottom-nav">
-        <div class="nav-item active" onclick="goToHome()">
-            <div class="nav-icon">
-                <i class="fas fa-home"></i>
-            </div>
-            <div class="nav-text">خانه</div>
-        </div>
-        
-        <div class="nav-item" onclick="goToOrders()">
-            <div class="nav-icon">
-                <i class="fas fa-history"></i>
-            </div>
-            <div class="nav-text">سفارشات</div>
-        </div>
-        
-        <div class="nav-item" onclick="goToMap()">
-            <div class="nav-icon">
-                <i class="fas fa-map-marked-alt"></i>
-            </div>
-            <div class="nav-text">نقشه</div>
-        </div>
-        
-        <div class="nav-item" onclick="goToProfile()">
-            <div class="nav-icon">
-                <i class="fas fa-user"></i>
-            </div>
-            <div class="nav-text">پروفایل</div>
+        <div class="loading-bar">
+            <div class="loading-progress"></div>
         </div>
     </div>
 
     <script>
-        function filterServices(type) {
-            const buttons = document.querySelectorAll('.filter-btn');
-            buttons.forEach(btn => {
-                btn.classList.remove('active');
-            });
+        // تابع هدایت به صفحه اصلی پس از 2.5 ثانیه
+        setTimeout(function() {
+            // اینجا می‌توانید آدرس صفحه اصلی اپلیکیشن را قرار دهید
+            // برای مثال دمو، ما یک پیام نمایش می‌دهیم و صفحه را ریفرش می‌کنیم
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
             
-            event.target.classList.add('active');
+            setTimeout(function() {
+                // در یک اپلیکیشن واقعی، اینجا به صفحه اصلی منتقل می‌شوید
+                // window.location.href = "home.html";
+                
+                // برای دمو، فقط یک پیام نمایش می‌دهیم
+                alert("در حال انتقال به صفحه اصلی اپلیکیشن Aurix...\n\nدر یک اپلیکیشن واقعی، اینجا به صفحه اصلی منتقل می‌شوید.");
+                
+                // اگر بخواهیم صفحه را ریفرش کنیم (برای تست)
+                // window.location.reload();
+            }, 500);
+        }, 2500); // 2.5 ثانیه
+        
+        // اضافه کردن انیمیشن خروج هنگام کلیک (برای تست)
+        document.addEventListener('click', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.3s ease';
             
-            // در اینجا باید سرویس‌ها را بر اساس نوع فیلتر کنید
-            alert('فیلتر بر اساس: ' + type);
-        }
-        
-        function requestTaxi() {
-            alert('صفحه درخواست تاکسی باز می‌شود');
-            // در اینجا باید کاربر را به صفحه درخواست تاکسی هدایت کنید
-        }
-        
-        function orderFood() {
-            alert('صفحه سفارش غذا باز می‌شود');
-            // در اینجا باید کاربر را به صفحه سفارش غذا هدایت کنید
-        }
-        
-        function sendParcel() {
-            alert('صفحه ارسال بسته باز می‌شود');
-            // در اینجا باید کاربر را به صفحه ارسال بسته هدایت کنید
-        }
-        
-        function showAllServices() {
-            alert('همه سرویس‌ها نمایش داده می‌شوند');
-            // در اینجا باید همه سرویس‌ها را نمایش دهید
-        }
-        
-        function goToHome() {
-            // کاربر در حال حاضر در صفحه اصلی است
-            const navItems = document.querySelectorAll('.nav-item');
-            navItems.forEach(item => {
-                item.classList.remove('active');
-            });
-            event.target.closest('.nav-item').classList.add('active');
-        }
-        
-        function goToOrders() {
-            alert('صفحه سفارشات باز می‌شود');
-            // در اینجا باید کاربر را به صفحه سفارشات هدایت کنید
-        }
-        
-        function goToMap() {
-            alert('صفحه نقشه باز می‌شود');
-            // در اینجا باید کاربر را به صفحه نقشه هدایت کنید
-        }
-        
-        function goToProfile() {
-            alert('صفحه پروفایل باز می‌شود');
-            // در اینجا باید کاربر را به صفحه پروفایل هدایت کنید
-        }
-        
-        // ایجاد رانندگان و رستوران‌های تصادفی روی نقشه
-        document.addEventListener('DOMContentLoaded', function() {
-            const map = document.getElementById('map');
-            
-            // ایجاد رانندگان تصادفی
-            for (let i = 0; i < 8; i++) {
-                const driver = document.createElement('div');
-                driver.className = 'driver';
-                driver.style.top = Math.random() * 80 + 10 + '%';
-                driver.style.right = Math.random() * 80 + 10 + '%';
-                map.appendChild(driver);
-            }
-            
-            // ایجاد رستوران‌های تصادفی
-            for (let i = 0; i < 6; i++) {
-                const restaurant = document.createElement('div');
-                restaurant.className = 'restaurant';
-                restaurant.style.top = Math.random() * 80 + 10 + '%';
-                restaurant.style.right = Math.random() * 80 + 10 + '%';
-                map.appendChild(restaurant);
-            }
+            setTimeout(function() {
+                alert("به صفحه اصلی Aurix خوش آمدید!");
+                // window.location.href = "home.html";
+            }, 300);
         });
     </script>
 </body>
 </html>
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>آوریکس | حساب کاربری</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Vazir', 'Segoe UI', Tahoma, sans-serif;
-        }
-        
-        body {
-            background-color: #f5f5f5;
-            color: #333;
-            line-height: 1.6;
-        }
-        
-        .header {
-            background-color: #ff6b35;
-            color: white;
-            padding: 20px 15px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .back-btn {
-            font-size: 20px;
-            margin-left: 15px;
-            cursor: pointer;
-        }
-        
-        .header h1 {
-            font-size: 20px;
-        }
-        
-        .profile-section {
-            background-color: white;
-            padding: 25px 20px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .profile-image {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background-color: #ff6b35;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            margin-left: 20px;
-            cursor: pointer;
-        }
-        
-        .profile-info h2 {
-            margin-bottom: 5px;
-            font-size: 20px;
-        }
-        
-        .profile-info p {
-            color: #666;
-            margin-bottom: 10px;
-        }
-        
-        .edit-profile {
-            color: #ff6b35;
-            font-weight: 500;
-            cursor: pointer;
-        }
-        
-        .menu-section {
-            background-color: white;
-            margin-bottom: 15px;
-        }
-        
-        .menu-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 18px 20px;
-            border-bottom: 1px solid #f0f0f0;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        
-        .menu-item:hover {
-            background-color: #f9f9f9;
-        }
-        
-        .menu-item:last-child {
-            border-bottom: none;
-        }
-        
-        .menu-item-left {
-            display: flex;
-            align-items: center;
-        }
-        
-        .menu-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: 15px;
-            color: #555;
-        }
-        
-        .menu-item-left h3 {
-            font-size: 16px;
-            margin-bottom: 3px;
-        }
-        
-        .menu-item-left p {
-            font-size: 13px;
-            color: #777;
-        }
-        
-        .arrow {
-            color: #aaa;
-        }
-        
-        .logout-btn {
-            background-color: #ff4444;
-            color: white;
-            text-align: center;
-            padding: 18px;
-            margin: 20px 15px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s;
-        }
-        
-        .logout-btn:hover {
-            background-color: #e53935;
-        }
-        
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: white;
-            display: flex;
-            justify-content: space-around;
-            padding: 15px 0;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            z-index: 100;
-        }
-        
-        .nav-item {
-            text-align: center;
-            cursor: pointer;
-            color: #777;
-            transition: color 0.3s;
-            flex: 1;
-        }
-        
-        .nav-item.active {
-            color: #ff6b35;
-        }
-        
-        .nav-icon {
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
-        
-        .nav-text {
-            font-size: 12px;
-        }
-        
-        @media (max-width: 480px) {
-            .profile-section {
-                padding: 20px 15px;
-            }
-            
-            .profile-image {
-                width: 70px;
-                height: 70px;
-                font-size: 26px;
-            }
-        }
-    </style>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vazir-font@30.1.0/dist/font-face.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-    <div class="header">
-        <div class="back-btn" onclick="goBack()">
-            <i class="fas fa-arrow-right"></i>
-        </div>
-        <h1>حساب کاربری و تنظیمات</h1>
-    </div>
-    
-    <div class="profile-section">
-        <div class="profile-image" onclick="changeProfileImage()">
-            <i class="fas fa-user"></i>
-        </div>
-        <div class="profile-info">
-            <h2>محمد احمدی</h2>
-            <p>0912xxxxxxx</p>
-            <p>m.ahmadi@email.com</p>
-            <div class="edit-profile" onclick="editProfile()">
-                ویرایش پروفایل
-            </div>
-        </div>
-    </div>
-    
-    <div class="menu-section">
-        <div class="menu-item" onclick="showOrderHistory()">
-            <div class="menu-item-left">
-                <div class="menu-icon">
-                    <i class="fas fa-history"></i>
-                </div>
-                <div>
-                    <h3>تاریخچه سفارشات</h3>
-                    <p>مشاهده سفرها و سفارشات قبلی</p>
-                </div>
-            </div>
-            <div class="arrow">
-                <i class="fas
