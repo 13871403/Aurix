@@ -4,8 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aurix - صفحه معرفی</title>
-    <link rel="stylesheet" href="https://i.postimg.cc/jd3KpPvb/Screenshot-20260107-110728-Gallery.jpg">
+    
+    <!-- متا تگ‌های مهم برای جلوگیری از کش -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
     <style>
+        /* کد CSS با کامنت نسخه - تغییر این عدد هنگام تغییر CSS */
+        /* Version: 1.0.1 - Last Updated: <?php echo date('Y-m-d H:i:s'); ?> */
+        
         * {
             margin: 0;
             padding: 0;
@@ -14,13 +22,14 @@
         }
 
         body {
-            background-color: #0046FF; /* رنگ آبی مشابه اسنپ */
+            background-color: #0046FF;
             overflow: hidden;
             height: 100vh;
             width: 100vw;
             display: flex;
             justify-content: center;
             align-items: center;
+            transition: opacity 0.5s ease;
         }
 
         .splash-container {
@@ -40,14 +49,17 @@
             justify-content: center;
             align-items: center;
             animation: fadeInZoom 1.5s ease-out forwards;
+            background-color: white;
+            border-radius: 25px;
+            padding: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
 
         .logo {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
-            border-radius: 20px;
+            border-radius: 15px;
         }
 
         .loading-bar {
@@ -66,6 +78,7 @@
             background-color: white;
             border-radius: 2px;
             animation: loading 2.5s ease-in-out forwards;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
         .brand-name {
@@ -76,74 +89,113 @@
             letter-spacing: 1px;
             opacity: 0;
             animation: fadeIn 0.5s ease-out 0.5s forwards;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .tagline {
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.9);
             font-size: 14px;
             margin-top: 10px;
             opacity: 0;
             animation: fadeIn 0.5s ease-out 0.8s forwards;
         }
 
-        /* انیمیشن‌ها */
         @keyframes fadeInZoom {
-            0% {
-                opacity: 0;
-                transform: scale(0.8);
+            0% { 
+                opacity: 0; 
+                transform: scale(0.8) rotate(-5deg);
             }
-            100% {
-                opacity: 1;
-                transform: scale(1);
+            70% {
+                transform: scale(1.05) rotate(2deg);
+            }
+            100% { 
+                opacity: 1; 
+                transform: scale(1) rotate(0deg);
             }
         }
 
         @keyframes loading {
-            0% {
+            0% { 
                 width: 0%;
+                box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
             }
-            100% {
+            50% {
+                box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+            }
+            100% { 
                 width: 100%;
+                box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
             }
         }
 
         @keyframes fadeIn {
-            0% {
+            0% { 
                 opacity: 0;
+                transform: translateY(10px);
             }
-            100% {
+            100% { 
                 opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        /* استایل برای موبایل */
+        @keyframes pulse {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; }
+        }
+
+        .loading-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 12px;
+            margin-top: 15px;
+            animation: pulse 2s infinite;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out 1s forwards, pulse 2s infinite 1.5s;
+        }
+
         @media (max-width: 768px) {
-            .logo-container {
-                width: 180px;
-                height: 180px;
+            .logo-container { 
+                width: 180px; 
+                height: 180px; 
+                border-radius: 20px;
             }
-            
-            .brand-name {
-                font-size: 24px;
+            .brand-name { 
+                font-size: 24px; 
             }
-            
-            .loading-bar {
-                width: 160px;
+            .loading-bar { 
+                width: 160px; 
             }
         }
 
         @media (max-width: 480px) {
-            .logo-container {
-                width: 150px;
-                height: 150px;
+            .logo-container { 
+                width: 150px; 
+                height: 150px; 
+                border-radius: 18px;
+                padding: 12px;
             }
-            
-            .brand-name {
-                font-size: 22px;
+            .brand-name { 
+                font-size: 22px; 
             }
-            
-            .loading-bar {
-                width: 140px;
+            .loading-bar { 
+                width: 140px; 
+            }
+            .tagline {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .logo-container { 
+                width: 130px; 
+                height: 130px; 
+            }
+            .brand-name { 
+                font-size: 20px; 
+            }
+            .loading-bar { 
+                width: 120px; 
             }
         }
     </style>
@@ -151,47 +203,260 @@
 <body>
     <div class="splash-container">
         <div class="logo-container">
-            <img src="https://i.postimg.cc/s2y3fv4B/Screenshot-20260107-110216-Gallery.jpg" alt="لوگوی Aurix" class="logo">
+            <!-- لوگوی Aurix با پارامتر جلوگیری از کش -->
+            <img src="https://i.postimg.cc/ZqnhVR6R/IMG-20260105-225855-207.webp?v=<?php echo time(); ?>" 
+                 alt="لوگوی Aurix" 
+                 class="logo"
+                 onerror="this.onerror=null; this.style.display='none'; this.parentElement.innerHTML='<div style=\"width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg, #0046FF 0%, #0099FF 100%);border-radius:15px;color:white;font-size:24px;font-weight:bold;\">AURIX</div>';">
         </div>
         
         <div class="brand-name">Aurix</div>
-        <div class="tagline">درحال برسی اینترنت...</div>
+        <div class="tagline">در حال بررسی اینترنت...</div>
         
         <div class="loading-bar">
             <div class="loading-progress"></div>
         </div>
+        
+        <div class="loading-text" id="loading-percentage">0%</div>
     </div>
 
     <script>
-        // تابع هدایت به صفحه اصلی پس از 2.5 ثانیه
-        setTimeout(function() {
-            // اینجا می‌توانید آدرس صفحه اصلی اپلیکیشن را قرار دهید
-            // برای مثال دمو، ما یک پیام نمایش می‌دهیم و صفحه را ریفرش می‌کنیم
+        // ============================================
+        // سیستم مدیریت کش
+        // ============================================
+        
+        // پارامتر نسخه برای جلوگیری از کش
+        const APP_VERSION = '1.0.1';
+        const CACHE_BUSTER = '?_v=' + APP_VERSION + '&t=' + Date.now();
+        
+        // پاک کردن کش مرورگر
+        function clearBrowserCache() {
+            // پاک کردن localStorage و sessionStorage در صورت نیاز
+            if (window.location.search.indexOf('clearCache') !== -1) {
+                localStorage.clear();
+                sessionStorage.clear();
+            }
+            
+            // پاک کردن کش API
+            if ('caches' in window) {
+                caches.keys().then(function(cacheNames) {
+                    cacheNames.forEach(function(cacheName) {
+                        caches.delete(cacheName);
+                    });
+                    console.log('✅ کش مرورگر پاک شد');
+                }).catch(function(err) {
+                    console.log('⚠️ خطا در پاک کردن کش:', err);
+                });
+            }
+        }
+        
+        // بررسی و اطمینان از بارگذاری نسخه جدید
+        function ensureFreshLoad() {
+            const currentVersion = localStorage.getItem('aurix_version');
+            
+            // اگر نسخه تغییر کرده، صفحه را ریلود کن
+            if (currentVersion !== APP_VERSION) {
+                console.log(`🔄 نسخه جدید: ${APP_VERSION} (قبلی: ${currentVersion || 'بدون'})`);
+                localStorage.setItem('aurix_version', APP_VERSION);
+                
+                // اگر از قبل صفحه بارگذاری شده، ریلود کن
+                if (currentVersion) {
+                    window.location.href = window.location.pathname + CACHE_BUSTER;
+                    return false;
+                }
+            }
+            
+            // پارامتر ریلود اجباری
+            if (window.location.search.indexOf('forceReload') !== -1) {
+                const newUrl = window.location.pathname + window.location.search.replace('forceReload', 'reloaded');
+                window.history.replaceState({}, document.title, newUrl);
+                window.location.reload(true);
+            }
+            
+            return true;
+        }
+        
+        // ============================================
+        // انیمیشن‌های صفحه
+        // ============================================
+        
+        // نمایش درصد لودینگ
+        function updateLoadingPercentage() {
+            const startTime = Date.now();
+            const totalTime = 2500; // مدت زمان انیمیشن
+            const percentageElement = document.getElementById('loading-percentage');
+            
+            const interval = setInterval(() => {
+                const elapsed = Date.now() - startTime;
+                const percentage = Math.min(Math.floor((elapsed / totalTime) * 100), 100);
+                
+                if (percentageElement) {
+                    percentageElement.textContent = percentage + '%';
+                    
+                    // تغییر رنگ در درصدهای خاص
+                    if (percentage > 90) {
+                        percentageElement.style.color = '#4CAF50';
+                    } else if (percentage > 70) {
+                        percentageElement.style.color = '#FFC107';
+                    }
+                }
+                
+                if (percentage >= 100) {
+                    clearInterval(interval);
+                }
+            }, 50);
+        }
+        
+        // ============================================
+        // مدیریت انتقال به صفحه اصلی
+        // ============================================
+        
+        function redirectToHome() {
+            // ایجاد افکت محو شدن
             document.body.style.opacity = '0';
             document.body.style.transition = 'opacity 0.5s ease';
             
-            setTimeout(function() {
-                // در یک اپلیکیشن واقعی، اینجا به صفحه اصلی منتقل می‌شوید
-                // window.location.href = "home.html";
+            setTimeout(() => {
+                // اینجا آدرس صفحه اصلی اپلیکیشن را قرار دهید
+                // اضافه کردن پارامتر کش‌باستر برای اطمینان از بارگذاری جدید
+                const homeUrl = 'home.html' + CACHE_BUSTER;
                 
-                // برای دمو، فقط یک پیام نمایش می‌دهیم
-                alert("در حال انتقال به صفحه اصلی اپلیکیشن Aurix...\n\nدر یک اپلیکیشن واقعی، اینجا به صفحه اصلی منتقل می‌شوید.");
+                // ذخیره زمان آخرین بازدید
+                localStorage.setItem('last_visit', Date.now());
                 
-                // اگر بخواهیم صفحه را ریفرش کنیم (برای تست)
-                // window.location.reload();
+                // انتقال به صفحه اصلی
+                console.log('🚀 انتقال به صفحه اصلی...');
+                window.location.href = homeUrl;
+                
+                // اگر انتقال انجام نشد، پیام نمایش بده
+                setTimeout(() => {
+                    if (window.location.pathname.includes('home.html') === false) {
+                        const confirmRedirect = confirm('آیا مایلید به صفحه اصلی منتقل شوید؟');
+                        if (confirmRedirect) {
+                            window.location.href = homeUrl;
+                        }
+                    }
+                }, 1000);
+                
             }, 500);
-        }, 2500); // 2.5 ثانیه
+        }
         
-        // اضافه کردن انیمیشن خروج هنگام کلیک (برای تست)
-        document.addEventListener('click', function() {
-            document.body.style.opacity = '0';
-            document.body.style.transition = 'opacity 0.3s ease';
+        // ============================================
+        // مدیریت خطاها
+        // ============================================
+        
+        function handleErrors() {
+            // مدیریت خطای لود تصویر
+            const logo = document.querySelector('.logo');
+            if (logo) {
+                logo.addEventListener('error', function() {
+                    console.log('⚠️ خطا در بارگذاری لوگو');
+                    this.style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        const container = this.parentElement;
+                        container.innerHTML = `
+                            <div style="
+                                width: 100%;
+                                height: 100%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                background: linear-gradient(135deg, #0046FF 0%, #0099FF 100%);
+                                border-radius: 15px;
+                                color: white;
+                                font-size: 28px;
+                                font-weight: bold;
+                                text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+                            ">
+                                AURIX
+                            </div>
+                        `;
+                    }, 300);
+                });
+            }
             
-            setTimeout(function() {
-                alert("به صفحه اصلی Aurix خوش آمدید!");
-                // window.location.href = "home.html";
-            }, 300);
+            // مدیریت خطای کلی
+            window.addEventListener('error', function(e) {
+                console.error('❌ خطا در صفحه:', e.error);
+            });
+        }
+        
+        // ============================================
+        // اجرای برنامه
+        // ============================================
+        
+        // شروع برنامه
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Aurix Splash Screen - Version ' + APP_VERSION);
+            console.log('📅 بارگذاری در: ' + new Date().toLocaleString('fa-IR'));
+            
+            // 1. مدیریت کش
+            clearBrowserCache();
+            
+            // 2. بررسی نسخه جدید
+            if (!ensureFreshLoad()) {
+                return; // اگر نسخه جدید بود، از اینجا ادامه نده
+            }
+            
+            // 3. شروع انیمیشن‌ها
+            updateLoadingPercentage();
+            
+            // 4. مدیریت خطاها
+            handleErrors();
+            
+            // 5. انتقال خودکار پس از 2.5 ثانیه
+            setTimeout(redirectToHome, 2500);
+            
+            // 6. امکان کلیک برای انتقال سریع‌تر
+            document.addEventListener('click', function(e) {
+                // جلوگیری از کلیک‌های مکرر
+                if (this.redirecting) return;
+                this.redirecting = true;
+                
+                console.log('🖱️ انتقال با کلیک کاربر');
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // افکت محو شدن سریع‌تر
+                document.body.style.opacity = '0';
+                document.body.style.transition = 'opacity 0.2s ease';
+                
+                setTimeout(() => {
+                    const homeUrl = 'home.html' + CACHE_BUSTER + '&clicked=true';
+                    window.location.href = homeUrl;
+                }, 200);
+            });
+            
+            // 7. امکان کلید Enter برای انتقال
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.keyCode === 13) {
+                    console.log('⌨️ انتقال با کلید Enter');
+                    redirectToHome();
+                }
+            });
+            
+            // 8. نمایش اطلاعات دیباگ در حالت توسعه
+            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                console.log('🔧 حالت توسعه فعال است');
+                document.addEventListener('contextmenu', function(e) {
+                    e.preventDefault();
+                    alert(`Aurix Splash Screen\nVersion: ${APP_VERSION}\nTime: ${new Date().toLocaleTimeString()}`);
+                });
+            }
         });
+        
+        // جلوگیری از کش شدن صفحه در تاریخچه مرورگر
+        window.addEventListener('beforeunload', function() {
+            window.scrollTo(0, 0);
+        });
+        
+        // اطمینان از بارگذاری کامل
+        window.addEventListener('load', function() {
+            console.log('✅ صفحه به طور کامل بارگذاری شد');
+            document.body.style.opacity = '1';
+        });
+        
     </script>
 </body>
 </html>
