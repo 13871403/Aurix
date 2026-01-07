@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aurix - در حال بارگذاری</title>
+    <title>Aurix - صفحه معرفی</title>
     
     <!-- متا تگ‌های مهم برای جلوگیری از کش -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -11,65 +11,24 @@
     <meta http-equiv="Expires" content="0">
     
     <style>
-        /* Reset و تنظیمات پایه */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', 'Vazirmatn', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: #0046FF;
+            background-color: #0046FF; /* رنگ آبی */
             overflow: hidden;
             height: 100vh;
             width: 100vw;
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: opacity 0.3s ease;
-            position: relative;
+            transition: opacity 0.5s ease;
         }
 
-        /* انیمیشن‌های پایه */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideUp {
-            from { 
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes scaleIn {
-            0% { 
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            70% { 
-                opacity: 1;
-                transform: scale(1.05);
-            }
-            100% { 
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-            100% { transform: scale(1); }
-        }
-
-        /* کانتینر اصلی */
         .splash-container {
             width: 100%;
             height: 100%;
@@ -78,506 +37,118 @@
             justify-content: center;
             align-items: center;
             position: relative;
-            padding: 20px;
-        }
-
-        /* بخش لوگو */
-        .logo-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 40px;
         }
 
         .logo-container {
-            width: 120px;
-            height: 120px;
+            width: 200px;
+            height: 200px;
             display: flex;
             justify-content: center;
             align-items: center;
-            animation: scaleIn 1s ease-out forwards;
+            animation: fadeInZoom 1.5s ease-out forwards;
             background-color: white;
-            border-radius: 28px;
-            padding: 20px;
-            box-shadow: 
-                0 10px 40px rgba(0, 0, 0, 0.2),
-                0 0 0 1px rgba(255, 255, 255, 0.1) inset;
-            margin-bottom: 25px;
+            border-radius: 25px;
+            padding: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
 
         .logo {
-            width: 100%;
-            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
             object-fit: contain;
-            border-radius: 20px;
-            animation: pulse 2s ease-in-out infinite;
-            animation-delay: 1s;
-        }
-
-        /* نام برند */
-        .brand-name {
-            color: white;
-            font-size: 36px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            opacity: 0;
-            animation: slideUp 0.6s ease-out 0.5s forwards;
-            text-shadow: 
-                0 2px 10px rgba(0, 0, 0, 0.2),
-                0 0 30px rgba(255, 255, 255, 0.3);
-            font-family: 'Segoe UI', 'Vazirmatn', sans-serif;
-        }
-
-        /* بخش بارگذاری */
-        .loading-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 280px;
-            margin-top: 30px;
-        }
-
-        /* نوار بارگذاری */
-        .loading-bar-container {
-            width: 100%;
-            height: 6px;
-            background-color: rgba(255, 255, 255, 0.15);
-            border-radius: 3px;
-            overflow: hidden;
-            position: relative;
-            margin-bottom: 12px;
+            border-radius: 15px;
         }
 
         .loading-bar {
+            width: 180px;
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            margin-top: 40px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .loading-progress {
             width: 0%;
             height: 100%;
-            position: absolute;
-            left: 0;
-            top: 0;
-            border-radius: 3px;
-            transition: width 0.1s linear, background-color 0.3s ease;
-            background: linear-gradient(90deg, 
-                #FFFFFF 0%, 
-                #FFFFFF 70%, 
-                #FFD700 70%, 
-                #FFD700 90%, 
-                #4CAF50 90%, 
-                #4CAF50 100%);
+            background-color: white;
+            border-radius: 2px;
+            animation: loading 2.5s ease-in-out forwards;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
-        /* درصد بارگذاری */
-        .percentage-display {
-            color: white;
-            font-size: 14px;
-            font-weight: 500;
-            opacity: 0;
-            animation: fadeIn 0.5s ease-out 0.8s forwards;
-            font-family: monospace;
-            letter-spacing: 1px;
-        }
-
-        /* متن وضعیت */
-        .status-text {
-            color: rgba(255, 255, 255, 0.85);
-            font-size: 15px;
-            font-weight: 400;
-            margin-top: 8px;
-            opacity: 0;
-            animation: fadeIn 0.5s ease-out 1s forwards;
-            text-align: center;
-            line-height: 1.5;
-        }
-
-        /* پیام‌های مرحله‌ای */
-        .phase-messages {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 13px;
-            margin-top: 25px;
-            opacity: 0;
-            animation: fadeIn 0.5s ease-out 1.2s forwards;
-            text-align: center;
-            line-height: 1.8;
-            max-width: 280px;
-        }
-
-        .phase-messages span {
-            display: block;
-            margin: 5px 0;
-            opacity: 0.8;
-        }
-
-        /* انیمیشن پالس برای لوگو */
-        @keyframes logoPulse {
-            0%, 100% { 
-                transform: scale(1);
-                box-shadow: 
-                    0 10px 40px rgba(0, 0, 0, 0.2),
-                    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+        @keyframes fadeInZoom {
+            0% { 
+                opacity: 0; 
+                transform: scale(0.8) rotate(-5deg);
             }
-            50% { 
-                transform: scale(1.03);
-                box-shadow: 
-                    0 15px 50px rgba(0, 0, 0, 0.3),
-                    0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+            100% { 
+                opacity: 1; 
+                transform: scale(1) rotate(0deg);
             }
         }
 
-        /* لودر چرخشی در پس‌زمینه */
-        .spinner {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            border: 2px dashed rgba(255, 255, 255, 0.1);
-            animation: spin 20s linear infinite;
-            opacity: 0.3;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* ریسپانسیو برای موبایل */
-        @media (max-width: 768px) {
-            .logo-container {
-                width: 110px;
-                height: 110px;
-                border-radius: 24px;
-                padding: 18px;
+        @keyframes loading {
+            0% { 
+                width: 0%;
+                box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
             }
-            
-            .brand-name {
-                font-size: 32px;
+            50% {
+                box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
             }
-            
-            .loading-section {
-                max-width: 250px;
+            100% { 
+                width: 100%;
+                box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
             }
-            
-            .status-text {
-                font-size: 14px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .logo-container {
-                width: 100px;
-                height: 100px;
-                border-radius: 22px;
-                padding: 16px;
-            }
-            
-            .brand-name {
-                font-size: 28px;
-            }
-            
-            .loading-bar-container {
-                height: 5px;
-            }
-            
-            .percentage-display {
-                font-size: 13px;
-            }
-            
-            .status-text {
-                font-size: 13px;
-            }
-            
-            .phase-messages {
-                font-size: 12px;
-            }
-            
-            .spinner {
-                width: 180px;
-                height: 180px;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .logo-container {
-                width: 90px;
-                height: 90px;
-                border-radius: 20px;
-                padding: 14px;
-            }
-            
-            .brand-name {
-                font-size: 26px;
-            }
-            
-            .loading-section {
-                max-width: 220px;
-            }
-        }
-
-        /* افکت‌های خاص برای نمایش بهتر */
-        .glow-effect {
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            filter: blur(20px);
-            opacity: 0.5;
-            z-index: -1;
         }
     </style>
 </head>
 <body>
-    <!-- افکت نور پس‌زمینه -->
-    <div class="glow-effect" style="top: 20%; right: 20%;"></div>
-    <div class="glow-effect" style="bottom: 20%; left: 20%;"></div>
-    
-    <!-- اسپینر چرخشی -->
-    <div class="spinner"></div>
-
-    <!-- کانتینر اصلی -->
     <div class="splash-container">
-        <!-- بخش لوگو و نام برند -->
-        <div class="logo-section">
-            <div class="logo-container">
-                <img src="https://i.postimg.cc/ZqnhVR6R/IMG-20260105-225855-207.webp" 
-                     alt="لوگوی Aurix" 
-                     class="logo"
-                     onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%230046FF\" rx=\"20\"/><text x=\"50\" y=\"50\" font-family=\"Arial\" font-size=\"30\" fill=\"white\" text-anchor=\"middle\" dy=\".3em\">A</text></svg>'">
-            </div>
-            <div class="brand-name">Aurix</div>
+        <div class="logo-container">
+            <img src="https://i.postimg.cc/ZqnhVR6R/IMG-20260105-225855-207.webp" 
+                 alt="لوگوی Aurix" 
+                 class="logo">
         </div>
-
-        <!-- بخش بارگذاری -->
-        <div class="loading-section">
-            <!-- نوار بارگذاری -->
-            <div class="loading-bar-container">
-                <div class="loading-bar" id="loadingBar"></div>
-            </div>
-            
-            <!-- نمایش درصد -->
-            <div class="percentage-display" id="percentageDisplay">%0</div>
-            
-            <!-- متن وضعیت -->
-            <div class="status-text">در حال بررسی اینترنت...</div>
-        </div>
-
-        <!-- پیام‌های مرحله‌ای -->
-        <div class="phase-messages" id="phaseMessages">
-            <span>✓ بررسی اتصال شبکه</span>
-            <span>⏳ بارگذاری منابع</span>
-            <span>⏳ آماده‌سازی رابط کاربری</span>
+        
+        <div class="loading-bar">
+            <div class="loading-progress"></div>
         </div>
     </div>
 
     <script>
         // ============================================
-        // تنظیمات اولیه
+        // انیمیشن‌های صفحه
         // ============================================
-        const config = {
-            totalLoadingTime: 3000, // مدت زمان کل بارگذاری (میلی‌ثانیه)
-            phaseChangeInterval: 600, // فاصله تغییر پیام‌ها
-            redirectDelay: 800, // تاخیر قبل از هدایت
-            targetPage: 'index.html' // صفحه مقصد
-        };
-
-        // ============================================
-        // متغیرهای اصلی
-        // ============================================
-        let loadingProgress = 0;
-        let currentPhase = 0;
-        const loadingBar = document.getElementById('loadingBar');
-        const percentageDisplay = document.getElementById('percentageDisplay');
-        const phaseMessages = document.getElementById('phaseMessages');
-        const statusText = document.querySelector('.status-text');
-
-        // ============================================
-        // پیام‌های مرحله‌ای
-        // ============================================
-        const phases = [
-            { text: '✓ بررسی اتصال شبکه', delay: 400 },
-            { text: '✓ بارگذاری منابع', delay: 900 },
-            { text: '✓ آماده‌سازی رابط کاربری', delay: 1400 },
-            { text: '✓ بررسی مجوزها', delay: 1900 },
-            { text: '✓ راه‌اندازی سرویس‌ها', delay: 2400 }
-        ];
-
-        // ============================================
-        // تابع به‌روزرسانی نوار بارگذاری
-        // ============================================
-        function updateLoadingBar() {
-            const interval = 30; // به‌روزرسانی هر 30ms
-            const increment = (100 / config.totalLoadingTime) * interval;
-            
-            const timer = setInterval(() => {
-                loadingProgress += increment;
-                
-                // محدود کردن به 100%
-                if (loadingProgress > 100) {
-                    loadingProgress = 100;
-                    clearInterval(timer);
-                    
-                    // پس از اتمام بارگذاری
-                    setTimeout(() => {
-                        completeLoading();
-                    }, 300);
-                }
-                
-                // به‌روزرسانی UI
-                loadingBar.style.width = `${loadingProgress}%`;
-                percentageDisplay.textContent = `%${Math.round(loadingProgress)}`;
-                
-                // تغییر متن وضعیت در درصدهای خاص
-                if (loadingProgress > 70 && loadingProgress < 71) {
-                    statusText.textContent = 'اتصال برقرار شد...';
-                }
-                if (loadingProgress > 90 && loadingProgress < 91) {
-                    statusText.textContent = 'آماده‌سازی نهایی...';
-                }
-                
-            }, interval);
-        }
-
-        // ============================================
-        // تابع تغییر پیام‌های مرحله‌ای
-        // ============================================
-        function updatePhaseMessages() {
-            const phaseElements = phaseMessages.querySelectorAll('span');
-            
-            // مخفی کردن تمام پیام‌ها
-            phaseElements.forEach(el => {
-                el.style.opacity = '0.4';
-                el.style.transition = 'opacity 0.3s ease';
-            });
-            
-            // نمایش پیام فعلی
-            if (currentPhase < phaseElements.length) {
-                phaseElements[currentPhase].style.opacity = '1';
-                phaseElements[currentPhase].textContent = phases[currentPhase]?.text || phaseElements[currentPhase].textContent;
-                
-                // تیک زدن پیام‌های قبلی
-                for (let i = 0; i < currentPhase; i++) {
-                    if (!phaseElements[i].textContent.startsWith('✓')) {
-                        phaseElements[i].textContent = '✓ ' + phaseElements[i].textContent.replace('⏳ ', '');
-                    }
-                }
-                
-                currentPhase++;
-            }
-        }
-
-        // ============================================
-        // تابع اتمام بارگذاری
-        // ============================================
-        function completeLoading() {
-            // تغییر متن نهایی
-            statusText.textContent = 'آماده!';
-            statusText.style.color = '#4CAF50';
-            statusText.style.fontWeight = 'bold';
-            
-            // انیمیشن تکمیل
-            document.querySelector('.brand-name').style.animation = 'pulse 0.5s ease-out';
-            
-            // افکت محو شدن
-            setTimeout(() => {
-                document.body.style.opacity = '0';
-                document.body.style.transition = 'opacity 0.5s ease';
-            }, 500);
-            
-            // هدایت به صفحه اصلی
-            setTimeout(() => {
-                window.location.href = config.targetPage + '?loaded=' + Date.now();
-            }, config.redirectDelay);
-        }
-
-        // ============================================
-        // تابع شروع تایمر پیام‌ها
-        // ============================================
-        function startPhaseTimer() {
-            const phaseInterval = setInterval(() => {
-                updatePhaseMessages();
-                
-                if (currentPhase >= phases.length) {
-                    clearInterval(phaseInterval);
-                }
-            }, config.phaseChangeInterval);
-        }
-
-        // ============================================
-        // تابع راه‌اندازی
-        // ============================================
-        function initializeSplashScreen() {
-            console.log('🚀 Aurix Splash Screen - شروع بارگذاری');
-            
-            // شروع بارگذاری
-            updateLoadingBar();
-            
-            // شروع تغییر پیام‌ها
-            startPhaseTimer();
-            
-            // مدیریت خطای لوگو
-            const logo = document.querySelector('.logo');
-            if (logo) {
-                logo.onerror = function() {
-                    console.log('⚠️ خطا در بارگذاری لوگو، استفاده از لوگوی جایگزین');
-                    this.style.opacity = '0';
-                    
-                    setTimeout(() => {
-                        this.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="%230046FF" rx="20"/><text x="50" y="50" font-family="Arial" font-size="40" fill="white" text-anchor="middle" dy=".3em">A</text></svg>';
-                        this.style.opacity = '1';
-                        this.style.transition = 'opacity 0.5s ease';
-                    }, 300);
-                };
-            }
-            
-            // مدیریت کلیک برای رد شدن
-            document.addEventListener('click', function skipSplash() {
-                if (loadingProgress < 100) {
-                    if (confirm('آیا می‌خواهید از صفحه بارگذاری رد شوید؟')) {
-                        loadingProgress = 100;
-                        loadingBar.style.width = '100%';
-                        percentageDisplay.textContent = '%100';
-                        completeLoading();
-                    }
-                }
-            });
-            
-            // مدیریت کلید Enter برای رد شدن
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' || e.keyCode === 13) {
-                    if (loadingProgress < 100) {
-                        loadingProgress = 100;
-                        loadingBar.style.width = '100%';
-                        percentageDisplay.textContent = '%100';
-                        completeLoading();
-                    }
-                }
-            });
-        }
-
-        // ============================================
-        // اجرا پس از بارگذاری DOM
-        // ============================================
-        document.addEventListener('DOMContentLoaded', initializeSplashScreen);
-
-        // ============================================
-        // مدیریت خطاهای کلی
-        // ============================================
-        window.addEventListener('error', function(e) {
-            console.error('❌ خطا در اجرای splash screen:', e.error);
-            
-            // اگر خطا رخ داد، بعد از 4 ثانیه هدایت کن
-            setTimeout(() => {
-                window.location.href = config.targetPage;
-            }, 4000);
-        });
-
-        // ============================================
-        // جلوگیری از کش شدن
-        // ============================================
-        if (window.location.search.indexOf('reload') === -1) {
-            window.history.replaceState({}, document.title, window.location.pathname + '?reload=' + Date.now());
-        }
         
+        function updateLoadingPercentage() {
+            const startTime = Date.now();
+            const totalTime = 2500; // مدت زمان انیمیشن
+            const interval = setInterval(() => {
+                const elapsed = Date.now() - startTime;
+                const percentage = Math.min(Math.floor((elapsed / totalTime) * 100), 100);
+
+                if (percentage >= 100) {
+                    clearInterval(interval);
+                    setTimeout(redirectToHome, 500); // انتقال به صفحه اصلی بعد از 0.5 ثانیه
+                }
+            }, 50);
+        }
+
+        // ============================================
+        // مدیریت انتقال به صفحه اصلی
+        // ============================================
+        
+        function redirectToHome() {
+            // به صفحه اصلی هدایت می‌شود
+            window.location.href = 'home.html';
+        }
+
+        // شروع برنامه
+        document.addEventListener('DOMContentLoaded', function() {
+            updateLoadingPercentage();
+        });
     </script>
 </body>
 </html>
