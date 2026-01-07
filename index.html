@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aurix - صفحه معرفی</title>
+    <title>Aurix - در حال بارگذاری</title>
     
     <!-- متا تگ‌های مهم برای جلوگیری از کش -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -11,11 +11,12 @@
     <meta http-equiv="Expires" content="0">
     
     <style>
+        /* Reset و تنظیمات پایه */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', 'Vazirmatn', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
@@ -26,9 +27,23 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.3s ease;
+            position: relative;
         }
 
+        /* انیمیشن‌ها */
+        @keyframes scaleIn {
+            0% { 
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* کانتینر اصلی */
         .splash-container {
             width: 100%;
             height: 100%;
@@ -37,118 +52,162 @@
             justify-content: center;
             align-items: center;
             position: relative;
+            padding: 20px;
         }
 
+        /* بخش لوگو */
         .logo-container {
-            width: 200px;
-            height: 200px;
+            width: 120px;
+            height: 120px;
             display: flex;
             justify-content: center;
             align-items: center;
-            animation: fadeInZoom 1.5s ease-out forwards;
+            animation: scaleIn 1s ease-out forwards;
             background-color: white;
-            border-radius: 25px;
-            padding: 15px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border-radius: 28px;
+            padding: 20px;
+            box-shadow: 
+                0 10px 40px rgba(0, 0, 0, 0.2),
+                0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+            margin-bottom: 25px;
         }
 
         .logo {
-            max-width: 100%;
-            max-height: 100%;
+            width: 100%;
+            height: 100%;
             object-fit: contain;
-            border-radius: 15px;
+            border-radius: 20px;
+        }
+
+        /* نوار بارگذاری */
+        .loading-bar-container {
+            width: 100%;
+            height: 6px;
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 12px;
         }
 
         .loading-bar {
-            width: 180px;
-            height: 4px;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 2px;
-            margin-top: 40px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .loading-progress {
             width: 0%;
             height: 100%;
-            background-color: white;
-            border-radius: 2px;
-            animation: loading 2.5s ease-in-out forwards;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            position: absolute;
+            left: 0;
+            top: 0;
+            border-radius: 3px;
+            transition: width 0.1s linear, background-color 0.3s ease;
+            background: linear-gradient(90deg, 
+                #FFFFFF 0%, 
+                #FFFFFF 70%, 
+                #FFD700 70%, 
+                #FFD700 90%, 
+                #4CAF50 90%, 
+                #4CAF50 100%);
         }
 
-        @keyframes fadeInZoom {
-            0% { 
-                opacity: 0; 
-                transform: scale(0.8) rotate(-5deg);
-            }
-            100% { 
-                opacity: 1; 
-                transform: scale(1) rotate(0deg);
-            }
+        /* درصد بارگذاری */
+        .percentage-display {
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out 0.8s forwards;
+            font-family: monospace;
+            letter-spacing: 1px;
         }
 
-        @keyframes loading {
-            0% { 
-                width: 0%;
-                box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
-            }
-            50% {
-                box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
-            }
-            100% { 
-                width: 100%;
-                box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-            }
+        /* افکت‌های خاص برای نمایش بهتر */
+        .glow-effect {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            filter: blur(20px);
+            opacity: 0.5;
+            z-index: -1;
         }
     </style>
 </head>
 <body>
+    <!-- افکت نور پس‌زمینه -->
+    <div class="glow-effect" style="top: 20%; right: 20%;"></div>
+    <div class="glow-effect" style="bottom: 20%; left: 20%;"></div>
+
+    <!-- کانتینر اصلی -->
     <div class="splash-container">
+        <!-- بخش لوگو -->
         <div class="logo-container">
             <img src="https://i.postimg.cc/ZqnhVR6R/IMG-20260105-225855-207.webp" 
                  alt="لوگوی Aurix" 
-                 class="logo">
+                 class="logo"
+                 onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 100 100\"><rect width=\"100\" height=\"100\" fill=\"%230046FF\" rx=\"20\"/><text x=\"50\" y=\"50\" font-family=\"Arial\" font-size=\"30\" fill=\"white\" text-anchor=\"middle\" dy=\".3em\">A</text></svg>'">
+            </div>
+
+        <!-- بخش بارگذاری -->
+        <div class="loading-bar-container">
+            <div class="loading-bar" id="loadingBar"></div>
         </div>
-        
-        <div class="loading-bar">
-            <div class="loading-progress"></div>
-        </div>
+
+        <!-- نمایش درصد -->
+        <div class="percentage-display" id="percentageDisplay">%0</div>
     </div>
 
     <script>
-        // ============================================
-        // انیمیشن‌های صفحه
-        // ============================================
-        
-        function updateLoadingPercentage() {
-            const startTime = Date.now();
-            const totalTime = 2500; // مدت زمان انیمیشن
-            const interval = setInterval(() => {
-                const elapsed = Date.now() - startTime;
-                const percentage = Math.min(Math.floor((elapsed / totalTime) * 100), 100);
+        // تنظیمات
+        const config = {
+            totalLoadingTime: 3000, // مدت زمان کل بارگذاری (میلی‌ثانیه)
+            redirectDelay: 800, // تاخیر قبل از هدایت
+            targetPage: 'index.html' // صفحه مقصد
+        };
 
-                if (percentage >= 100) {
-                    clearInterval(interval);
-                    setTimeout(redirectToHome, 500); // انتقال به صفحه اصلی بعد از 0.5 ثانیه
+        // متغیرهای اصلی
+        let loadingProgress = 0;
+        const loadingBar = document.getElementById('loadingBar');
+        const percentageDisplay = document.getElementById('percentageDisplay');
+
+        // به‌روزرسانی نوار بارگذاری
+        function updateLoadingBar() {
+            const interval = 30; // به‌روزرسانی هر 30ms
+            const increment = (100 / config.totalLoadingTime) * interval;
+
+            const timer = setInterval(() => {
+                loadingProgress += increment;
+
+                if (loadingProgress > 100) {
+                    loadingProgress = 100;
+                    clearInterval(timer);
+
+                    // پس از اتمام بارگذاری
+                    setTimeout(() => {
+                        completeLoading();
+                    }, 300);
                 }
-            }, 50);
+
+                // به‌روزرسانی UI
+                loadingBar.style.width = `${loadingProgress}%`;
+                percentageDisplay.textContent = `%${Math.round(loadingProgress)}`;
+            }, interval);
         }
 
-        // ============================================
-        // مدیریت انتقال به صفحه اصلی
-        // ============================================
-        
-        function redirectToHome() {
-            // به صفحه اصلی هدایت می‌شود
-            window.location.href = 'home.html';
+        // تکمیل بارگذاری و هدایت به صفحه اصلی
+        function completeLoading() {
+            // افکت محو شدن
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            
+            setTimeout(() => {
+                window.location.href = config.targetPage + '?loaded=' + Date.now();
+            }, config.redirectDelay);
         }
 
-        // شروع برنامه
-        document.addEventListener('DOMContentLoaded', function() {
-            updateLoadingPercentage();
+        // راه‌اندازی صفحه
+        document.addEventListener('DOMContentLoaded', () => {
+            updateLoadingBar();
         });
+
     </script>
 </body>
 </html>
