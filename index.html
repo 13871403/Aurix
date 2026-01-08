@@ -19,11 +19,12 @@
 body{
     width:100vw;
     height:100vh;
-    background:#0046FF; /* آبی ثابت */
+    background:#0046FF;
     display:flex;
     justify-content:center;
     align-items:center;
     overflow:hidden;
+    transition: background 0.3s ease;
 }
 
 /* لوگو */
@@ -45,6 +46,24 @@ body{
     }
 }
 
+/* صفحه سفید */
+.white-screen{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100vw;
+    height:100vh;
+    background:#fff;
+    opacity:0;
+    pointer-events:none;
+    transition: opacity 0.25s ease;
+    z-index:10;
+}
+
+.white-screen.show{
+    opacity:1;
+}
+
 /* ریسپانسیو */
 @media (max-width:480px){
     .logo{
@@ -53,7 +72,8 @@ body{
     }
 }
 </style>
-    <link rel="manifest" href="manifest.json">
+
+<link rel="manifest" href="manifest.json">
 </head>
 
 <body>
@@ -65,11 +85,18 @@ body{
     onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 100 100&quot;><rect width=&quot;100&quot; height=&quot;100&quot; fill=&quot;%230046FF&quot;/><text x=&quot;50&quot; y=&quot;55&quot; font-size=&quot;40&quot; fill=&quot;white&quot; text-anchor=&quot;middle&quot; font-family=&quot;Arial&quot;>A</text></svg>'"
 />
 
+<div class="white-screen" id="whiteScreen"></div>
+
 <script>
-/* بعد 2 ثانیه برو صفحه اصلی */
-setTimeout(()=>{
-    window.location.href = "index.html";
-},2000);
+/* بعد از نمایش لوگو صفحه سفید بیاد */
+setTimeout(() => {
+    document.getElementById("whiteScreen").classList.add("show");
+}, 1600);
+
+/* بعدش برو صفحه اصلی */
+setTimeout(() => {
+    window.location.replace("index.html");
+}, 2000);
 </script>
 
 </body>
