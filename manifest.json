@@ -1,0 +1,17 @@
+{
+  "background_color": "#0046ff",
+  "dir": "auto",
+  "display": "standalone",
+  "name": "Aurix",
+  "orientation": "any",
+  "scope": "/Aurix/",
+  "short_name": "Aurix",
+  "start_url": "/Aurix/",
+  "theme_color": "#0046ff",
+  "description": "Aurixapp",
+  "lang": "fa",
+  "categories": [
+    "productivity",
+    "utilities"
+  ]
+}
