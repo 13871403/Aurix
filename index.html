@@ -1,148 +1,150 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>آوریکس</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>آوریکس</title>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
-  <style>
-    body { 
-      font-family: Arial, sans-serif; 
-      margin:0; 
-      padding:0; 
-      background:#fff;
-      text-align:center;
-      min-height:100vh;
-    }
+<style>
+body{
+  font-family:Arial,sans-serif;
+  margin:0;
+  padding:0;
+  background:#fff;
+  text-align:center;
+  min-height:100vh;
+}
 
-    /* هدر */
-    header {
-      position:fixed;
-      top:0;
-      right:0;
-      width:100%;
-      display:flex;
-      justify-content:flex-end;
-      padding:15px 20px;
-      z-index:2000;
-    }
+/* هدر */
+header{
+  position:fixed;
+  top:0;
+  right:0;
+  width:100%;
+  display:flex;
+  justify-content:flex-end;
+  padding:15px 20px;
+  z-index:2000;
+}
 
-    .menu-btn {
-      font-size:26px;
-      cursor:pointer;
-      color:#333;
-    }
+.menu-btn{
+  font-size:26px;
+  cursor:pointer;
+  color:#333;
+}
 
-    .container {
-      padding:120px 20px 120px;
-    }
+.container{
+  padding:120px 20px 120px;
+}
 
-    /* دکمه شیشه‌ای طوسی */
-    .btn-glass-gray {
-      display:inline-block;
-      padding:15px 30px;
-      margin:15px;
-      font-size:18px;
-      border-radius:14px;
-      color:#333;
-      text-decoration:none;
-      background: rgba(200,200,200,0.25);
-      border:1px solid rgba(150,150,150,0.35);
-      backdrop-filter: blur(12px);
-      box-shadow:0 6px 20px rgba(0,0,0,0.12);
-      transition:0.3s;
-    }
+/* دکمه شیشه‌ای */
+.btn-glass-gray{
+  display:inline-block;
+  padding:15px 30px;
+  margin:15px;
+  font-size:18px;
+  border-radius:14px;
+  color:#333;
+  text-decoration:none;
+  background:rgba(200,200,200,0.25);
+  border:1px solid rgba(150,150,150,0.35);
+  backdrop-filter:blur(12px);
+  box-shadow:0 6px 20px rgba(0,0,0,0.12);
+  transition:0.3s;
+}
 
-    .btn-glass-gray:hover {
-      transform:translateY(-3px);
-      background:rgba(200,200,200,0.35);
-    }
+.btn-glass-gray:hover{
+  transform:translateY(-3px);
+  background:rgba(200,200,200,0.35);
+}
 
-    input {
-      padding:12px;
-      margin:10px 0;
-      width:80%;
-      max-width:300px;
-      border-radius:12px;
-      border:1px solid rgba(0,0,0,0.1);
-      background:rgba(255,255,255,0.25);
-      text-align:center;
-      backdrop-filter: blur(10px);
-    }
+input{
+  padding:12px;
+  margin:10px 0;
+  width:80%;
+  max-width:300px;
+  border-radius:12px;
+  border:1px solid rgba(0,0,0,0.1);
+  background:rgba(255,255,255,0.25);
+  text-align:center;
+  backdrop-filter:blur(10px);
+}
 
-    /* منوی همبرگری */
-    .menu-overlay {
-      position:fixed;
-      top:0;
-      right:0;
-      width:100%;
-      height:100%;
-      background:rgba(0,0,0,0.3);
-      display:none;
-      z-index:3000;
-    }
+/* منوی همبرگری */
+.menu-overlay{
+  position:fixed;
+  top:0;
+  right:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.3);
+  display:none;
+  z-index:3000;
+}
 
-    .side-menu {
-      position:absolute;
-      right:0;
-      top:0;
-      width:260px;
-      height:100%;
-      background:rgba(255,255,255,0.35);
-      backdrop-filter: blur(15px);
-      padding:30px 20px;
-      box-shadow:-5px 0 20px rgba(0,0,0,0.2);
-      animation: slideIn 0.3s ease;
-      text-align:right;
-    }
+.side-menu{
+  position:absolute;
+  right:0;
+  top:0;
+  width:260px;
+  height:100%;
+  background:rgba(255,255,255,0.35);
+  backdrop-filter:blur(15px);
+  padding:30px 20px;
+  box-shadow:-5px 0 20px rgba(0,0,0,0.2);
+  animation:slideIn 0.3s ease;
+  text-align:right;
+}
 
-    @keyframes slideIn {
-      from { transform:translateX(100%); }
-      to { transform:translateX(0); }
-    }
+@keyframes slideIn{
+  from{transform:translateX(100%)}
+  to{transform:translateX(0)}
+}
 
-    .side-menu a {
-      display:block;
-      margin:20px 0;
-      color:#333;
-      text-decoration:none;
-      font-size:18px;
-    }
+.side-menu a{
+  display:block;
+  margin:20px 0;
+  color:#333;
+  text-decoration:none;
+  font-size:18px;
+}
 
-    /* پشتیبانی شناور */
-    .support {
-      position:fixed;
-      right:20px;
-      bottom:110px;
-      width:60px;
-      height:60px;
-      line-height:60px;
-      border-radius:50%;
-      background:#FF5722;
-      color:#fff;
-      font-size:24px;
-      cursor:pointer;
-      display:none;
-      z-index:9999;
-    }
+/* پشتیبانی شناور */
+.support{
+  position:fixed;
+  right:20px;
+  bottom:110px;
+  width:60px;
+  height:60px;
+  line-height:60px;
+  border-radius:50%;
+  background:#FF5722;
+  color:#fff;
+  font-size:24px;
+  cursor:pointer;
+  display:none;
+  z-index:9999;
+}
 
-    footer {
-      position:fixed;
-      bottom:0;
-      width:100%;
-      background:rgba(0,0,0,0.05);
-      padding:15px;
-      z-index:10;
-    }
+footer{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  background:rgba(0,0,0,0.05);
+  padding:15px;
+  z-index:10;
+}
 
-    .hidden { display:none; }
-  </style>
+.hidden{display:none}
+</style>
 </head>
+
 <body>
 
-<header>
+<!-- هدر (بعد از ثبت نام نمایش داده می‌شود) -->
+<header id="header" class="hidden">
   <i class="fas fa-bars menu-btn" onclick="openMenu()"></i>
 </header>
 
@@ -160,15 +162,20 @@
   <h2>ثبت نام</h2>
   <input id="username" placeholder="نام کاربری"><br>
   <input id="phone" placeholder="شماره تلفن"><br>
-  <button onclick="register()" class="btn-glass-gray">ثبت نام</button>
+  <button class="btn-glass-gray" onclick="register()">ثبت نام</button>
 </div>
 
 <!-- صفحه اصلی -->
 <div id="mainPage" class="container hidden">
   <h1>خوش آمدید</h1>
 
-  <a class="btn-glass-gray" href="https://rubika.ir/joing/JCGDHFGJ0BCLIWMEBHISIYKCWUECGDHL">گروه کافه اردبیل</a><br>
-  <a class="btn-glass-gray" href="https://rubika.ir/Remix_daniyal">کانال ریمیکس دانیال</a>
+  <a class="btn-glass-gray" href="https://rubika.ir/joing/JCGDHFGJ0BCLIWMEBHISIYKCWUECGDHL">
+    گروه کافه اردبیل
+  </a><br>
+
+  <a class="btn-glass-gray" href="https://rubika.ir/Remix_daniyal">
+    کانال ریمیکس دانیال
+  </a>
 </div>
 
 <!-- پشتیبانی -->
@@ -178,6 +185,7 @@
 
 <footer>
   <p>تماس: 09054359178</p>
+  <p>پیام‌رسان: @Music_daniyal</p>
 </footer>
 
 <script>
@@ -188,15 +196,16 @@ function register(){
   }
   signupPage.classList.add("hidden");
   mainPage.classList.remove("hidden");
+  header.classList.remove("hidden");
   supportBtn.style.display="block";
 }
 
 function openMenu(){
-  document.getElementById("menuOverlay").style.display="block";
+  menuOverlay.style.display="block";
 }
 
 function closeMenu(){
-  document.getElementById("menuOverlay").style.display="none";
+  menuOverlay.style.display="none";
 }
 </script>
 
