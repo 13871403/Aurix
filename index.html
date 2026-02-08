@@ -120,7 +120,7 @@
       box-shadow: 0 6px 20px rgba(0,0,0,0.3);
     }
 
-    /* فوتر فقط متن ارتباط با ما سیاه */
+    /* فوتر */
     footer {     
       background: rgba(0,0,0,0.05);     
       color:#333;     
@@ -131,9 +131,14 @@
       width:100%;     
     }
 
+    /* فقط متن "ارتباط با ما" پس‌زمینه سفید */
     footer p:first-child {
+      display:inline-block;
+      padding:2px 8px;
+      background: #ffffff; /* سفید */
+      color: #000; /* سیاه */
       font-weight:bold;
-      color:#000; /* ارتباط با ما سیاه */
+      border-radius:4px;
       margin-bottom:5px;
     }
 
@@ -155,7 +160,7 @@
 <!-- صفحه اصلی -->
 <div id="mainPage" class="container hidden">
   <header>
-    <!-- هدر پاک شد، هیچ کادر سبزی وجود ندارد -->
+    <!-- هدر کاملاً خالی و شفاف -->
   </header>
 
   <h1>خوش آمدید</h1>
