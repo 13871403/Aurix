@@ -9,7 +9,7 @@
       font-family: Arial, sans-serif; 
       margin:0; 
       padding:0; 
-      background:#f0f0f0; 
+      background: #e0e0e0;
       text-align:center;
     }
 
@@ -34,17 +34,18 @@
       padding:120px 20px 20px 20px; 
     }
 
-    /* دکمه حرفه‌ای */
+    /* دکمه شیشه‌ای */
     .btn {
       display:inline-block;
       padding:15px 30px;
       margin:15px;
       font-size:18px;
       cursor:pointer;
-      border:none;
+      border: 1px solid rgba(255, 255, 255, 0.4);
       border-radius:12px;
       color:white;
-      background: linear-gradient(45deg, #FF5722, #FF9800);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
       box-shadow: 0 4px 15px rgba(0,0,0,0.2);
       transition: all 0.3s ease;
       text-decoration:none;
@@ -52,32 +53,63 @@
 
     .btn:hover {
       transform: translateY(-3px);
+      background: rgba(255, 255, 255, 0.2);
       box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     }
 
     .btn-blue {
-      background: linear-gradient(45deg, #2196F3, #21CBF3);
+      background: rgba(33,203,243,0.2);
+      border: 1px solid rgba(33,203,243,0.4);
+    }
+
+    .btn-blue:hover {
+      background: rgba(33,203,243,0.3);
+    }
+
+    /* input شیشه‌ای */
+    input {
+      padding:12px;
+      margin:10px 0;
+      width:80%;
+      max-width:300px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      text-align:center;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    input::placeholder {
+      color: rgba(255,255,255,0.7);
+    }
+
+    input:focus {
+      outline: none;
+      background: rgba(255,255,255,0.2);
+      box-shadow: 0 0 10px rgba(255,255,255,0.3);
     }
 
     /* پشتیبانی دایره‌ای */
     .support {
       position: fixed;
-      right: 20px;           
-      top: 65%;              
-      transform: translateY(-50%);
-      background: #FF5722;   
-      color: white;
-      width: 60px;
-      height: 60px;
-      line-height: 60px;     
-      text-align: center;
-      font-weight: bold;
-      border-radius: 50%;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      z-index: 1001;
-      display: none; /* اول مخفی است */
+      right: 20px;             
+      top: 65%;                
+      transform: translateY(-50%);  
+      background: #FF5722;     
+      color: white;  
+      width: 60px;  
+      height: 60px;  
+      line-height: 60px;       
+      text-align: center;  
+      font-weight: bold;  
+      border-radius: 50%;  
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);  
+      cursor: pointer;  
+      transition: all 0.3s ease;  
+      z-index: 1001;  
+      display: none; /* اول مخفی است */  
     }
 
     .support:hover {
@@ -86,23 +118,14 @@
     }
 
     /* فوتر */
-    footer {   
-      background:#333;   
-      color:white;   
-      text-align:center;   
-      padding:15px 0;   
-      position:fixed;   
-      bottom:0;   
-      width:100%;   
-    }
-
-    input {   
-      padding:10px;   
-      margin:5px;   
-      width:80%;   
-      max-width:300px;   
-      border-radius:5px;
-      border:1px solid #ccc;
+    footer {     
+      background:#333;     
+      color:white;     
+      text-align:center;     
+      padding:15px 0;     
+      position:fixed;     
+      bottom:0;     
+      width:100%;     
     }
 
     .hidden { display:none; }
@@ -147,21 +170,20 @@ function register() {
   const username = document.getElementById('username').value.trim();
   const phone = document.getElementById('phone').value.trim();
     
-  if(username === "" || phone === "") {  
-    alert("لطفاً همه فیلدها را پر کنید!");  
-    return;  
-  }  
-  
-  alert("با موفقیت ثبت نام کردید!");  
+  if(username === "" || phone === "") {    
+    alert("لطفاً همه فیلدها را پر کنید!");    
+    return;    
+  }    
     
-  // مخفی کردن ثبت نام
-  document.getElementById('signupPage').classList.add('hidden');
-  // نمایش صفحه اصلی
-  document.getElementById('mainPage').classList.remove('hidden');
-  // نمایش دکمه پشتیبانی
-  document.getElementById('supportBtn').style.display = 'block';
+  alert("با موفقیت ثبت نام کردید!");    
+      
+  // مخفی کردن ثبت نام  
+  document.getElementById('signupPage').classList.add('hidden');  
+  // نمایش صفحه اصلی  
+  document.getElementById('mainPage').classList.remove('hidden');  
+  // نمایش دکمه پشتیبانی  
+  document.getElementById('supportBtn').style.display = 'block';  
 }
 </script>
-
 </body>
 </html>
