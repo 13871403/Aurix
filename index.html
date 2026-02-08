@@ -15,18 +15,18 @@
       min-height: 100vh;
     }
 
-    /* هدر */
+    /* هدر ساده، بدون کادر اضافی */
     header { 
       display:flex; 
       justify-content:flex-end; 
       align-items:center; 
-      background: rgba(0, 128, 0, 0.0); /* سبز پاک شد، کاملاً شفاف */
+      background: transparent; /* کاملاً شفاف */
       color:#333; 
       padding:10px 20px; 
       position:fixed;
       width:100%;
       top:0;
-      box-shadow:0 2px 5px rgba(0,0,0,0.1);
+      box-shadow:none; /* حذف سایه */
       z-index:1000;
     }
 
@@ -120,7 +120,7 @@
       box-shadow: 0 6px 20px rgba(0,0,0,0.3);
     }
 
-    /* فوتر */
+    /* فوتر فقط متن ارتباط با ما سیاه */
     footer {     
       background: rgba(0,0,0,0.05);     
       color:#333;     
@@ -129,6 +129,12 @@
       position:fixed;     
       bottom:0;     
       width:100%;     
+    }
+
+    footer p:first-child {
+      font-weight:bold;
+      color:#000; /* ارتباط با ما سیاه */
+      margin-bottom:5px;
     }
 
     .hidden { display:none; }
@@ -149,7 +155,7 @@
 <!-- صفحه اصلی -->
 <div id="mainPage" class="container hidden">
   <header>
-    <div class="menu">&#9776;</div>
+    <!-- هدر پاک شد، هیچ کادر سبزی وجود ندارد -->
   </header>
 
   <h1>خوش آمدید</h1>
