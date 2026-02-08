@@ -15,7 +15,7 @@
 
     header { 
       display:flex; 
-      justify-content:space-between; 
+      justify-content:flex-end; 
       align-items:center; 
       background:#4CAF50; 
       color:white; 
@@ -28,10 +28,9 @@
     }
 
     .menu { cursor:pointer; font-size:24px; }
-    .support { cursor:pointer; font-weight:bold; }
 
     .container { 
-      padding:100px 20px 20px 20px; 
+      padding:120px 20px 20px 20px; 
     }
 
     /* دکمه حرفه‌ای */
@@ -59,6 +58,31 @@
       background: linear-gradient(45deg, #2196F3, #21CBF3);
     }
 
+    /* دکمه پشتیبانی دایره‌ای و شناور */
+    .support {
+      position: fixed;       /* شناور روی صفحه */
+      left: 20px;            /* فاصله از سمت چپ */
+      top: 50%;              /* وسط صفحه عمودی */
+      transform: translateY(-50%);
+      background: #FF5722;   /* رنگ نارنجی */
+      color: white;
+      width: 60px;
+      height: 60px;
+      line-height: 60px;     /* متن وسط دایره */
+      text-align: center;
+      font-weight: bold;
+      border-radius: 50%;    /* دایره‌ای شدن */
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 1001;
+    }
+
+    .support:hover {
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    }
+
     footer { 
       background:#333; 
       color:white; 
@@ -79,6 +103,7 @@
     }
 
     .hidden { display:none; }
+
   </style>
 </head>
 <body>
@@ -95,7 +120,6 @@
 <!-- صفحه اصلی -->
 <div id="mainPage" class="container hidden">
   <header>
-    <div class="support" onclick="window.open('https://rubika.ir/Music_daniyal','_blank')">پشتیبانی هوایی</div>
     <div class="menu">&#9776;</div>
   </header>
 
@@ -105,6 +129,9 @@
 
   <a href="https://rubika.ir/Remix_daniyal" target="_blank" class="btn btn-blue">کانال ریمیکس دانیال برای ورود کلیک کنید</a>
 </div>
+
+<!-- پشتیبانی دایره‌ای -->
+<div class="support" onclick="window.open('https://rubika.ir/Music_daniyal','_blank')">پشتیبانی</div>
 
 <footer>
   <p>ارتباط با ما:</p>
