@@ -30,7 +30,7 @@
     }
 
     .container { 
-      padding:120px 20px 20px 20px; 
+      padding:120px 20px 120px 20px; 
     }
 
     /* دکمه شیشه‌ای طوسی */
@@ -43,11 +43,9 @@
       border-radius:14px;
       color:#333;
       text-decoration:none;
-
       background: rgba(200, 200, 200, 0.25);
       border: 1px solid rgba(150, 150, 150, 0.35);
       backdrop-filter: blur(12px);
-
       box-shadow: 0 6px 20px rgba(0,0,0,0.12);
       transition: all 0.3s ease;
     }
@@ -78,10 +76,11 @@
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
+    /* پشتیبانی شناور */
     .support {
       position: fixed;
       right: 20px;
-      bottom: 100px;
+      bottom: 110px;
       background: #FF5722;
       color: white;
       width: 60px;
@@ -93,6 +92,12 @@
       cursor: pointer;
       display:none;
       font-size:24px;
+      z-index: 9999; /* مهم */
+      transition: 0.3s;
+    }
+
+    .support:hover {
+      transform: scale(1.1);
     }
 
     footer {
@@ -103,6 +108,7 @@
       position:fixed;
       bottom:0;
       width:100%;
+      z-index: 10; /* پایین‌تر از پشتیبانی */
     }
 
     .hidden { display:none; }
@@ -123,14 +129,12 @@
 <div id="mainPage" class="container hidden">
   <h1>خوش آمدید</h1>
 
-  <!-- دکمه گروه شیشه‌ای طوسی -->
   <a href="https://rubika.ir/joing/JCGDHFGJ0BCLIWMEBHISIYKCWUECGDHL"
      target="_blank"
      class="btn-glass-gray">
      گروه کافه اردبیل
   </a><br>
 
-  <!-- دکمه کانال شیشه‌ای طوسی -->
   <a href="https://rubika.ir/Remix_daniyal"
      target="_blank"
      class="btn-glass-gray">
