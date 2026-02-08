@@ -4,11 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>آوریکس</title>
-  <!-- افزودن Font Awesome برای آیکون -->
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
   <style>
-    /* پس زمینه کامل سفید */
     body { 
       font-family: Arial, sans-serif; 
       margin:0; 
@@ -18,58 +17,45 @@
       min-height: 100vh;
     }
 
-    /* هدر ساده، بدون کادر اضافی */
     header { 
       display:flex; 
       justify-content:flex-end; 
       align-items:center; 
-      background: transparent; /* کاملاً شفاف */
-      color:#333; 
+      background: transparent;
       padding:10px 20px; 
       position:fixed;
       width:100%;
       top:0;
-      box-shadow:none; /* حذف سایه */
       z-index:1000;
     }
-
-    .menu { cursor:pointer; font-size:24px; }
 
     .container { 
       padding:120px 20px 20px 20px; 
     }
 
-    /* دکمه شیشه‌ای */
-    .btn {
+    /* دکمه شیشه‌ای طوسی */
+    .btn-glass-gray {
       display:inline-block;
       padding:15px 30px;
       margin:15px;
       font-size:18px;
       cursor:pointer;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      border-radius:12px;
+      border-radius:14px;
       color:#333;
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      transition: all 0.3s ease;
       text-decoration:none;
+
+      background: rgba(200, 200, 200, 0.25);
+      border: 1px solid rgba(150, 150, 150, 0.35);
+      backdrop-filter: blur(12px);
+
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+      transition: all 0.3s ease;
     }
 
-    .btn:hover {
+    .btn-glass-gray:hover {
       transform: translateY(-3px);
-      background: rgba(255, 255, 255, 0.3);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    }
-
-    .btn-blue {
-      background: rgba(33,203,243,0.15);
-      border: 1px solid rgba(33,203,243,0.3);
-      color:#333;
-    }
-
-    .btn-blue:hover {
-      background: rgba(33,203,243,0.25);
+      background: rgba(200, 200, 200, 0.35);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.18);
     }
 
     /* input شیشه‌ای */
@@ -84,126 +70,103 @@
       color: #333;
       text-align:center;
       backdrop-filter: blur(10px);
-      transition: all 0.3s ease;
-    }
-
-    input::placeholder {
-      color: rgba(0,0,0,0.5);
     }
 
     input:focus {
-      outline: none;
+      outline:none;
       background: rgba(255,255,255,0.3);
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
-    /* پشتیبانی دایره‌ای با آیکون */
     .support {
       position: fixed;
-      right: 20px;             
-      bottom: 100px; /* کمی بالاتر از فوتر */
-      background: #FF5722;     
-      color: white;  
-      width: 60px;  
-      height: 60px;  
-      line-height: 60px;       
-      text-align: center;  
-      font-weight: bold;  
-      border-radius: 50%;  
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);  
-      cursor: pointer;  
-      transition: all 0.3s ease;  
-      z-index: 1001;  
-      display: none; /* اول مخفی است */  
-      font-size: 24px;
+      right: 20px;
+      bottom: 100px;
+      background: #FF5722;
+      color: white;
+      width: 60px;
+      height: 60px;
+      line-height: 60px;
+      text-align: center;
+      border-radius: 50%;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      cursor: pointer;
+      display:none;
+      font-size:24px;
     }
 
-    .support:hover {
-      transform: scale(1.1);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-    }
-
-    /* فوتر */
-    footer {     
-      background: rgba(0,0,0,0.05);     
-      color:#333;     
-      text-align:center;     
-      padding:15px 0;     
-      position:fixed;     
-      bottom:0;     
-      width:100%;     
-    }
-
-    /* فقط متن "ارتباط با ما" پس‌زمینه سفید */
-    footer p:first-child {
-      display:inline-block;
-      padding:2px 8px;
-      background: #ffffff; /* سفید */
-      color: #000; /* سیاه */
-      font-weight:bold;
-      border-radius:4px;
-      margin-bottom:5px;
+    footer {
+      background: rgba(0,0,0,0.05);
+      color:#333;
+      text-align:center;
+      padding:15px 0;
+      position:fixed;
+      bottom:0;
+      width:100%;
     }
 
     .hidden { display:none; }
-
   </style>
 </head>
 <body>
 
-<!-- صفحه ثبت نام -->
+<!-- ثبت نام -->
 <div id="signupPage" class="container">
   <h2>ثبت نام</h2>
-  <p>لطفاً شماره تلفن و نام کاربری جدید را وارد کنید:</p>
+  <p>شماره تلفن و نام کاربری را وارد کنید</p>
   <input type="text" id="username" placeholder="نام کاربری"><br>
   <input type="text" id="phone" placeholder="شماره تلفن"><br>
-  <button onclick="register()" class="btn btn-blue">ثبت نام</button>
+  <button onclick="register()" class="btn-glass-gray">ثبت نام</button>
 </div>
 
 <!-- صفحه اصلی -->
 <div id="mainPage" class="container hidden">
-  <header>
-    <!-- هدر کاملاً خالی و شفاف -->
-  </header>
-
   <h1>خوش آمدید</h1>
 
-  <a href="https://rubika.ir/joing/JCGDHFGJ0BCLIWMEBHISIYKCWUECGDHL" target="_blank" class="btn">گروه کافه اردبیل برای ورود کلیک کنید</a><br>
+  <!-- دکمه گروه شیشه‌ای طوسی -->
+  <a href="https://rubika.ir/joing/JCGDHFGJ0BCLIWMEBHISIYKCWUECGDHL"
+     target="_blank"
+     class="btn-glass-gray">
+     گروه کافه اردبیل
+  </a><br>
 
-  <a href="https://rubika.ir/Remix_daniyal" target="_blank" class="btn btn-blue">کانال ریمیکس دانیال برای ورود کلیک کنید</a>
+  <!-- دکمه کانال شیشه‌ای طوسی -->
+  <a href="https://rubika.ir/Remix_daniyal"
+     target="_blank"
+     class="btn-glass-gray">
+     کانال ریمیکس دانیال
+  </a>
 </div>
 
-<!-- پشتیبانی دایره‌ای با آیکون -->
-<div id="supportBtn" class="support" onclick="window.open('https://rubika.ir/Music_daniyal','_blank')">
+<!-- پشتیبانی -->
+<div id="supportBtn" class="support"
+     onclick="window.open('https://rubika.ir/Music_daniyal','_blank')">
   <i class="fas fa-headset"></i>
 </div>
 
-<!-- فوتر -->
 <footer>
-  <p>ارتباط با ما:</p>
-  <p>تماس با ما: 09054359178</p>
-  <p>پیام‌رسان: @Music_daniyal</p>
+  <p>ارتباط با ما</p>
+  <p>تماس: 09054359178</p>
+  <p>@Music_daniyal</p>
 </footer>
 
 <script>
 function register() {
   const username = document.getElementById('username').value.trim();
   const phone = document.getElementById('phone').value.trim();
-    
-  if(username === "" || phone === "") {    
-    alert("لطفاً همه فیلدها را پر کنید!");    
-    return;    
-  }    
-    
-  alert("با موفقیت ثبت نام کردید!");    
-      
-  // مخفی کردن ثبت نام  
-  document.getElementById('signupPage').classList.add('hidden');  
-  // نمایش صفحه اصلی  
-  document.getElementById('mainPage').classList.remove('hidden');  
-  // نمایش دکمه پشتیبانی  
-  document.getElementById('supportBtn').style.display = 'block';  
+
+  if(username === "" || phone === "") {
+    alert("همه فیلدها را پر کنید");
+    return;
+  }
+
+  alert("ثبت نام با موفقیت انجام شد");
+
+  document.getElementById('signupPage').classList.add('hidden');
+  document.getElementById('mainPage').classList.remove('hidden');
+  document.getElementById('supportBtn').style.display = 'block';
 }
 </script>
+
 </body>
 </html>
