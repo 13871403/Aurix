@@ -13,6 +13,7 @@
       text-align:center;
     }
 
+    /* هدر */
     header { 
       display:flex; 
       justify-content:flex-end; 
@@ -58,11 +59,11 @@
       background: linear-gradient(45deg, #2196F3, #21CBF3);
     }
 
-    /* دکمه پشتیبانی دایره‌ای و شناور */
+    /* دکمه پشتیبانی دایره‌ای و شناور سمت راست پایین‌تر */
     .support {
-      position: fixed;       /* شناور روی صفحه */
-      left: 20px;            /* فاصله از سمت چپ */
-      top: 50%;              /* وسط صفحه عمودی */
+      position: fixed;
+      right: 20px;           /* سمت راست */
+      top: 65%;              /* کمی پایین‌تر */
       transform: translateY(-50%);
       background: #FF5722;   /* رنگ نارنجی */
       color: white;
@@ -71,7 +72,7 @@
       line-height: 60px;     /* متن وسط دایره */
       text-align: center;
       font-weight: bold;
-      border-radius: 50%;    /* دایره‌ای شدن */
+      border-radius: 50%;
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
       cursor: pointer;
       transition: all 0.3s ease;
@@ -83,6 +84,7 @@
       box-shadow: 0 6px 20px rgba(0,0,0,0.4);
     }
 
+    /* فوتر */
     footer { 
       background:#333; 
       color:white; 
@@ -93,6 +95,7 @@
       width:100%; 
     }
 
+    /* input */
     input { 
       padding:10px; 
       margin:5px; 
@@ -103,12 +106,11 @@
     }
 
     .hidden { display:none; }
-
   </style>
 </head>
 <body>
 
-<!-- ثبت نام -->
+<!-- صفحه ثبت نام -->
 <div id="signupPage" class="container">
   <h2>ثبت نام</h2>
   <p>لطفاً شماره تلفن و نام کاربری جدید را وارد کنید:</p>
@@ -133,6 +135,7 @@
 <!-- پشتیبانی دایره‌ای -->
 <div class="support" onclick="window.open('https://rubika.ir/Music_daniyal','_blank')">پشتیبانی</div>
 
+<!-- فوتر -->
 <footer>
   <p>ارتباط با ما:</p>
   <p>تماس با ما: 09054359178</p>
