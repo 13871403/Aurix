@@ -100,21 +100,25 @@ input{
   font-size:18px;
 }
 
-/* پشتیبانی */
+/* پشتیبانی شناور تصویری */
 .support{
   position:fixed;
   right:20px;
   bottom:160px;
-  width:60px;
-  height:60px;
-  line-height:60px;
+  width:65px;
+  height:65px;
   border-radius:50%;
-  background:#FF5722;
-  color:#fff;
-  font-size:24px;
   cursor:pointer;
   display:none;
   z-index:9999;
+  box-shadow:0 6px 15px rgba(0,0,0,0.3);
+  background:#fff;
+}
+
+.support img{
+  width:100%;
+  height:100%;
+  border-radius:50%;
 }
 
 /* نوار پایین */
@@ -210,9 +214,9 @@ input{
   <a class="btn-glass-gray" href="https://rubika.ir/Music_daniyal">@Music_daniyal</a>
 </div>
 
-<!-- پشتیبانی شناور -->
+<!-- پشتیبانی شناور با عکس -->
 <div id="supportBtn" class="support" onclick="window.open('https://rubika.ir/Music_daniyal')">
-  <i class="fas fa-headset"></i>
+  <img src="https://i.postimg.cc/YSWvMPMp/In-Shot-20260209-121456919.png">
 </div>
 
 <!-- نوار پایین -->
