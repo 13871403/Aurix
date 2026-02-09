@@ -15,6 +15,7 @@ body{
   background:#fff;
   text-align:center;
   min-height:100vh;
+  padding-bottom:100px; /* فضا برای فوتر */
 }
 
 /* هدر */
@@ -36,7 +37,7 @@ header{
 }
 
 .container{
-  padding:120px 20px 120px;
+  padding:120px 20px 40px;
 }
 
 /* دکمه شیشه‌ای */
@@ -115,7 +116,7 @@ input{
 .support{
   position:fixed;
   right:20px;
-  bottom:110px;
+  bottom:130px;
   width:60px;
   height:60px;
   line-height:60px;
@@ -128,20 +129,23 @@ input{
   z-index:9999;
 }
 
-/* فوتر ارتباط با ما */
+/* فوتر ارتباط با ما (اصلاح شده) */
 footer{
   position:fixed;
   bottom:0;
+  left:0;
   width:100%;
-  background:#fff; /* پس‌زمینه سفید */
-  padding:15px;
-  border-top:1px solid rgba(0,0,0,0.1);
-  z-index:10;
+  background:#ffffff;
+  padding:12px 10px;
+  border-top:1px solid rgba(0,0,0,0.15);
+  z-index:5000;
   text-align:center;
 }
 
 footer p{
-  margin:5px 0;
+  margin:4px 0;
+  font-size:14px;
+  color:#333;
 }
 
 .hidden{display:none}
@@ -150,12 +154,10 @@ footer p{
 
 <body>
 
-<!-- هدر (بعد از ثبت نام نمایش داده می‌شود) -->
 <header id="header" class="hidden">
   <i class="fas fa-bars menu-btn" onclick="openMenu()"></i>
 </header>
 
-<!-- منوی همبرگری -->
 <div id="menuOverlay" class="menu-overlay" onclick="closeMenu()">
   <div class="side-menu" onclick="event.stopPropagation()">
     <a href="https://rubika.ir/joing/JCGDHFGJ0BCLIWMEBHISIYKCWUECGDHL">👥 گروه کافه اردبیل</a>
@@ -164,7 +166,6 @@ footer p{
   </div>
 </div>
 
-<!-- ثبت نام -->
 <div id="signupPage" class="container">
   <h2>ثبت نام</h2>
   <input id="username" placeholder="نام کاربری"><br>
@@ -172,7 +173,6 @@ footer p{
   <button class="btn-glass-gray" onclick="register()">ثبت نام</button>
 </div>
 
-<!-- صفحه اصلی -->
 <div id="mainPage" class="container hidden">
   <h1>خوش آمدید</h1>
 
@@ -185,15 +185,13 @@ footer p{
   </a>
 </div>
 
-<!-- پشتیبانی -->
 <div id="supportBtn" class="support" onclick="window.open('https://rubika.ir/Music_daniyal')">
   <i class="fas fa-headset"></i>
 </div>
 
-<!-- فوتر ارتباط با ما -->
 <footer>
-  <p>تماس: 09054359178</p>
-  <p>پیام‌رسان: @Music_daniyal</p>
+  <p><strong>تماس با ما:</strong> 09054359178</p>
+  <p><strong>پیام‌رسان:</strong> @Music_daniyal</p>
 </footer>
 
 <script>
