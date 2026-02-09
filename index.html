@@ -229,11 +229,29 @@ input{
 </div>
 
 <script>
+window.onload = function() {
+  // بررسی اینکه قبلاً ثبت نام شده
+  const savedUser = localStorage.getItem('username');
+  const savedPhone = localStorage.getItem('phone');
+  if(savedUser && savedPhone){
+    username.value = savedUser;
+    phone.value = savedPhone;
+    showMainPage();
+  }
+}
+
 function register(){
   if(!username.value || !phone.value){
     alert("همه فیلدها را پر کنید");
     return;
   }
+  // سیو کردن در localStorage
+  localStorage.setItem('username', username.value);
+  localStorage.setItem('phone', phone.value);
+  showMainPage();
+}
+
+function showMainPage(){
   signupPage.classList.add("hidden");
   mainPage.classList.remove("hidden");
   header.classList.remove("hidden");
@@ -271,6 +289,10 @@ function closeAllPages(){
 }
 
 function logout(){
+  // پاک کردن اطلاعات ذخیره شده
+  localStorage.removeItem('username');
+  localStorage.removeItem('phone');
+
   settingsPage.classList.add("hidden");
   settingsHeader.classList.add("hidden");
   mainPage.classList.add("hidden");
