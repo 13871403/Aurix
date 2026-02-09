@@ -18,21 +18,27 @@ body{
   padding-bottom:100px;
 }
 
+/* هدرها */
 header{
   position:fixed;
   top:0;
   right:0;
   width:100%;
+  height:60px;
   display:flex;
+  align-items:center;
   justify-content:space-between;
-  padding:15px 20px;
+  padding:0 16px;
+  box-sizing:border-box;
   z-index:2000;
+  background:#fff;
 }
 
 .menu-btn, .back-btn{
   font-size:26px;
   cursor:pointer;
   color:#333;
+  padding:8px;
 }
 
 .container{
@@ -42,7 +48,7 @@ header{
 .btn-glass-gray{
   display:inline-block;
   padding:15px 30px;
-  margin:15px;
+  margin:15px auto;
   font-size:18px;
   border-radius:14px;
   color:#333;
@@ -52,10 +58,6 @@ header{
   backdrop-filter:blur(12px);
   box-shadow:0 6px 20px rgba(0,0,0,0.12);
   transition:0.3s;
-}
-
-.btn-glass-gray:hover{
-  transform:translateY(-3px);
 }
 
 input{
@@ -91,11 +93,6 @@ input{
   box-shadow:-5px 0 20px rgba(0,0,0,0.2);
   animation:slideIn 0.3s ease;
   text-align:right;
-}
-
-@keyframes slideIn{
-  from{transform:translateX(100%)}
-  to{transform:translateX(0)}
 }
 
 .side-menu a{
@@ -134,9 +131,8 @@ footer{
   z-index:5000;
 }
 
-footer p{
-  margin:4px 0;
-  font-size:14px;
+#settingsPage{
+  padding-bottom:200px;
 }
 
 .hidden{display:none}
@@ -151,7 +147,7 @@ footer p{
   <i class="fas fa-bars menu-btn" onclick="openMenu()"></i>
 </header>
 
-<!-- هدر تنظیمات و ارتباط -->
+<!-- هدر تنظیمات / ارتباط -->
 <header id="settingsHeader" class="hidden">
   <i class="fas fa-arrow-right back-btn" onclick="closeAllPages()"></i>
   <strong id="headerTitle">تنظیمات</strong>
@@ -195,14 +191,8 @@ footer p{
 <!-- ارتباط با ما -->
 <div id="contactPage" class="container hidden">
   <h2>ارتباط با ما</h2>
-
-  <p>📞 شماره تماس</p>
-  <a class="btn-glass-gray" href="tel:09054359178">09054359178</a>
-
-  <p>💬 پشتیبانی در روبیکا</p>
-  <a class="btn-glass-gray" href="https://rubika.ir/Music_daniyal">
-    @Music_daniyal
-  </a>
+  <a class="btn-glass-gray" href="tel:09054359178">📞 09054359178</a>
+  <a class="btn-glass-gray" href="https://rubika.ir/Music_daniyal">@Music_daniyal</a>
 </div>
 
 <!-- پشتیبانی شناور -->
@@ -227,13 +217,8 @@ function register(){
   supportBtn.style.display="block";
 }
 
-function openMenu(){
-  menuOverlay.style.display="block";
-}
-
-function closeMenu(){
-  menuOverlay.style.display="none";
-}
+function openMenu(){ menuOverlay.style.display="block"; }
+function closeMenu(){ menuOverlay.style.display="none"; }
 
 function openSettings(){
   closeMenu();
