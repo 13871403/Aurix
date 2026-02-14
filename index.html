@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Avarix App</title>
+<title>Aurix App</title>
+
 <style>
 body{
 margin:0;
@@ -21,11 +22,12 @@ font-size:20px;
 .screen{
 display:none;
 padding:15px;
+padding-bottom:80px;
 }
 .active{
 display:block;
 }
-input,button{
+input,button,textarea{
 width:100%;
 padding:10px;
 margin:5px 0;
@@ -70,29 +72,36 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 }
+.saved-item{
+background:#eaeaea;
+padding:8px;
+margin:5px 0;
+border-radius:8px;
+}
 </style>
 </head>
+
 <body>
 
-<header>Avarix</header>
+<header>Aurix</header>
 
 <!-- LOGIN -->
 <div id="login" class="screen active">
 <h3>ورود</h3>
-<input type="text" placeholder="ایمیل یا شماره">
-<input type="password" placeholder="رمز عبور">
-<button onclick="showScreen('home')">ورود</button>
+<input id="loginUser" type="text" placeholder="ایمیل یا شماره">
+<input id="loginPass" type="password" placeholder="رمز عبور">
+<button onclick="login()">ورود</button>
 <p onclick="showScreen('signup')" style="color:blue;cursor:pointer;">ثبت‌نام</p>
 </div>
 
 <!-- SIGNUP -->
 <div id="signup" class="screen">
 <h3>ثبت‌نام</h3>
-<input type="text" placeholder="نام کاربری">
+<input id="signupUser" type="text" placeholder="نام کاربری">
 <input type="text" placeholder="ایمیل یا شماره">
 <input type="password" placeholder="رمز عبور">
-<button onclick="showScreen('home')">ایجاد حساب</button>
-<p onclick="showScreen('login')" style="color:blue;cursor:pointer;">بازگشت به ورود</p>
+<button onclick="signup()">ایجاد حساب</button>
+<p onclick="showScreen('login')" style="color:blue;cursor:pointer;">بازگشت</p>
 </div>
 
 <!-- HOME -->
@@ -101,27 +110,27 @@ align-items:center;
 <div>استوری‌ها</div>
 <div onclick="showScreen('dm')">✉</div>
 </div>
+
 <div>
 <div class="story"></div>
 <div class="story"></div>
 <div class="story"></div>
 </div>
+
 <div class="post">
 <h4>@user1</h4>
-<p>این یک پست نمونه است</p>
-<button>❤️</button>
-<button>💬</button>
-<button>📤</button>
-<button>🔖</button>
+<p id="post1">این یک پست نمونه است</p>
+<button onclick="like(this)">❤️</button>
+<button onclick="savePost('post1')">🔖 ذخیره</button>
 </div>
+
 <div class="post">
 <h4>@user2</h4>
-<p>پست دوم آوریکس</p>
-<button>❤️</button>
-<button>💬</button>
-<button>📤</button>
-<button>🔖</button>
+<p id="post2">پست دوم Aurix</p>
+<button onclick="like(this)">❤️</button>
+<button onclick="savePost('post2')">🔖 ذخیره</button>
 </div>
+
 </div>
 
 <!-- EXPLORE -->
@@ -136,7 +145,7 @@ align-items:center;
 <div id="create" class="screen">
 <h3>ایجاد پست</h3>
 <input type="file">
-<textarea placeholder="کپشن..." style="width:100%;height:80px;"></textarea>
+<textarea placeholder="کپشن..."></textarea>
 <button>انتشار</button>
 </div>
 
@@ -150,18 +159,12 @@ align-items:center;
 <!-- PROFILE -->
 <div id="profile" class="screen">
 <h3>پروفایل من</h3>
-<p>نام کاربری: @yourname</p>
-<button onclick="showScreen('settings')">تنظیمات</button>
-<div class="post">پست‌های من</div>
-</div>
+<p>نام کاربری: <span id="profileName">@guest</span></p>
 
-<!-- SETTINGS -->
-<div id="settings" class="screen">
-<h3>تنظیمات</h3>
-<button>Private Account</button>
-<button>تغییر رمز</button>
-<button>Two Factor Authentication</button>
-<button onclick="showScreen('profile')">بازگشت</button>
+<button onclick="showSaved()">مشاهده Saved</button>
+<button onclick="logout()">خروج از حساب</button>
+
+<div id="savedList"></div>
 </div>
 
 <!-- DM -->
@@ -182,12 +185,65 @@ align-items:center;
 </div>
 
 <script>
+
+// تغییر صفحه
 function showScreen(id){
 document.querySelectorAll('.screen').forEach(s=>{
 s.classList.remove('active');
 });
 document.getElementById(id).classList.add('active');
 }
+
+// ثبت‌نام
+function signup(){
+let user=document.getElementById("signupUser").value;
+localStorage.setItem("aurixUser",user);
+alert("ثبت‌نام انجام شد");
+document.getElementById("profileName").innerText="@"+user;
+showScreen("home");
+}
+
+// ورود
+function login(){
+let user=document.getElementById("loginUser").value;
+let savedUser=localStorage.getItem("aurixUser");
+if(user===savedUser){
+document.getElementById("profileName").innerText="@"+user;
+showScreen("home");
+}else{
+alert("کاربر یافت نشد");
+}
+}
+
+// خروج
+function logout(){
+showScreen("login");
+}
+
+// لایک
+function like(btn){
+btn.style.background="red";
+}
+
+// ذخیره پست
+function savePost(postId){
+let text=document.getElementById(postId).innerText;
+let saved=JSON.parse(localStorage.getItem("savedPosts"))||[];
+saved.push(text);
+localStorage.setItem("savedPosts",JSON.stringify(saved));
+alert("پست ذخیره شد");
+}
+
+// نمایش Saved
+function showSaved(){
+let saved=JSON.parse(localStorage.getItem("savedPosts"))||[];
+let container=document.getElementById("savedList");
+container.innerHTML="<h4>پست‌های ذخیره‌شده:</h4>";
+saved.forEach(item=>{
+container.innerHTML+=`<div class="saved-item">${item}</div>`;
+});
+}
+
 </script>
 
 </body>
