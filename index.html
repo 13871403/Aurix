@@ -1,4 +1,7 @@
 require("dotenv").config();
+
+console.log("🔥 CORRECT SERVER FILE IS RUNNING 🔥");
+
 const express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
@@ -13,11 +16,12 @@ const app = express();
 // ================= ENV CHECK =================
 
 if (!process.env.JWT_SECRET) {
-  console.error("❌ JWT_SECRET not defined");
+  console.error("❌ JWT_SECRET not defined in .env");
   process.exit(1);
 }
+
 if (!process.env.MONGO_URL) {
-  console.error("❌ MONGO_URL not defined");
+  console.error("❌ MONGO_URL not defined in .env");
   process.exit(1);
 }
 
@@ -42,13 +46,6 @@ app.use(rateLimit({
 
 mongoose.set("strictQuery", true);
 
-mongoose.connect(process.env.MONGO_URL)
-  .then(() => console.log("✅ MongoDB Connected"))
-  .catch(err => {
-    console.error(err);
-    process.exit(1);
-  });
-
 // ================= SCHEMAS =================
 
 const userSchema = new mongoose.Schema({
@@ -70,7 +67,6 @@ const messageSchema = new mongoose.Schema({
   text: { type: String, maxlength: 1000 }
 }, { timestamps: true });
 
-// compound index for fast chat queries
 messageSchema.index({ sender: 1, receiver: 1 });
 
 const supportSchema = new mongoose.Schema({
@@ -113,8 +109,13 @@ function validateEmail(email) {
 
 // ================= ROUTES =================
 
+// HEALTH CHECK
+app.get("/", (req, res) => {
+  res.json({ status: "Server is running 🚀" });
+});
+
 // REGISTER
-app.post("/api/register", async (req, res, next) => {
+app.post("/api/register", async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
@@ -140,12 +141,13 @@ app.post("/api/register", async (req, res, next) => {
     });
 
   } catch (err) {
-    next(err);
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
   }
 });
 
 // LOGIN
-app.post("/api/login", async (req, res, next) => {
+app.post("/api/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -169,146 +171,8 @@ app.post("/api/login", async (req, res, next) => {
     });
 
   } catch (err) {
-    next(err);
-  }
-});
-
-// CREATE POST
-app.post("/api/posts", auth, async (req, res, next) => {
-  try {
-    const { caption, image } = req.body;
-
-    const post = await Post.create({
-      userId: req.user.id,
-      caption,
-      image
-    });
-
-    res.status(201).json(post);
-
-  } catch (err) {
-    next(err);
-  }
-});
-
-// GET POSTS (paginated)
-app.get("/api/posts", async (req, res, next) => {
-  try {
-    const page = parseInt(req.query.page) || 1;
-    const limit = 10;
-
-    const posts = await Post.find()
-      .populate("userId", "username")
-      .sort({ createdAt: -1 })
-      .skip((page - 1) * limit)
-      .limit(limit);
-
-    res.json(posts);
-
-  } catch (err) {
-    next(err);
-  }
-});
-
-// LIKE / UNLIKE (Atomic)
-app.put("/api/posts/like/:id", auth, async (req, res, next) => {
-  try {
-    const postId = req.params.id;
-
-    if (!mongoose.Types.ObjectId.isValid(postId))
-      return res.status(400).json({ error: "Invalid post id" });
-
-    const post = await Post.findById(postId);
-    if (!post)
-      return res.status(404).json({ error: "Post not found" });
-
-    const userId = req.user.id;
-
-    const updated = post.likes.includes(userId)
-      ? await Post.findByIdAndUpdate(
-          postId,
-          { $pull: { likes: userId } },
-          { new: true }
-        )
-      : await Post.findByIdAndUpdate(
-          postId,
-          { $addToSet: { likes: userId } },
-          { new: true }
-        );
-
-    res.json(updated);
-
-  } catch (err) {
-    next(err);
-  }
-});
-
-// SEND MESSAGE
-app.post("/api/messages", auth, async (req, res, next) => {
-  try {
-    const { receiver, text } = req.body;
-
-    if (!receiver || !text)
-      return res.status(400).json({ error: "All fields required" });
-
-    if (!mongoose.Types.ObjectId.isValid(receiver))
-      return res.status(400).json({ error: "Invalid receiver id" });
-
-    const message = await Message.create({
-      sender: req.user.id,
-      receiver,
-      text
-    });
-
-    res.status(201).json(message);
-
-  } catch (err) {
-    next(err);
-  }
-});
-
-// GET MESSAGES (Fully Secured)
-app.get("/api/messages/:userId", auth, async (req, res, next) => {
-  try {
-    const otherUser = req.params.userId;
-
-    if (!mongoose.Types.ObjectId.isValid(otherUser))
-      return res.status(400).json({ error: "Invalid user id" });
-
-    const messages = await Message.find({
-      $or: [
-        { sender: req.user.id, receiver: otherUser },
-        { sender: otherUser, receiver: req.user.id }
-      ]
-    }).sort({ createdAt: 1 });
-
-    res.json(messages);
-
-  } catch (err) {
-    next(err);
-  }
-});
-
-// SUPPORT
-app.post("/api/support", auth, async (req, res, next) => {
-  try {
-    const { message } = req.body;
-
-    if (!message)
-      return res.status(400).json({ error: "Message required" });
-
-    const user = await User.findById(req.user.id);
-
-    await Support.create({
-      userId: req.user.id,
-      username: user.username,
-      message
-    });
-
-    res.json({ success: true });
-
-  } catch (err) {
-    next(err);
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
   }
 });
 
@@ -316,17 +180,24 @@ app.post("/api/support", auth, async (req, res, next) => {
 
 app.use((err, req, res, next) => {
   console.error(err);
-
-  if (err.code === 11000)
-    return res.status(400).json({ error: "Duplicate field value" });
-
   res.status(500).json({ error: "Internal server error" });
 });
 
-// ================= START =================
+// ================= START SERVER AFTER DB =================
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () =>
-  console.log(`🚀 Server running on port ${PORT}`)
-);
+mongoose.connect(process.env.MONGO_URL)
+  .then(() => {
+    console.log("✅ MongoDB Connected");
+
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+    });
+
+  })
+  .catch(err => {
+    console.error("❌ MongoDB Connection Failed");
+    console.error(err);
+    process.exit(1);
+  });
