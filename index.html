@@ -44,7 +44,7 @@ position:fixed;
 bottom:0;
 width:100%;
 background:white;
-display:none;
+display:none; /* مخفی پیش‌فرض */
 justify-content:space-around;
 border-top:1px solid #ddd;
 padding:10px 0;
@@ -88,7 +88,7 @@ border-radius:8px;
 <!-- LOGIN -->
 <div id="login" class="screen active">
 <h3>ورود</h3>
-<input id="loginUser" type="text" placeholder="نام کاربری">
+<input id="loginUser" type="text" placeholder="ایمیل یا شماره">
 <input id="loginPass" type="password" placeholder="رمز عبور">
 <button onclick="login()">ورود</button>
 <p onclick="showScreen('signup')" style="color:blue;cursor:pointer;">ثبت‌نام</p>
@@ -133,6 +133,29 @@ border-radius:8px;
 
 </div>
 
+<!-- EXPLORE -->
+<div id="explore" class="screen">
+<h3>جستجو</h3>
+<input type="text" placeholder="جستجو پیج، هشتگ، لوکیشن">
+<div class="post">پست پیشنهادی ۱</div>
+<div class="post">پست پیشنهادی ۲</div>
+</div>
+
+<!-- CREATE -->
+<div id="create" class="screen">
+<h3>ایجاد پست</h3>
+<input type="file">
+<textarea placeholder="کپشن..."></textarea>
+<button>انتشار</button>
+</div>
+
+<!-- REELS -->
+<div id="reels" class="screen">
+<h3>Reels</h3>
+<div class="post">ویدیو ۱</div>
+<div class="post">ویدیو ۲</div>
+</div>
+
 <!-- PROFILE -->
 <div id="profile" class="screen">
 <h3>پروفایل من</h3>
@@ -144,9 +167,20 @@ border-radius:8px;
 <div id="savedList"></div>
 </div>
 
+<!-- DM -->
+<div id="dm" class="screen">
+<h3>دایرکت</h3>
+<div class="post">چت با user1</div>
+<div class="post">چت با user2</div>
+<button onclick="showScreen('home')">بازگشت</button>
+</div>
+
 <!-- NAVBAR -->
-<div class="nav" id="navbar">
+<div class="nav">
 <div onclick="showScreen('home')">🏠</div>
+<div onclick="showScreen('explore')">🔍</div>
+<div onclick="showScreen('create')">➕</div>
+<div onclick="showScreen('reels')">🎬</div>
 <div onclick="showScreen('profile')">👤</div>
 </div>
 
@@ -159,42 +193,33 @@ s.classList.remove('active');
 });
 document.getElementById(id).classList.add('active');
 
+let nav=document.querySelector('.nav');
+
 if(id==="login" || id==="signup"){
-document.getElementById("navbar").style.display="none";
+nav.style.display="none";
 }else{
-document.getElementById("navbar").style.display="flex";
+nav.style.display="flex";
 }
 }
 
 // ثبت‌نام
 function signup(){
-let user=document.getElementById("signupUser").value.trim();
-
-if(user===""){
-alert("نام کاربری وارد کن");
-return;
-}
-
+let user=document.getElementById("signupUser").value;
 localStorage.setItem("aurixUser",user);
-alert("ثبت‌نام انجام شد ✅ حالا وارد شو");
-showScreen("login");
+alert("ثبت‌نام انجام شد");
+document.getElementById("profileName").innerText="@"+user;
+showScreen("home");
 }
 
 // ورود
 function login(){
-let user=document.getElementById("loginUser").value.trim();
+let user=document.getElementById("loginUser").value;
 let savedUser=localStorage.getItem("aurixUser");
-
-if(!savedUser){
-alert("اول ثبت‌نام کن");
-return;
-}
-
 if(user===savedUser){
 document.getElementById("profileName").innerText="@"+user;
 showScreen("home");
 }else{
-alert("نام کاربری اشتباه است");
+alert("کاربر یافت نشد");
 }
 }
 
@@ -222,12 +247,6 @@ function showSaved(){
 let saved=JSON.parse(localStorage.getItem("savedPosts"))||[];
 let container=document.getElementById("savedList");
 container.innerHTML="<h4>پست‌های ذخیره‌شده:</h4>";
-
-if(saved.length===0){
-container.innerHTML+="<p>چیزی ذخیره نشده</p>";
-return;
-}
-
 saved.forEach(item=>{
 container.innerHTML+=`<div class="saved-item">${item}</div>`;
 });
