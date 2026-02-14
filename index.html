@@ -46,12 +46,30 @@ width:100%;
 background:white;
 display:none;
 justify-content:space-around;
+align-items:center;
 border-top:1px solid #ddd;
 padding:10px 0;
+font-size:22px;
 }
 .nav div{
 cursor:pointer;
-font-size:14px;
+position:relative;
+}
+.profile-icon{
+width:28px;
+height:28px;
+border-radius:50%;
+background:#ccc;
+display:inline-block;
+}
+.online-dot{
+width:8px;
+height:8px;
+background:red;
+border-radius:50%;
+position:absolute;
+bottom:0;
+right:0;
 }
 .post{
 background:white;
@@ -147,14 +165,12 @@ text-align:center;
 <input type="text" id="searchInput" placeholder="جستجو پیج، هشتگ، لوکیشن" onkeyup="searchPosts()">
 
 <div id="explorePosts">
-
 <div class="post">پست عمومی شماره ۱</div>
 <div class="post">پست عمومی شماره ۲</div>
 <div class="post">پست عمومی شماره ۳</div>
 <div class="post">پست عمومی شماره ۴</div>
 <div class="post">پست عمومی شماره ۵</div>
 <div class="post">پست عمومی شماره ۶</div>
-
 </div>
 </div>
 
@@ -169,48 +185,45 @@ text-align:center;
 <!-- REELS -->
 <div id="reels" class="screen">
 <h3>Reels</h3>
-
 <div class="video-box">ریلز ویدیو ۱</div>
 <div class="video-box">ریلز ویدیو ۲</div>
 <div class="video-box">ریلز ویدیو ۳</div>
 <div class="video-box">ریلز ویدیو ۴</div>
 <div class="video-box">ریلز ویدیو ۵</div>
 <div class="video-box">ریلز ویدیو ۶</div>
-
 </div>
 
 <!-- PROFILE -->
 <div id="profile" class="screen">
 <h3>پروفایل من</h3>
 <p>نام کاربری: <span id="profileName">@guest</span></p>
-
 <button onclick="showSaved()">مشاهده Saved</button>
 <button onclick="logout()">خروج از حساب</button>
-
 <div id="savedList"></div>
 </div>
 
 <!-- DM -->
 <div id="dm" class="screen">
 <h3>دایرکت</h3>
-
 <div class="video-box">فیلم ۱</div>
 <div class="video-box">فیلم ۲</div>
 <div class="video-box">فیلم ۳</div>
 <div class="video-box">فیلم ۴</div>
 <div class="video-box">فیلم ۵</div>
 <div class="video-box">فیلم ۶</div>
-
 <button onclick="showScreen('home')">بازگشت</button>
 </div>
 
-<!-- NAVBAR -->
+<!-- NAVBAR جدید -->
 <div class="nav">
 <div onclick="showScreen('home')">🏠</div>
-<div onclick="showScreen('explore')">🔍</div>
+<div onclick="showScreen('reels')">▶️</div>
 <div onclick="showScreen('create')">➕</div>
-<div onclick="showScreen('reels')">🎬</div>
-<div onclick="showScreen('profile')">👤</div>
+<div onclick="showScreen('explore')">🔍</div>
+<div onclick="showScreen('profile')">
+<div class="profile-icon"></div>
+<div class="online-dot"></div>
+</div>
 </div>
 
 <script>
