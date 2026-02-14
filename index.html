@@ -6,26 +6,37 @@
 <title>Avarix</title>
 
 <style>
-body {margin:0;font-family:tahoma;background:#111;color:#fff;transition:0.3s}
-.light {background:#fff;color:#000}
-header {background:#1f1f1f;padding:10px;display:flex;justify-content:space-between}
-.page {display:none;padding:10px}
-.active {display:block}
-.post {background:#222;padding:10px;margin:10px 0;border-radius:10px}
-.light .post {background:#ddd}
-.bottom-nav {position:fixed;bottom:0;width:100%;display:flex;justify-content:space-around;background:#1f1f1f;padding:10px}
-button {background:#333;color:#fff;border:none;padding:5px;margin:3px;border-radius:5px}
-.light button {background:#ccc;color:#000}
-#menu {position:fixed;left:-220px;top:0;width:220px;height:100%;background:#222;transition:0.3s;padding:10px}
-input {width:100%;padding:5px;margin:5px 0}
+body{margin:0;font-family:tahoma;background:#111;color:#fff}
+.light{background:#eee;color:#000}
+
+header{display:flex;justify-content:space-between;padding:10px;background:#222}
+.page{display:none;padding:10px}
+.active{display:block}
+
+.bottom{
+position:fixed;bottom:0;width:100%;
+display:flex;justify-content:space-around;
+background:#222;padding:10px
+}
+
+button{padding:6px;border:none;border-radius:6px;background:#444;color:#fff}
+input,textarea{width:100%;padding:6px;margin:5px 0}
+
+.post{background:#333;padding:10px;margin:10px 0;border-radius:10px}
+.story{display:inline-block;width:60px;height:60px;background:#555;border-radius:50%;margin:5px;text-align:center;line-height:60px}
+
+#menu{
+position:fixed;left:-220px;top:0;
+width:220px;height:100%;
+background:#333;padding:10px;transition:0.3s
+}
 </style>
 
 </head>
-
 <body>
 
 <header>
-<span onclick="toggleMenu()">☰</span>
+<span onclick="menu()">☰</span>
 <span>Avarix</span>
 <span onclick="go('search')">🔍</span>
 </header>
@@ -33,205 +44,275 @@ input {width:100%;padding:5px;margin:5px 0}
 <!-- منو -->
 <div id="menu">
 <h3>منو</h3>
-<button onclick="go('home')">🏠 خانه</button>
-<button onclick="go('chat')">💬 چت</button>
-<button onclick="go('saved')">📁 ذخیره‌ها</button>
-<button onclick="go('profile')">👤 پروفایل</button>
-<button onclick="toggleTheme()">🌗 تم</button>
-<button onclick="toggleLang()">🌍 زبان</button>
-<button onclick="logout()">🚪 خروج</button>
-<button onclick="openSupport()">📞 پشتیبانی</button>
+<button onclick="go('home')">خانه</button>
+<button onclick="go('profile')">پروفایل</button>
+<button onclick="go('saved')">سیو</button>
+<button onclick="go('settings')">تنظیمات</button>
+<button onclick="logout()">خروج</button>
+</div>
+
+<!-- ثبت نام -->
+<div id="signup" class="page">
+<h3>ثبت نام</h3>
+<input id="phone" placeholder="شماره">
+<input id="user" placeholder="نام کاربری">
+<button onclick="signup()">ثبت نام</button>
+</div>
+
+<!-- ورود -->
+<div id="login" class="page">
+<h3>ورود</h3>
+<input id="loginphone" placeholder="شماره">
+<button onclick="login()">ورود</button>
 </div>
 
 <!-- خانه -->
-<div id="home" class="page active">
+<div id="home" class="page">
 
-<div class="post" data-id="1">
-<p>کاربر 1</p>
-<img src="https://picsum.photos/300/200" width="100%">
-<p>❤️ <span class="likes">0</span> | 💬 0</p>
+<h3>استوری</h3>
+<div id="stories"></div>
+<button onclick="addStory()">افزودن استوری</button>
 
-<button onclick="like(this)">لایک</button>
-<button onclick="save(this)">سیو</button>
-<button onclick="share()">اشتراک</button>
-<button onclick="interest(this)">علاقه‌مندم</button>
-<button onclick="notInterest(this)">علاقه ندارم</button>
-<button onclick="report()">گزارش</button>
-</div>
+<h3>پست ها</h3>
+<div id="posts"></div>
 
-</div>
+<textarea id="newpost" placeholder="پست جدید"></textarea>
+<button onclick="addPost()">ارسال پست</button>
 
-<!-- ذخیره -->
-<div id="saved" class="page">
-<h3>ذخیره‌ها</h3>
-<div id="savedList"></div>
-</div>
-
-<!-- چت -->
-<div id="chat" class="page">
-<div id="chatBox"></div>
-<input id="msg">
-<button onclick="sendMessage()">ارسال</button>
 </div>
 
 <!-- پروفایل -->
 <div id="profile" class="page">
 <h3>پروفایل</h3>
-<input id="name" placeholder="نام">
-<input id="username" placeholder="نام کاربری">
-<textarea id="bio" placeholder="بیو"></textarea>
-<button onclick="saveProfile()">ذخیره</button>
 
-<p id="showProfile"></p>
+<img id="avatar" width="80" src="https://via.placeholder.com/80">
+
+<p id="name">کاربر</p>
+<p id="bio"></p>
+
+<input id="editname" placeholder="نام">
+<input id="editbio" placeholder="بیو">
+<button onclick="editProfile()">ذخیره</button>
 
 <button onclick="follow()">فالو</button>
 <button onclick="block()">بلاک</button>
-<button onclick="unblock()">آنبلاک</button>
+
+</div>
+
+<!-- سیو -->
+<div id="saved" class="page">
+<h3>پست های ذخیره شده</h3>
+<div id="savedPosts"></div>
+</div>
+
+<!-- چت -->
+<div id="chat" class="page">
+<h3>چت</h3>
+<div id="chatbox"></div>
+<input id="msg">
+<button onclick="send()">ارسال</button>
 </div>
 
 <!-- جستجو -->
 <div id="search" class="page">
-<input placeholder="جستجو">
+<h3>جستجو</h3>
+<input id="searchInput">
+<button onclick="search()">جستجو</button>
+<div id="result"></div>
 </div>
 
-<!-- ورود -->
-<div id="login" class="page">
-<input id="phone" placeholder="شماره">
-<button onclick="login()">ورود</button>
+<!-- تنظیمات -->
+<div id="settings" class="page">
+<h3>تنظیمات</h3>
+
+<button onclick="toggleTheme()">حالت شب/روز</button>
+<button onclick="lang('fa')">فارسی</button>
+<button onclick="lang('en')">English</button>
+
+<button onclick="report()">گزارش</button>
+<button onclick="support()">پشتیبانی</button>
+
 </div>
 
-<!-- نوار پایین -->
-<div class="bottom-nav">
+<!-- پایین -->
+<div class="bottom">
 <button onclick="go('home')">🏠</button>
 <button onclick="go('chat')">💬</button>
-<button onclick="go('saved')">📁</button>
 <button onclick="go('profile')">👤</button>
 </div>
 
 <script>
 
 // صفحه
-function go(page){
-    localStorage.setItem("page",page);
-    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-    document.getElementById(page).classList.add('active');
-    toggleMenu(false);
-}
-
-// لود صفحه قبلی
-window.onload=function(){
-    let p=localStorage.getItem("page")||"home";
-    go(p);
-    loadProfile();
+function go(p){
+localStorage.setItem("page",p)
+document.querySelectorAll('.page').forEach(e=>e.classList.remove('active'))
+document.getElementById(p).classList.add('active')
+menu(false)
 }
 
 // منو
-function toggleMenu(force){
-    let m=document.getElementById("menu");
-    if(force===false){m.style.left="-220px";return;}
-    m.style.left=(m.style.left=="0px")?"-220px":"0px";
+function menu(f){
+let m=document.getElementById("menu")
+m.style.left = m.style.left=="0px" ? "-220px" : "0px"
 }
 
-// لایک
-function like(btn){
-    let likes=btn.parentElement.querySelector(".likes");
-    likes.innerText=parseInt(likes.innerText)+1;
+// ثبت نام
+function signup(){
+let phone=phoneInput("phone")
+if(localStorage.getItem(phone)){
+alert("قبلا ثبت شده")
+return
 }
-
-// سیو
-function save(btn){
-    let post=btn.parentElement.innerHTML;
-    let saved=JSON.parse(localStorage.getItem("saved")||"[]");
-    saved.push(post);
-    localStorage.setItem("saved",JSON.stringify(saved));
-    alert("سیو شد");
-    showSaved();
+localStorage.setItem(phone,JSON.stringify({user:user.value}))
+localStorage.setItem("user",phone)
+go("home")
 }
-
-function showSaved(){
-    let list=document.getElementById("savedList");
-    list.innerHTML="";
-    let saved=JSON.parse(localStorage.getItem("saved")||"[]");
-    saved.forEach(p=>list.innerHTML+=`<div class="post">${p}</div>`);
-}
-
-// اشتراک
-function share(){
-    alert("به فالوورها ارسال شد");
-}
-
-// علاقه
-function interest(btn){
-    alert("محتواهای مشابه نمایش داده می‌شود");
-}
-
-// عدم علاقه
-function notInterest(btn){
-    btn.parentElement.style.display="none";
-}
-
-// گزارش
-function report(){
-    window.location.href="https://rubika.ir/Music_daniyal";
-}
-
-// پشتیبانی
-function openSupport(){
-    window.location.href="https://rubika.ir/Music_daniyal";
-}
-
-// چت
-function sendMessage(){
-    let msg=document.getElementById("msg").value;
-    let div=document.createElement("div");
-    div.innerText=msg;
-    document.getElementById("chatBox").appendChild(div);
-}
-
-// تم
-function toggleTheme(){
-    document.body.classList.toggle("light");
-}
-
-// زبان
-function toggleLang(){
-    alert("زبان تغییر کرد");
-}
-
-// پروفایل
-function saveProfile(){
-    let data={
-        name:document.getElementById("name").value,
-        user:document.getElementById("username").value,
-        bio:document.getElementById("bio").value
-    };
-    localStorage.setItem("profile",JSON.stringify(data));
-    loadProfile();
-}
-
-function loadProfile(){
-    let p=JSON.parse(localStorage.getItem("profile")||"{}");
-    document.getElementById("showProfile").innerText=
-        p.name+" | "+p.user+" | "+p.bio;
-}
-
-// فالو بلاک
-function follow(){alert("فالو شد")}
-function block(){alert("بلاک شد")}
-function unblock(){alert("آنبلاک شد")}
 
 // ورود
 function login(){
-    let phone=document.getElementById("phone").value;
-    if(!phone)return alert("شماره وارد کن");
-    localStorage.setItem("user",phone);
-    go("home");
+let phone=loginphone.value
+if(!localStorage.getItem(phone)){
+alert("ثبت نام نکردی")
+return
+}
+localStorage.setItem("user",phone)
+go("home")
 }
 
 // خروج
 function logout(){
-    localStorage.clear();
-    go("login");
+localStorage.removeItem("user")
+go("login")
+}
+
+// پست
+function addPost(){
+let text=newpost.value
+let posts=JSON.parse(localStorage.getItem("posts")||"[]")
+posts.push({text,like:0,save:false})
+localStorage.setItem("posts",JSON.stringify(posts))
+renderPosts()
+}
+
+// نمایش پست
+function renderPosts(){
+let posts=JSON.parse(localStorage.getItem("posts")||"[]")
+postsDiv.innerHTML=""
+posts.forEach((p,i)=>{
+postsDiv.innerHTML+=`
+<div class="post">
+${p.text}
+<br>
+❤️ ${p.like}
+<button onclick="like(${i})">لایک</button>
+<button onclick="save(${i})">سیو</button>
+<button onclick="share()">شیر</button>
+<button onclick="comment()">کامنت</button>
+</div>`
+})
+}
+
+// لایک
+function like(i){
+let posts=JSON.parse(localStorage.getItem("posts"))
+posts[i].like++
+localStorage.setItem("posts",JSON.stringify(posts))
+renderPosts()
+}
+
+// سیو
+function save(i){
+let posts=JSON.parse(localStorage.getItem("posts"))
+posts[i].save=true
+localStorage.setItem("posts",JSON.stringify(posts))
+renderSaved()
+}
+
+// نمایش سیو
+function renderSaved(){
+let posts=JSON.parse(localStorage.getItem("posts")||"[]")
+savedPosts.innerHTML=""
+posts.filter(p=>p.save).forEach(p=>{
+savedPosts.innerHTML+=`<div class="post">${p.text}</div>`
+})
+}
+
+// چت
+function send(){
+chatbox.innerHTML+=`<div>${msg.value}</div>`
+msg.value=""
+}
+
+// استوری
+function addStory(){
+let s=JSON.parse(localStorage.getItem("story")||"[]")
+s.push("استوری")
+localStorage.setItem("story",JSON.stringify(s))
+renderStory()
+}
+function renderStory(){
+let s=JSON.parse(localStorage.getItem("story")||"[]")
+stories.innerHTML=""
+s.forEach(st=>{
+stories.innerHTML+=`<div class="story" onclick="viewStory()">●</div>`
+})
+}
+function viewStory(){
+alert("دیدی")
+}
+
+// پروفایل
+function editProfile(){
+localStorage.setItem("name",editname.value)
+localStorage.setItem("bio",editbio.value)
+loadProfile()
+}
+function loadProfile(){
+name.innerText=localStorage.getItem("name")||"کاربر"
+bio.innerText=localStorage.getItem("bio")||""
+}
+
+// فالو
+function follow(){alert("فالو شد")}
+
+// بلاک
+function block(){alert("بلاک شد")}
+
+// جستجو
+function search(){
+result.innerText="کاربر پیدا شد"
+}
+
+// گزارش
+function report(){
+window.location.href="https://rubika.ir/Music_daniyal"
+}
+
+// پشتیبانی
+function support(){
+window.location.href="https://rubika.ir/Music_daniyal"
+}
+
+// زبان
+function lang(l){
+localStorage.setItem("lang",l)
+alert("زبان تغییر کرد")
+}
+
+// تم
+function toggleTheme(){
+document.body.classList.toggle("light")
+}
+
+// لود
+window.onload=function(){
+let p=localStorage.getItem("page")||"login"
+go(p)
+renderPosts()
+renderSaved()
+renderStory()
+loadProfile()
 }
 
 </script>
