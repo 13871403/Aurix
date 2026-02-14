@@ -3,195 +3,191 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aurix</title>
-
+<title>Avarix App</title>
 <style>
 body{
-  margin:0;
-  font-family:sans-serif;
-  direction:rtl;
-  min-height:100vh;
-  background:
-    radial-gradient(circle at top left,#ff00cc,transparent 40%),
-    radial-gradient(circle at bottom right,#00f0ff,transparent 40%),
-    linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+margin:0;
+font-family:tahoma;
+background:#f5f5f5;
+direction:rtl;
 }
-.card{
-  max-width:380px;
-  margin:80px auto;
-  padding:24px;
-  border-radius:24px;
-  background:#fff;
-  box-shadow:0 20px 60px rgba(0,0,0,.35);
+header{
+background:#111;
+color:#fff;
+padding:15px;
+text-align:center;
+font-size:20px;
 }
-h2{text-align:center;margin-bottom:16px}
-input{
-  width:100%;
-  padding:14px;
-  margin-bottom:12px;
-  border-radius:14px;
-  border:1px solid #ddd;
-  font-size:15px;
+.screen{
+display:none;
+padding:15px;
+}
+.active{
+display:block;
+}
+input,button{
+width:100%;
+padding:10px;
+margin:5px 0;
+border-radius:8px;
+border:1px solid #ccc;
 }
 button{
-  width:100%;
-  padding:16px;
-  border:none;
-  border-radius:999px;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
-  background:linear-gradient(90deg,#ffcc00,#ff00ff);
+background:#111;
+color:white;
+cursor:pointer;
 }
-a{
-  display:block;
-  text-align:center;
-  margin:12px 0;
-  font-weight:bold;
-  color:#5a00ff;
-  text-decoration:none;
+.nav{
+position:fixed;
+bottom:0;
+width:100%;
+background:white;
+display:flex;
+justify-content:space-around;
+border-top:1px solid #ddd;
+padding:10px 0;
 }
-#verify,#gameContainer,#bottomNav{display:none;}
-.game-page{
-  max-width:380px;
-  margin:40px auto 120px;
-  padding:20px;
-  border-radius:20px;
-  background:#fff;
-  display:none;
-  box-shadow:0 10px 30px rgba(0,0,0,.25);
-  text-align:center;
+.nav div{
+cursor:pointer;
+font-size:14px;
 }
-#bottomNav{
-  position:fixed;
-  bottom:0;left:0;right:0;
-  background:#fff;
-  display:flex;
-  justify-content:space-around;
-  padding:10px 0;
-  box-shadow:0 -5px 20px rgba(0,0,0,.2);
+.post{
+background:white;
+padding:10px;
+margin-bottom:15px;
+border-radius:10px;
 }
-.nav-item{text-align:center;font-size:12px;cursor:pointer;}
-.nav-item span{display:block;font-size:22px;}
+.story{
+display:inline-block;
+width:60px;
+height:60px;
+border-radius:50%;
+background:gray;
+margin:5px;
+}
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
 </style>
 </head>
-
 <body>
 
-<div id="register" class="card">
-  <h2>Aurix</h2>
-  <input id="fullName" placeholder="نام کامل">
-  <input id="phoneNumber" placeholder="شماره موبایل">
-  <input id="emailAddress" placeholder="ایمیل">
-  <button onclick="doRegister()">🔒 ثبت‌نام امن</button>
+<header>Avarix</header>
+
+<!-- LOGIN -->
+<div id="login" class="screen active">
+<h3>ورود</h3>
+<input type="text" placeholder="ایمیل یا شماره">
+<input type="password" placeholder="رمز عبور">
+<button onclick="showScreen('home')">ورود</button>
+<p onclick="showScreen('signup')" style="color:blue;cursor:pointer;">ثبت‌نام</p>
 </div>
 
-<div id="verify" class="card">
-  <h2>دریافت و تأیید کد</h2>
-  <p id="showPhone" style="text-align:center"></p>
-  <input id="codeInput" placeholder="کد تأیید">
-  <button onclick="verifyCode()">✅ تأیید و ورود</button>
+<!-- SIGNUP -->
+<div id="signup" class="screen">
+<h3>ثبت‌نام</h3>
+<input type="text" placeholder="نام کاربری">
+<input type="text" placeholder="ایمیل یا شماره">
+<input type="password" placeholder="رمز عبور">
+<button onclick="showScreen('home')">ایجاد حساب</button>
+<p onclick="showScreen('login')" style="color:blue;cursor:pointer;">بازگشت به ورود</p>
 </div>
 
-<div id="gameContainer">
-  <div id="homePage" class="game-page">
-    <h3>🎮 خوش آمدی به Aurix</h3>
-  </div>
-
-  <div id="walletPage" class="game-page">
-    <h3>💰 کیف پول</h3>
-    <h1>1250 ⭐</h1>
-  </div>
-
-  <div id="accountPage" class="game-page">
-    <h3>👤 حساب کاربری</h3>
-    <p id="accName"></p>
-    <p id="accPhone"></p>
-    <p id="accEmail"></p>
-  </div>
-
-  <div id="settingsPage" class="game-page">
-    <h3>⚙️ تنظیمات</h3>
-    <button onclick="logout()">خروج</button>
-  </div>
+<!-- HOME -->
+<div id="home" class="screen">
+<div class="topbar">
+<div>استوری‌ها</div>
+<div onclick="showScreen('dm')">✉</div>
+</div>
+<div>
+<div class="story"></div>
+<div class="story"></div>
+<div class="story"></div>
+</div>
+<div class="post">
+<h4>@user1</h4>
+<p>این یک پست نمونه است</p>
+<button>❤️</button>
+<button>💬</button>
+<button>📤</button>
+<button>🔖</button>
+</div>
+<div class="post">
+<h4>@user2</h4>
+<p>پست دوم آوریکس</p>
+<button>❤️</button>
+<button>💬</button>
+<button>📤</button>
+<button>🔖</button>
+</div>
 </div>
 
-<div id="bottomNav">
-  <div class="nav-item" onclick="showPage('homePage')"><span>▶️</span>شروع</div>
-  <div class="nav-item" onclick="showPage('walletPage')"><span>💰</span>کیف پول</div>
-  <div class="nav-item" onclick="showPage('accountPage')"><span>👤</span>حساب</div>
-  <div class="nav-item" onclick="showPage('settingsPage')"><span>⚙️</span>تنظیمات</div>
+<!-- EXPLORE -->
+<div id="explore" class="screen">
+<h3>جستجو</h3>
+<input type="text" placeholder="جستجو پیج، هشتگ، لوکیشن">
+<div class="post">پست پیشنهادی ۱</div>
+<div class="post">پست پیشنهادی ۲</div>
+</div>
+
+<!-- CREATE -->
+<div id="create" class="screen">
+<h3>ایجاد پست</h3>
+<input type="file">
+<textarea placeholder="کپشن..." style="width:100%;height:80px;"></textarea>
+<button>انتشار</button>
+</div>
+
+<!-- REELS -->
+<div id="reels" class="screen">
+<h3>Reels</h3>
+<div class="post">ویدیو ۱</div>
+<div class="post">ویدیو ۲</div>
+</div>
+
+<!-- PROFILE -->
+<div id="profile" class="screen">
+<h3>پروفایل من</h3>
+<p>نام کاربری: @yourname</p>
+<button onclick="showScreen('settings')">تنظیمات</button>
+<div class="post">پست‌های من</div>
+</div>
+
+<!-- SETTINGS -->
+<div id="settings" class="screen">
+<h3>تنظیمات</h3>
+<button>Private Account</button>
+<button>تغییر رمز</button>
+<button>Two Factor Authentication</button>
+<button onclick="showScreen('profile')">بازگشت</button>
+</div>
+
+<!-- DM -->
+<div id="dm" class="screen">
+<h3>دایرکت</h3>
+<div class="post">چت با user1</div>
+<div class="post">چت با user2</div>
+<button onclick="showScreen('home')">بازگشت</button>
+</div>
+
+<!-- NAVBAR -->
+<div class="nav">
+<div onclick="showScreen('home')">🏠</div>
+<div onclick="showScreen('explore')">🔍</div>
+<div onclick="showScreen('create')">➕</div>
+<div onclick="showScreen('reels')">🎬</div>
+<div onclick="showScreen('profile')">👤</div>
 </div>
 
 <script>
-
-// ===== AUTO LOGIN =====
-window.onload = () => {
-  if(localStorage.getItem("aurix_logged")==="true"){
-    enterApp();
-  }
-};
-
-// ===== REGISTER =====
-function doRegister(){
-  const name=document.getElementById("fullName").value.trim();
-  const phone=document.getElementById("phoneNumber").value.trim();
-  const email=document.getElementById("emailAddress").value.trim();
-
-  if(!name || !phone || !email){
-    alert("همه فیلدها را پر کنید");
-    return;
-  }
-
-  localStorage.setItem("aurix_name",name);
-  localStorage.setItem("aurix_phone",phone);
-  localStorage.setItem("aurix_email",email);
-
-  document.getElementById("register").style.display="none";
-  document.getElementById("verify").style.display="block";
-  document.getElementById("showPhone").innerText="کد برای "+phone;
+function showScreen(id){
+document.querySelectorAll('.screen').forEach(s=>{
+s.classList.remove('active');
+});
+document.getElementById(id).classList.add('active');
 }
-
-// ===== VERIFY =====
-const validCodes=["AURIX-2025","AURIX-GOLD","AURIX-STAR"];
-
-function verifyCode(){
-  const code=document.getElementById("codeInput").value.trim();
-
-  if(validCodes.includes(code)){
-    localStorage.setItem("aurix_logged","true");
-    enterApp();
-  }else{
-    alert("کد اشتباه است");
-  }
-}
-
-// ===== ENTER APP =====
-function enterApp(){
-  document.getElementById("register").style.display="none";
-  document.getElementById("verify").style.display="none";
-  document.getElementById("gameContainer").style.display="block";
-  document.getElementById("bottomNav").style.display="flex";
-
-  document.getElementById("accName").innerText="نام: "+localStorage.getItem("aurix_name");
-  document.getElementById("accPhone").innerText="شماره: "+localStorage.getItem("aurix_phone");
-  document.getElementById("accEmail").innerText="ایمیل: "+localStorage.getItem("aurix_email");
-
-  showPage("homePage");
-}
-
-// ===== NAVIGATION =====
-function showPage(id){
-  document.querySelectorAll(".game-page").forEach(p=>p.style.display="none");
-  document.getElementById(id).style.display="block";
-}
-
-// ===== LOGOUT =====
-function logout(){
-  localStorage.clear();
-  location.reload();
-}
-
 </script>
 
 </body>
