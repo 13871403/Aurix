@@ -3,249 +3,237 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aurix</title>
+<title>Avarix</title>
+
 <style>
-body{margin:0;font-family:sans-serif;background:#111;color:#fff}
-header{background:#000;padding:10px;text-align:center;font-size:22px}
-button{padding:6px 10px;margin:4px;border:none;border-radius:6px;cursor:pointer}
-input,textarea{width:100%;padding:6px;margin:4px 0;border-radius:6px;border:none}
-.card{background:#1c1c1c;padding:10px;margin:10px;border-radius:10px}
-.hidden{display:none}
-.nav{position:fixed;bottom:0;width:100%;background:#000;display:flex;justify-content:space-around;padding:8px}
-.nav button{background:none;color:#fff}
-.menu{position:fixed;left:0;top:0;width:220px;height:100%;background:#222;padding:10px;display:none;overflow:auto}
-a{color:#0af}
-.small{font-size:12px;color:#aaa}
+body {margin:0;font-family:tahoma;background:#111;color:#fff;transition:0.3s}
+.light {background:#fff;color:#000}
+header {background:#1f1f1f;padding:10px;display:flex;justify-content:space-between}
+.page {display:none;padding:10px}
+.active {display:block}
+.post {background:#222;padding:10px;margin:10px 0;border-radius:10px}
+.light .post {background:#ddd}
+.bottom-nav {position:fixed;bottom:0;width:100%;display:flex;justify-content:space-around;background:#1f1f1f;padding:10px}
+button {background:#333;color:#fff;border:none;padding:5px;margin:3px;border-radius:5px}
+.light button {background:#ccc;color:#000}
+#menu {position:fixed;left:-220px;top:0;width:220px;height:100%;background:#222;transition:0.3s;padding:10px}
+input {width:100%;padding:5px;margin:5px 0}
 </style>
+
 </head>
+
 <body>
 
-<header>Aurix</header>
+<header>
+<span onclick="toggleMenu()">☰</span>
+<span>Avarix</span>
+<span onclick="go('search')">🔍</span>
+</header>
 
-<div id="menu" class="menu">
-<button onclick="toggleMenu()">✖</button>
-<hr>
-<button onclick="switchAccount()">🔄 سوئیچ اکانت</button>
+<!-- منو -->
+<div id="menu">
+<h3>منو</h3>
+<button onclick="go('home')">🏠 خانه</button>
+<button onclick="go('chat')">💬 چت</button>
+<button onclick="go('saved')">📁 ذخیره‌ها</button>
+<button onclick="go('profile')">👤 پروفایل</button>
+<button onclick="toggleTheme()">🌗 تم</button>
+<button onclick="toggleLang()">🌍 زبان</button>
 <button onclick="logout()">🚪 خروج</button>
-<button onclick="support()">🎧 پشتیبانی</button>
+<button onclick="openSupport()">📞 پشتیبانی</button>
 </div>
 
-<div id="auth">
-<h3>ثبت نام</h3>
-<input id="r_name" placeholder="نام">
-<input id="r_username" placeholder="Username (English only)">
-<input id="r_email" placeholder="Email">
-<input id="r_phone" placeholder="Phone (11 digits)">
-<button onclick="register()">ثبت نام</button>
-<hr>
-<h3>ورود</h3>
-<input id="l_username" placeholder="Username">
+<!-- خانه -->
+<div id="home" class="page active">
+
+<div class="post" data-id="1">
+<p>کاربر 1</p>
+<img src="https://picsum.photos/300/200" width="100%">
+<p>❤️ <span class="likes">0</span> | 💬 0</p>
+
+<button onclick="like(this)">لایک</button>
+<button onclick="save(this)">سیو</button>
+<button onclick="share()">اشتراک</button>
+<button onclick="interest(this)">علاقه‌مندم</button>
+<button onclick="notInterest(this)">علاقه ندارم</button>
+<button onclick="report()">گزارش</button>
+</div>
+
+</div>
+
+<!-- ذخیره -->
+<div id="saved" class="page">
+<h3>ذخیره‌ها</h3>
+<div id="savedList"></div>
+</div>
+
+<!-- چت -->
+<div id="chat" class="page">
+<div id="chatBox"></div>
+<input id="msg">
+<button onclick="sendMessage()">ارسال</button>
+</div>
+
+<!-- پروفایل -->
+<div id="profile" class="page">
+<h3>پروفایل</h3>
+<input id="name" placeholder="نام">
+<input id="username" placeholder="نام کاربری">
+<textarea id="bio" placeholder="بیو"></textarea>
+<button onclick="saveProfile()">ذخیره</button>
+
+<p id="showProfile"></p>
+
+<button onclick="follow()">فالو</button>
+<button onclick="block()">بلاک</button>
+<button onclick="unblock()">آنبلاک</button>
+</div>
+
+<!-- جستجو -->
+<div id="search" class="page">
+<input placeholder="جستجو">
+</div>
+
+<!-- ورود -->
+<div id="login" class="page">
+<input id="phone" placeholder="شماره">
 <button onclick="login()">ورود</button>
 </div>
 
-<div id="app" class="hidden">
-<button onclick="toggleMenu()">☰</button>
-<div id="feed"></div>
-<div class="nav">
-<button onclick="home()">خانه</button>
-<button onclick="explore()">اکسپلور</button>
-<button onclick="profile()">پروفایل</button>
-<button onclick="messages()">دایرکت</button>
-</div>
+<!-- نوار پایین -->
+<div class="bottom-nav">
+<button onclick="go('home')">🏠</button>
+<button onclick="go('chat')">💬</button>
+<button onclick="go('saved')">📁</button>
+<button onclick="go('profile')">👤</button>
 </div>
 
 <script>
-let users=JSON.parse(localStorage.getItem("aurix_users"))||[];
-let current=null;
 
-function save(){localStorage.setItem("aurix_users",JSON.stringify(users))}
-function validUser(u){return /^[a-zA-Z0-9_]+$/.test(u)}
-function validPhone(p){return p.length>=11}
-
-function register(){
-if(users.length>=3){alert("حداکثر 3 اکانت");return}
-let name=r_name.value;
-let username=r_username.value;
-let email=r_email.value;
-let phone=r_phone.value;
-if(!validUser(username)){alert("یوزرنیم انگلیسی");return}
-if(!validPhone(phone)){alert("شماره حداقل 11 رقم");return}
-if(users.find(u=>u.phone===phone)){alert("شماره تکراری");return}
-if(users.find(u=>u.username===username)){alert("یوزرنیم تکراری");return}
-users.push({name,username,email,phone,bio:"",note:"",
-private:false,followers:[],following:[],blocked:[],
-posts:[],stories:[],messages:{}});
-save();alert("ثبت شد");
+// صفحه
+function go(page){
+    localStorage.setItem("page",page);
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById(page).classList.add('active');
+    toggleMenu(false);
 }
 
+// لود صفحه قبلی
+window.onload=function(){
+    let p=localStorage.getItem("page")||"home";
+    go(p);
+    loadProfile();
+}
+
+// منو
+function toggleMenu(force){
+    let m=document.getElementById("menu");
+    if(force===false){m.style.left="-220px";return;}
+    m.style.left=(m.style.left=="0px")?"-220px":"0px";
+}
+
+// لایک
+function like(btn){
+    let likes=btn.parentElement.querySelector(".likes");
+    likes.innerText=parseInt(likes.innerText)+1;
+}
+
+// سیو
+function save(btn){
+    let post=btn.parentElement.innerHTML;
+    let saved=JSON.parse(localStorage.getItem("saved")||"[]");
+    saved.push(post);
+    localStorage.setItem("saved",JSON.stringify(saved));
+    alert("سیو شد");
+    showSaved();
+}
+
+function showSaved(){
+    let list=document.getElementById("savedList");
+    list.innerHTML="";
+    let saved=JSON.parse(localStorage.getItem("saved")||"[]");
+    saved.forEach(p=>list.innerHTML+=`<div class="post">${p}</div>`);
+}
+
+// اشتراک
+function share(){
+    alert("به فالوورها ارسال شد");
+}
+
+// علاقه
+function interest(btn){
+    alert("محتواهای مشابه نمایش داده می‌شود");
+}
+
+// عدم علاقه
+function notInterest(btn){
+    btn.parentElement.style.display="none";
+}
+
+// گزارش
+function report(){
+    window.location.href="https://rubika.ir/Music_daniyal";
+}
+
+// پشتیبانی
+function openSupport(){
+    window.location.href="https://rubika.ir/Music_daniyal";
+}
+
+// چت
+function sendMessage(){
+    let msg=document.getElementById("msg").value;
+    let div=document.createElement("div");
+    div.innerText=msg;
+    document.getElementById("chatBox").appendChild(div);
+}
+
+// تم
+function toggleTheme(){
+    document.body.classList.toggle("light");
+}
+
+// زبان
+function toggleLang(){
+    alert("زبان تغییر کرد");
+}
+
+// پروفایل
+function saveProfile(){
+    let data={
+        name:document.getElementById("name").value,
+        user:document.getElementById("username").value,
+        bio:document.getElementById("bio").value
+    };
+    localStorage.setItem("profile",JSON.stringify(data));
+    loadProfile();
+}
+
+function loadProfile(){
+    let p=JSON.parse(localStorage.getItem("profile")||"{}");
+    document.getElementById("showProfile").innerText=
+        p.name+" | "+p.user+" | "+p.bio;
+}
+
+// فالو بلاک
+function follow(){alert("فالو شد")}
+function block(){alert("بلاک شد")}
+function unblock(){alert("آنبلاک شد")}
+
+// ورود
 function login(){
-let u=users.find(x=>x.username===l_username.value);
-if(!u){alert("کاربر نیست");return}
-current=u;
-auth.classList.add("hidden");
-app.classList.remove("hidden");
-home();
+    let phone=document.getElementById("phone").value;
+    if(!phone)return alert("شماره وارد کن");
+    localStorage.setItem("user",phone);
+    go("home");
 }
 
-function logout(){current=null;app.classList.add("hidden");auth.classList.remove("hidden")}
-function toggleMenu(){menu.style.display=menu.style.display==="block"?"none":"block"}
-
-function home(){
-feed.innerHTML="";
-users.forEach(u=>{
-if(u.username!==current.username && 
-!current.blocked.includes(u.username) &&
-!u.blocked.includes(current.username)){
-if(u.private && !u.followers.includes(current.username)) return;
-u.posts.forEach((p,i)=>{
-p.views=p.views||[];
-if(!p.views.includes(current.username)) p.views.push(current.username);
-feed.innerHTML+=`
-<div class="card">
-<h4>@${u.username}</h4>
-<p>${p.text}</p>
-<div class="small">بازدید: ${p.views.length}</div>
-<button onclick="likePost('${u.username}',${i})">❤️ ${p.likes||0}</button>
-<input placeholder="کامنت" onkeydown="commentPost(event,'${u.username}',${i})">
-<div>${(p.comments||[]).join("<br>")}</div>
-</div>`;
-});
-}
-});
-feed.innerHTML+=`
-<div class="card">
-<textarea id="newPost" placeholder="پست جدید"></textarea>
-<button onclick="addPost()">ارسال</button>
-</div>
-<div class="card">
-<textarea id="newStory" placeholder="استوری جدید"></textarea>
-<button onclick="addStory()">ارسال استوری</button>
-</div>`;
-save();
+// خروج
+function logout(){
+    localStorage.clear();
+    go("login");
 }
 
-function addPost(){
-if(!newPost.value)return;
-current.posts.push({text:newPost.value,likes:0,comments:[],views:[]});
-save();home();
-}
-
-function likePost(user,i){
-let u=users.find(x=>x.username===user);
-u.posts[i].likes++;
-save();home();
-}
-
-function commentPost(e,user,i){
-if(e.key==="Enter"){
-let u=users.find(x=>x.username===user);
-u.posts[i].comments.push(current.username+": "+e.target.value);
-e.target.value="";
-save();home();
-}
-}
-
-function addStory(){
-if(!newStory.value)return;
-current.stories.push({text:newStory.value,views:[],likes:0});
-save();home();
-}
-
-function explore(){
-feed.innerHTML="";
-users.forEach(u=>{
-if(u.username!==current.username){
-feed.innerHTML+=`
-<div class="card">
-<h4>@${u.username}</h4>
-<button onclick="follow('${u.username}')">
-${current.following.includes(u.username)?"آنفالو":"فالو"}
-</button>
-<button onclick="block('${u.username}')">بلاک</button>
-<button onclick="openChat('${u.username}')">پیام</button>
-</div>`;
-}
-});
-}
-
-function follow(username){
-let u=users.find(x=>x.username===username);
-if(current.following.includes(username)){
-current.following=current.following.filter(x=>x!==username);
-u.followers=u.followers.filter(x=>x!==current.username);
-}else{
-current.following.push(username);
-u.followers.push(current.username);
-}
-save();explore();
-}
-
-function block(username){
-if(!current.blocked.includes(username)){
-current.blocked.push(username);
-alert("بلاک شد");
-}
-save();explore();
-}
-
-function profile(){
-feed.innerHTML=`
-<div class="card">
-<h3>${current.name}</h3>
-<p>@${current.username}</p>
-<p>بیو: ${current.bio}</p>
-<p>نوت: ${current.note}</p>
-<p>فالورها: ${current.followers.length}</p>
-<p>فالوینگ: ${current.following.length}</p>
-<label>پیج خصوصی 
-<input type="checkbox" ${current.private?"checked":""}
-onchange="current.private=!current.private;save()">
-</label>
-<textarea id="bioEdit" placeholder="ویرایش بیو"></textarea>
-<button onclick="editBio()">ذخیره بیو</button>
-<textarea id="noteEdit" placeholder="ویرایش نوت"></textarea>
-<button onclick="editNote()">ذخیره نوت</button>
-</div>`;
-}
-
-function editBio(){current.bio=bioEdit.value;save();profile()}
-function editNote(){current.note=noteEdit.value;save();profile()}
-
-function messages(){
-feed.innerHTML="<h3>دایرکت</h3>";
-Object.keys(current.messages).forEach(user=>{
-feed.innerHTML+=`<div class="card" onclick="openChat('${user}')">@${user}</div>`;
-});
-}
-
-function openChat(user){
-feed.innerHTML=`<h3>چت با @${user}</h3>
-<div id="chatBox"></div>
-<input id="msgInput" placeholder="پیام..." onkeydown="sendMsg(event,'${user}')">`;
-let msgs=current.messages[user]||[];
-chatBox.innerHTML=msgs.join("<br>");
-}
-
-function sendMsg(e,user){
-if(e.key==="Enter"){
-current.messages[user]=current.messages[user]||[];
-current.messages[user].push("من: "+msgInput.value);
-let u=users.find(x=>x.username===user);
-u.messages[current.username]=u.messages[current.username]||[];
-u.messages[current.username].push(current.username+": "+msgInput.value);
-msgInput.value="";
-save();openChat(user);
-}
-}
-
-function switchAccount(){
-let list=users.map(u=>u.username).join("\n");
-let choose=prompt("انتخاب کن:\n"+list);
-let u=users.find(x=>x.username===choose);
-if(u){current=u;home();}
-}
-
-function support(){window.location.href="https://rubika.ir/Music_daniyal"}
 </script>
 
 </body>
