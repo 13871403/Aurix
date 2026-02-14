@@ -1,186 +1,198 @@
-require("dotenv").config();
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurix</title>
 
-const express = require("express");
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const cors = require("cors");
-const helmet = require("helmet");
-const rateLimit = require("express-rate-limit");
-const mongoSanitize = require("express-mongo-sanitize");
+<style>
+body{
+  margin:0;
+  font-family:sans-serif;
+  direction:rtl;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at top left,#ff00cc,transparent 40%),
+    radial-gradient(circle at bottom right,#00f0ff,transparent 40%),
+    linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+}
+.card{
+  max-width:380px;
+  margin:80px auto;
+  padding:24px;
+  border-radius:24px;
+  background:#fff;
+  box-shadow:0 20px 60px rgba(0,0,0,.35);
+}
+h2{text-align:center;margin-bottom:16px}
+input{
+  width:100%;
+  padding:14px;
+  margin-bottom:12px;
+  border-radius:14px;
+  border:1px solid #ddd;
+  font-size:15px;
+}
+button{
+  width:100%;
+  padding:16px;
+  border:none;
+  border-radius:999px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  background:linear-gradient(90deg,#ffcc00,#ff00ff);
+}
+a{
+  display:block;
+  text-align:center;
+  margin:12px 0;
+  font-weight:bold;
+  color:#5a00ff;
+  text-decoration:none;
+}
+#verify,#gameContainer,#bottomNav{display:none;}
+.game-page{
+  max-width:380px;
+  margin:40px auto 120px;
+  padding:20px;
+  border-radius:20px;
+  background:#fff;
+  display:none;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+  text-align:center;
+}
+#bottomNav{
+  position:fixed;
+  bottom:0;left:0;right:0;
+  background:#fff;
+  display:flex;
+  justify-content:space-around;
+  padding:10px 0;
+  box-shadow:0 -5px 20px rgba(0,0,0,.2);
+}
+.nav-item{text-align:center;font-size:12px;cursor:pointer;}
+.nav-item span{display:block;font-size:22px;}
+</style>
+</head>
 
-const app = express();
+<body>
 
-console.log("🔥 Aurix Server Starting...");
+<div id="register" class="card">
+  <h2>Aurix</h2>
+  <input id="fullName" placeholder="نام کامل">
+  <input id="phoneNumber" placeholder="شماره موبایل">
+  <input id="emailAddress" placeholder="ایمیل">
+  <button onclick="doRegister()">🔒 ثبت‌نام امن</button>
+</div>
 
-// ================= GLOBAL ERROR HANDLING =================
+<div id="verify" class="card">
+  <h2>دریافت و تأیید کد</h2>
+  <p id="showPhone" style="text-align:center"></p>
+  <input id="codeInput" placeholder="کد تأیید">
+  <button onclick="verifyCode()">✅ تأیید و ورود</button>
+</div>
 
-process.on("unhandledRejection", (err) => {
-  console.error("❌ Unhandled Rejection:", err);
-});
+<div id="gameContainer">
+  <div id="homePage" class="game-page">
+    <h3>🎮 خوش آمدی به Aurix</h3>
+  </div>
 
-process.on("uncaughtException", (err) => {
-  console.error("❌ Uncaught Exception:", err);
-  process.exit(1);
-});
+  <div id="walletPage" class="game-page">
+    <h3>💰 کیف پول</h3>
+    <h1>1250 ⭐</h1>
+  </div>
 
-// ================= SECURITY =================
+  <div id="accountPage" class="game-page">
+    <h3>👤 حساب کاربری</h3>
+    <p id="accName"></p>
+    <p id="accPhone"></p>
+    <p id="accEmail"></p>
+  </div>
 
-app.use(helmet());
+  <div id="settingsPage" class="game-page">
+    <h3>⚙️ تنظیمات</h3>
+    <button onclick="logout()">خروج</button>
+  </div>
+</div>
 
-app.use(cors({
-  origin: "*"
-}));
+<div id="bottomNav">
+  <div class="nav-item" onclick="showPage('homePage')"><span>▶️</span>شروع</div>
+  <div class="nav-item" onclick="showPage('walletPage')"><span>💰</span>کیف پول</div>
+  <div class="nav-item" onclick="showPage('accountPage')"><span>👤</span>حساب</div>
+  <div class="nav-item" onclick="showPage('settingsPage')"><span>⚙️</span>تنظیمات</div>
+</div>
 
-app.use(express.json({ limit: "10mb" }));
-app.use(mongoSanitize());
+<script>
 
-app.use(rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 200,
-  standardHeaders: true,
-  legacyHeaders: false,
-}));
+// ===== AUTO LOGIN =====
+window.onload = () => {
+  if(localStorage.getItem("aurix_logged")==="true"){
+    enterApp();
+  }
+};
 
-// ================= ENV CHECK =================
+// ===== REGISTER =====
+function doRegister(){
+  const name=document.getElementById("fullName").value.trim();
+  const phone=document.getElementById("phoneNumber").value.trim();
+  const email=document.getElementById("emailAddress").value.trim();
 
-if (!process.env.JWT_SECRET) {
-  console.error("❌ JWT_SECRET missing");
-  process.exit(1);
+  if(!name || !phone || !email){
+    alert("همه فیلدها را پر کنید");
+    return;
+  }
+
+  localStorage.setItem("aurix_name",name);
+  localStorage.setItem("aurix_phone",phone);
+  localStorage.setItem("aurix_email",email);
+
+  document.getElementById("register").style.display="none";
+  document.getElementById("verify").style.display="block";
+  document.getElementById("showPhone").innerText="کد برای "+phone;
 }
 
-if (!process.env.MONGO_URL) {
-  console.error("❌ MONGO_URL missing");
-  process.exit(1);
-}
+// ===== VERIFY =====
+const validCodes=["AURIX-2025","AURIX-GOLD","AURIX-STAR"];
 
-// ================= DATABASE =================
+function verifyCode(){
+  const code=document.getElementById("codeInput").value.trim();
 
-mongoose.set("strictQuery", true);
-
-mongoose.connection.on("connected", () => {
-  console.log("✅ MongoDB Connected");
-});
-
-mongoose.connection.on("error", (err) => {
-  console.error("❌ MongoDB Error:", err);
-});
-
-mongoose.connection.on("disconnected", () => {
-  console.log("⚠ MongoDB Disconnected");
-});
-
-// ================= SCHEMA =================
-
-const userSchema = new mongoose.Schema({
-  username: { type: String, required: true, unique: true, trim: true },
-  email: { type: String, required: true, unique: true, lowercase: true },
-  password: { type: String, required: true }
-}, { timestamps: true });
-
-const User = mongoose.model("User", userSchema);
-
-// ================= ROUTES =================
-
-// Health Check
-app.get("/", (req, res) => {
-  res.status(200).json({ status: "Aurix API Running 🚀" });
-});
-
-// REGISTER
-app.post("/api/register", async (req, res) => {
-  try {
-    const { username, email, password } = req.body;
-
-    if (!username || !email || !password)
-      return res.status(400).json({ error: "All fields required" });
-
-    if (password.length < 6)
-      return res.status(400).json({ error: "Password must be at least 6 characters" });
-
-    const existingUser = await User.findOne({
-      $or: [{ email }, { username }]
-    });
-
-    if (existingUser)
-      return res.status(400).json({ error: "User already exists" });
-
-    const hashedPassword = await bcrypt.hash(password, 12);
-
-    const user = await User.create({
-      username,
-      email,
-      password: hashedPassword
-    });
-
-    res.status(201).json({
-      message: "User created successfully",
-      user: {
-        id: user._id,
-        username: user.username,
-        email: user.email
-      }
-    });
-
-  } catch (error) {
-    console.error("Register Error:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
-
-// LOGIN
-app.post("/api/login", async (req, res) => {
-  try {
-    const { email, password } = req.body;
-
-    if (!email || !password)
-      return res.status(400).json({ error: "Email and password required" });
-
-    const user = await User.findOne({ email });
-
-    if (!user)
-      return res.status(400).json({ error: "Invalid credentials" });
-
-    const isMatch = await bcrypt.compare(password, user.password);
-
-    if (!isMatch)
-      return res.status(400).json({ error: "Invalid credentials" });
-
-    const token = jwt.sign(
-      { id: user._id },
-      process.env.JWT_SECRET,
-      { expiresIn: "7d" }
-    );
-
-    res.status(200).json({
-      message: "Login successful",
-      token
-    });
-
-  } catch (error) {
-    console.error("Login Error:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
-
-// ================= START SERVER =================
-
-const PORT = process.env.PORT || 10000;
-
-async function startServer() {
-  try {
-    await mongoose.connect(process.env.MONGO_URL, {
-      serverSelectionTimeoutMS: 5000
-    });
-
-    app.listen(PORT, () => {
-      console.log(`🚀 Server running on port ${PORT}`);
-    });
-
-  } catch (error) {
-    console.error("❌ Failed to connect to MongoDB:", error);
-    process.exit(1);
+  if(validCodes.includes(code)){
+    localStorage.setItem("aurix_logged","true");
+    enterApp();
+  }else{
+    alert("کد اشتباه است");
   }
 }
 
-startServer();
+// ===== ENTER APP =====
+function enterApp(){
+  document.getElementById("register").style.display="none";
+  document.getElementById("verify").style.display="none";
+  document.getElementById("gameContainer").style.display="block";
+  document.getElementById("bottomNav").style.display="flex";
+
+  document.getElementById("accName").innerText="نام: "+localStorage.getItem("aurix_name");
+  document.getElementById("accPhone").innerText="شماره: "+localStorage.getItem("aurix_phone");
+  document.getElementById("accEmail").innerText="ایمیل: "+localStorage.getItem("aurix_email");
+
+  showPage("homePage");
+}
+
+// ===== NAVIGATION =====
+function showPage(id){
+  document.querySelectorAll(".game-page").forEach(p=>p.style.display="none");
+  document.getElementById(id).style.display="block";
+}
+
+// ===== LOGOUT =====
+function logout(){
+  localStorage.clear();
+  location.reload();
+}
+
+</script>
+
+</body>
+</html>
