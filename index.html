@@ -1,86 +1,332 @@
-<!DOCTYPE html>
-<html lang="fa">
-<head>
-  <meta charset="UTF-8">
-  <title>Mini GTA Game</title>
-  <style>
-    body {
-      background: #222;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: white;
-      font-family: sans-serif;
-    }
-    canvas {
-      background: #3a8f3a; /* زمین */
-      border: 3px solid #000;
-      margin-top: 20px;
-    }
-    button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body>
+require("dotenv").config();
+const express = require("express");
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const cors = require("cors");
+const rateLimit = require("express-rate-limit");
+const helmet = require("helmet");
+const mongoSanitize = require("express-mongo-sanitize");
 
-<h2>🎮 Mini GTA Style Game</h2>
+const app = express();
 
-<canvas id="game" width="400" height="300"></canvas>
+// ================= ENV CHECK =================
 
-<button onclick="movePlayer()">🚶‍♂️ راه برو</button>
+if (!process.env.JWT_SECRET) {
+  console.error("❌ JWT_SECRET not defined");
+  process.exit(1);
+}
+if (!process.env.MONGO_URL) {
+  console.error("❌ MONGO_URL not defined");
+  process.exit(1);
+}
 
-<script>
-  const canvas = document.getElementById("game");
-  const ctx = canvas.getContext("2d");
+// ================= SECURITY =================
 
-  // پلیر (اسکین ساده)
-  let player = {
-    x: 50,
-    y: 180,
-    width: 30,
-    height: 50,
-    speed: 2,
-    walking: false
-  };
+app.use(helmet());
 
-  function drawGround() {
-    ctx.fillStyle = "#3a8f3a";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+app.use(cors({
+  origin: process.env.CLIENT_URL || "http://localhost:3000",
+  credentials: true
+}));
+
+app.use(express.json({ limit: "5mb" }));
+app.use(mongoSanitize());
+
+app.use(rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100
+}));
+
+// ================= DATABASE =================
+
+mongoose.set("strictQuery", true);
+
+mongoose.connect(process.env.MONGO_URL)
+  .then(() => console.log("✅ MongoDB Connected"))
+  .catch(err => {
+    console.error(err);
+    process.exit(1);
+  });
+
+// ================= SCHEMAS =================
+
+const userSchema = new mongoose.Schema({
+  username: { type: String, unique: true, required: true, index: true },
+  email: { type: String, unique: true, required: true, index: true },
+  password: { type: String, required: true }
+}, { timestamps: true });
+
+const postSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", index: true },
+  caption: { type: String, maxlength: 500 },
+  image: String,
+  likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }]
+}, { timestamps: true });
+
+const messageSchema = new mongoose.Schema({
+  sender: { type: mongoose.Schema.Types.ObjectId, ref: "User", index: true },
+  receiver: { type: mongoose.Schema.Types.ObjectId, ref: "User", index: true },
+  text: { type: String, maxlength: 1000 }
+}, { timestamps: true });
+
+// compound index for fast chat queries
+messageSchema.index({ sender: 1, receiver: 1 });
+
+const supportSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  username: String,
+  message: { type: String, maxlength: 2000 }
+}, { timestamps: true });
+
+// ================= MODELS =================
+
+const User = mongoose.model("User", userSchema);
+const Post = mongoose.model("Post", postSchema);
+const Message = mongoose.model("Message", messageSchema);
+const Support = mongoose.model("Support", supportSchema);
+
+// ================= AUTH =================
+
+function auth(req, res, next) {
+  const header = req.header("Authorization");
+  if (!header) return res.status(401).json({ error: "Access denied" });
+
+  const token = header.startsWith("Bearer ")
+    ? header.split(" ")[1]
+    : header;
+
+  try {
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = verified;
+    next();
+  } catch {
+    return res.status(401).json({ error: "Invalid token" });
   }
+}
 
-  function drawPlayer() {
-    // بدن
-    ctx.fillStyle = "#1e90ff";
-    ctx.fillRect(player.x, player.y, player.width, player.height);
+// ================= HELPERS =================
 
-    // سر
-    ctx.fillStyle = "#f1c27d";
-    ctx.fillRect(player.x + 5, player.y - 15, 20, 15);
+function validateEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+// ================= ROUTES =================
+
+// REGISTER
+app.post("/api/register", async (req, res, next) => {
+  try {
+    const { username, email, password } = req.body;
+
+    if (!username || !email || !password)
+      return res.status(400).json({ error: "All fields required" });
+
+    if (!validateEmail(email))
+      return res.status(400).json({ error: "Invalid email" });
+
+    if (password.length < 6)
+      return res.status(400).json({ error: "Password too short" });
+
+    const exists = await User.findOne({ $or: [{ email }, { username }] });
+    if (exists)
+      return res.status(400).json({ error: "User already exists" });
+
+    const hash = await bcrypt.hash(password, 12);
+
+    const user = await User.create({ username, email, password: hash });
+
+    res.status(201).json({
+      user: { id: user._id, username, email }
+    });
+
+  } catch (err) {
+    next(err);
   }
+});
 
-  function update() {
-    if (player.walking && player.x < canvas.width - player.width) {
-      player.x += player.speed;
-    }
+// LOGIN
+app.post("/api/login", async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user)
+      return res.status(400).json({ error: "Invalid credentials" });
+
+    const valid = await bcrypt.compare(password, user.password);
+    if (!valid)
+      return res.status(400).json({ error: "Invalid credentials" });
+
+    const token = jwt.sign(
+      { id: user._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    res.json({
+      token,
+      user: { id: user._id, username: user.username, email: user.email }
+    });
+
+  } catch (err) {
+    next(err);
   }
+});
 
-  function gameLoop() {
-    drawGround();
-    drawPlayer();
-    update();
-    requestAnimationFrame(gameLoop);
+// CREATE POST
+app.post("/api/posts", auth, async (req, res, next) => {
+  try {
+    const { caption, image } = req.body;
+
+    const post = await Post.create({
+      userId: req.user.id,
+      caption,
+      image
+    });
+
+    res.status(201).json(post);
+
+  } catch (err) {
+    next(err);
   }
+});
 
-  function movePlayer() {
-    player.walking = !player.walking;
+// GET POSTS (paginated)
+app.get("/api/posts", async (req, res, next) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = 10;
+
+    const posts = await Post.find()
+      .populate("userId", "username")
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    res.json(posts);
+
+  } catch (err) {
+    next(err);
   }
+});
 
-  gameLoop();
-</script>
+// LIKE / UNLIKE (Atomic)
+app.put("/api/posts/like/:id", auth, async (req, res, next) => {
+  try {
+    const postId = req.params.id;
 
-</body>
-</html>
+    if (!mongoose.Types.ObjectId.isValid(postId))
+      return res.status(400).json({ error: "Invalid post id" });
+
+    const post = await Post.findById(postId);
+    if (!post)
+      return res.status(404).json({ error: "Post not found" });
+
+    const userId = req.user.id;
+
+    const updated = post.likes.includes(userId)
+      ? await Post.findByIdAndUpdate(
+          postId,
+          { $pull: { likes: userId } },
+          { new: true }
+        )
+      : await Post.findByIdAndUpdate(
+          postId,
+          { $addToSet: { likes: userId } },
+          { new: true }
+        );
+
+    res.json(updated);
+
+  } catch (err) {
+    next(err);
+  }
+});
+
+// SEND MESSAGE
+app.post("/api/messages", auth, async (req, res, next) => {
+  try {
+    const { receiver, text } = req.body;
+
+    if (!receiver || !text)
+      return res.status(400).json({ error: "All fields required" });
+
+    if (!mongoose.Types.ObjectId.isValid(receiver))
+      return res.status(400).json({ error: "Invalid receiver id" });
+
+    const message = await Message.create({
+      sender: req.user.id,
+      receiver,
+      text
+    });
+
+    res.status(201).json(message);
+
+  } catch (err) {
+    next(err);
+  }
+});
+
+// GET MESSAGES (Fully Secured)
+app.get("/api/messages/:userId", auth, async (req, res, next) => {
+  try {
+    const otherUser = req.params.userId;
+
+    if (!mongoose.Types.ObjectId.isValid(otherUser))
+      return res.status(400).json({ error: "Invalid user id" });
+
+    const messages = await Message.find({
+      $or: [
+        { sender: req.user.id, receiver: otherUser },
+        { sender: otherUser, receiver: req.user.id }
+      ]
+    }).sort({ createdAt: 1 });
+
+    res.json(messages);
+
+  } catch (err) {
+    next(err);
+  }
+});
+
+// SUPPORT
+app.post("/api/support", auth, async (req, res, next) => {
+  try {
+    const { message } = req.body;
+
+    if (!message)
+      return res.status(400).json({ error: "Message required" });
+
+    const user = await User.findById(req.user.id);
+
+    await Support.create({
+      userId: req.user.id,
+      username: user.username,
+      message
+    });
+
+    res.json({ success: true });
+
+  } catch (err) {
+    next(err);
+  }
+});
+
+// ================= ERROR HANDLER =================
+
+app.use((err, req, res, next) => {
+  console.error(err);
+
+  if (err.code === 11000)
+    return res.status(400).json({ error: "Duplicate field value" });
+
+  res.status(500).json({ error: "Internal server error" });
+});
+
+// ================= START =================
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () =>
+  console.log(`🚀 Server running on port ${PORT}`)
+);
