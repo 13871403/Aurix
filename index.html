@@ -44,7 +44,7 @@ position:fixed;
 bottom:0;
 width:100%;
 background:white;
-display:none; /* مخفی پیش‌فرض */
+display:none;
 justify-content:space-around;
 border-top:1px solid #ddd;
 padding:10px 0;
@@ -77,6 +77,14 @@ background:#eaeaea;
 padding:8px;
 margin:5px 0;
 border-radius:8px;
+}
+.video-box{
+background:black;
+color:white;
+padding:20px;
+margin-bottom:15px;
+border-radius:10px;
+text-align:center;
 }
 </style>
 </head>
@@ -136,9 +144,18 @@ border-radius:8px;
 <!-- EXPLORE -->
 <div id="explore" class="screen">
 <h3>جستجو</h3>
-<input type="text" placeholder="جستجو پیج، هشتگ، لوکیشن">
-<div class="post">پست پیشنهادی ۱</div>
-<div class="post">پست پیشنهادی ۲</div>
+<input type="text" id="searchInput" placeholder="جستجو پیج، هشتگ، لوکیشن" onkeyup="searchPosts()">
+
+<div id="explorePosts">
+
+<div class="post">پست عمومی شماره ۱</div>
+<div class="post">پست عمومی شماره ۲</div>
+<div class="post">پست عمومی شماره ۳</div>
+<div class="post">پست عمومی شماره ۴</div>
+<div class="post">پست عمومی شماره ۵</div>
+<div class="post">پست عمومی شماره ۶</div>
+
+</div>
 </div>
 
 <!-- CREATE -->
@@ -152,8 +169,14 @@ border-radius:8px;
 <!-- REELS -->
 <div id="reels" class="screen">
 <h3>Reels</h3>
-<div class="post">ویدیو ۱</div>
-<div class="post">ویدیو ۲</div>
+
+<div class="video-box">ریلز ویدیو ۱</div>
+<div class="video-box">ریلز ویدیو ۲</div>
+<div class="video-box">ریلز ویدیو ۳</div>
+<div class="video-box">ریلز ویدیو ۴</div>
+<div class="video-box">ریلز ویدیو ۵</div>
+<div class="video-box">ریلز ویدیو ۶</div>
+
 </div>
 
 <!-- PROFILE -->
@@ -170,8 +193,14 @@ border-radius:8px;
 <!-- DM -->
 <div id="dm" class="screen">
 <h3>دایرکت</h3>
-<div class="post">چت با user1</div>
-<div class="post">چت با user2</div>
+
+<div class="video-box">فیلم ۱</div>
+<div class="video-box">فیلم ۲</div>
+<div class="video-box">فیلم ۳</div>
+<div class="video-box">فیلم ۴</div>
+<div class="video-box">فیلم ۵</div>
+<div class="video-box">فیلم ۶</div>
+
 <button onclick="showScreen('home')">بازگشت</button>
 </div>
 
@@ -186,7 +215,6 @@ border-radius:8px;
 
 <script>
 
-// تغییر صفحه
 function showScreen(id){
 document.querySelectorAll('.screen').forEach(s=>{
 s.classList.remove('active');
@@ -202,7 +230,6 @@ nav.style.display="flex";
 }
 }
 
-// ثبت‌نام
 function signup(){
 let user=document.getElementById("signupUser").value;
 localStorage.setItem("aurixUser",user);
@@ -211,7 +238,6 @@ document.getElementById("profileName").innerText="@"+user;
 showScreen("home");
 }
 
-// ورود
 function login(){
 let user=document.getElementById("loginUser").value;
 let savedUser=localStorage.getItem("aurixUser");
@@ -223,17 +249,14 @@ alert("کاربر یافت نشد");
 }
 }
 
-// خروج
 function logout(){
 showScreen("login");
 }
 
-// لایک
 function like(btn){
 btn.style.background="red";
 }
 
-// ذخیره پست
 function savePost(postId){
 let text=document.getElementById(postId).innerText;
 let saved=JSON.parse(localStorage.getItem("savedPosts"))||[];
@@ -242,13 +265,24 @@ localStorage.setItem("savedPosts",JSON.stringify(saved));
 alert("پست ذخیره شد");
 }
 
-// نمایش Saved
 function showSaved(){
 let saved=JSON.parse(localStorage.getItem("savedPosts"))||[];
 let container=document.getElementById("savedList");
 container.innerHTML="<h4>پست‌های ذخیره‌شده:</h4>";
 saved.forEach(item=>{
 container.innerHTML+=`<div class="saved-item">${item}</div>`;
+});
+}
+
+function searchPosts(){
+let input=document.getElementById("searchInput").value.toLowerCase();
+let posts=document.querySelectorAll("#explorePosts .post");
+posts.forEach(p=>{
+if(p.innerText.toLowerCase().includes(input)){
+p.style.display="block";
+}else{
+p.style.display="none";
+}
 });
 }
 
