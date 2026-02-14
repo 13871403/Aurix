@@ -3,62 +3,69 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aurix App</title>
+<title>Aurix</title>
 
 <style>
+:root{
+--bg:#f5f5f5;
+--card:#ffffff;
+--text:#000;
+--main:#111;
+}
+
+.dark{
+--bg:#121212;
+--card:#1e1e1e;
+--text:#fff;
+--main:#000;
+}
+
 body{
 margin:0;
 font-family:tahoma;
-background:#f5f5f5;
+background:var(--bg);
+color:var(--text);
 direction:rtl;
+transition:0.3s;
 }
+
 header{
-background:#111;
+background:var(--main);
 color:#fff;
 padding:15px;
 text-align:center;
 font-size:20px;
 }
+
 .screen{
 display:none;
 padding:15px;
 padding-bottom:80px;
 }
-.active{
-display:block;
-}
+
+.active{display:block;}
+
 input,button,textarea{
 width:100%;
 padding:10px;
-margin:5px 0;
+margin:6px 0;
 border-radius:8px;
 border:1px solid #ccc;
 }
+
 button{
-background:#111;
+background:var(--main);
 color:white;
 cursor:pointer;
 }
-.nav{
-position:fixed;
-bottom:0;
-width:100%;
-background:white;
-display:flex;
-justify-content:space-around;
-border-top:1px solid #ddd;
-padding:10px 0;
-}
-.nav div{
-cursor:pointer;
-font-size:14px;
-}
+
 .post{
-background:white;
+background:var(--card);
 padding:10px;
 margin-bottom:15px;
 border-radius:10px;
 }
+
 .story{
 display:inline-block;
 width:60px;
@@ -67,28 +74,55 @@ border-radius:50%;
 background:gray;
 margin:5px;
 }
-.topbar{
+
+.nav{
+position:fixed;
+bottom:0;
+width:100%;
+background:var(--card);
 display:flex;
-justify-content:space-between;
-align-items:center;
+justify-content:space-around;
+border-top:1px solid #ccc;
+padding:10px 0;
 }
-.saved-item{
-background:#eaeaea;
-padding:8px;
-margin:5px 0;
-border-radius:8px;
+
+.nav div{cursor:pointer;}
+
+.chat-box{
+height:200px;
+overflow-y:auto;
+background:var(--card);
+padding:10px;
+border-radius:10px;
+margin-bottom:10px;
+}
+
+.message{
+background:#4caf50;
+color:white;
+padding:6px;
+margin:4px 0;
+border-radius:6px;
+}
+
+.delete-btn{
+background:red;
+margin-top:5px;
 }
 </style>
 </head>
 
 <body>
 
-<header>Aurix</header>
+<header>
+Aurix
+<button onclick="toggleDark()" style="float:left;width:auto;padding:5px;">🌙</button>
+</header>
 
 <!-- LOGIN -->
 <div id="login" class="screen active">
 <h3>ورود</h3>
-<input id="loginUser" type="text" placeholder="ایمیل یا شماره">
+<input id="loginUser" placeholder="نام کاربری">
 <input id="loginPass" type="password" placeholder="رمز عبور">
 <button onclick="login()">ورود</button>
 <p onclick="showScreen('signup')" style="color:blue;cursor:pointer;">ثبت‌نام</p>
@@ -97,90 +131,46 @@ border-radius:8px;
 <!-- SIGNUP -->
 <div id="signup" class="screen">
 <h3>ثبت‌نام</h3>
-<input id="signupUser" type="text" placeholder="نام کاربری">
-<input type="text" placeholder="ایمیل یا شماره">
-<input type="password" placeholder="رمز عبور">
+<input id="signupUser" placeholder="نام کاربری">
+<input id="signupPass" type="password" placeholder="رمز عبور">
 <button onclick="signup()">ایجاد حساب</button>
 <p onclick="showScreen('login')" style="color:blue;cursor:pointer;">بازگشت</p>
 </div>
 
 <!-- HOME -->
 <div id="home" class="screen">
-<div class="topbar">
-<div>استوری‌ها</div>
-<div onclick="showScreen('dm')">✉</div>
-</div>
+<h3>استوری‌ها</h3>
+<input type="text" id="storyInput" placeholder="متن استوری">
+<button onclick="addStory()">افزودن استوری</button>
+<div id="stories"></div>
 
-<div>
-<div class="story"></div>
-<div class="story"></div>
-<div class="story"></div>
-</div>
+<h3>پست‌ها</h3>
+<textarea id="postInput" placeholder="چی فکر میکنی؟"></textarea>
+<button onclick="addPost()">انتشار پست</button>
 
-<div class="post">
-<h4>@user1</h4>
-<p id="post1">این یک پست نمونه است</p>
-<button onclick="like(this)">❤️</button>
-<button onclick="savePost('post1')">🔖 ذخیره</button>
-</div>
-
-<div class="post">
-<h4>@user2</h4>
-<p id="post2">پست دوم Aurix</p>
-<button onclick="like(this)">❤️</button>
-<button onclick="savePost('post2')">🔖 ذخیره</button>
-</div>
-
-</div>
-
-<!-- EXPLORE -->
-<div id="explore" class="screen">
-<h3>جستجو</h3>
-<input type="text" placeholder="جستجو پیج، هشتگ، لوکیشن">
-<div class="post">پست پیشنهادی ۱</div>
-<div class="post">پست پیشنهادی ۲</div>
-</div>
-
-<!-- CREATE -->
-<div id="create" class="screen">
-<h3>ایجاد پست</h3>
-<input type="file">
-<textarea placeholder="کپشن..."></textarea>
-<button>انتشار</button>
-</div>
-
-<!-- REELS -->
-<div id="reels" class="screen">
-<h3>Reels</h3>
-<div class="post">ویدیو ۱</div>
-<div class="post">ویدیو ۲</div>
-</div>
-
-<!-- PROFILE -->
-<div id="profile" class="screen">
-<h3>پروفایل من</h3>
-<p>نام کاربری: <span id="profileName">@guest</span></p>
-
-<button onclick="showSaved()">مشاهده Saved</button>
-<button onclick="logout()">خروج از حساب</button>
-
-<div id="savedList"></div>
+<div id="posts"></div>
 </div>
 
 <!-- DM -->
 <div id="dm" class="screen">
 <h3>دایرکت</h3>
-<div class="post">چت با user1</div>
-<div class="post">چت با user2</div>
+<div class="chat-box" id="chatBox"></div>
+<input id="chatInput" placeholder="پیام...">
+<button onclick="sendMessage()">ارسال</button>
 <button onclick="showScreen('home')">بازگشت</button>
 </div>
 
-<!-- NAVBAR -->
+<!-- PROFILE -->
+<div id="profile" class="screen">
+<h3>پروفایل</h3>
+<p>نام کاربری: <span id="profileName"></span></p>
+<button onclick="logout()">خروج</button>
+</div>
+
+<!-- NAV -->
 <div class="nav">
 <div onclick="showScreen('home')">🏠</div>
-<div onclick="showScreen('explore')">🔍</div>
-<div onclick="showScreen('create')">➕</div>
-<div onclick="showScreen('reels')">🎬</div>
+<div onclick="showScreen('dm')">💬</div>
 <div onclick="showScreen('profile')">👤</div>
 </div>
 
@@ -188,30 +178,40 @@ border-radius:8px;
 
 // تغییر صفحه
 function showScreen(id){
-document.querySelectorAll('.screen').forEach(s=>{
-s.classList.remove('active');
-});
+document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
 document.getElementById(id).classList.add('active');
 }
 
-// ثبت‌نام
+// ثبت‌نام واقعی
 function signup(){
 let user=document.getElementById("signupUser").value;
-localStorage.setItem("aurixUser",user);
-alert("ثبت‌نام انجام شد");
-document.getElementById("profileName").innerText="@"+user;
-showScreen("home");
+let pass=document.getElementById("signupPass").value;
+
+if(user===""||pass===""){
+alert("همه فیلدها را پر کن");
+return;
 }
 
-// ورود
+localStorage.setItem("aurixUser",user);
+localStorage.setItem("aurixPass",pass);
+
+alert("ثبت‌نام موفق");
+showScreen("login");
+}
+
+// ورود با بررسی رمز
 function login(){
 let user=document.getElementById("loginUser").value;
+let pass=document.getElementById("loginPass").value;
+
 let savedUser=localStorage.getItem("aurixUser");
-if(user===savedUser){
+let savedPass=localStorage.getItem("aurixPass");
+
+if(user===savedUser && pass===savedPass){
 document.getElementById("profileName").innerText="@"+user;
 showScreen("home");
 }else{
-alert("کاربر یافت نشد");
+alert("اطلاعات اشتباه است");
 }
 }
 
@@ -220,28 +220,49 @@ function logout(){
 showScreen("login");
 }
 
-// لایک
-function like(btn){
-btn.style.background="red";
+// تم تاریک
+function toggleDark(){
+document.body.classList.toggle("dark");
 }
 
-// ذخیره پست
-function savePost(postId){
-let text=document.getElementById(postId).innerText;
-let saved=JSON.parse(localStorage.getItem("savedPosts"))||[];
-saved.push(text);
-localStorage.setItem("savedPosts",JSON.stringify(saved));
-alert("پست ذخیره شد");
+// افزودن استوری
+function addStory(){
+let text=document.getElementById("storyInput").value;
+if(text==="") return;
+let div=document.createElement("div");
+div.className="story";
+div.innerText=text;
+document.getElementById("stories").appendChild(div);
+document.getElementById("storyInput").value="";
 }
 
-// نمایش Saved
-function showSaved(){
-let saved=JSON.parse(localStorage.getItem("savedPosts"))||[];
-let container=document.getElementById("savedList");
-container.innerHTML="<h4>پست‌های ذخیره‌شده:</h4>";
-saved.forEach(item=>{
-container.innerHTML+=`<div class="saved-item">${item}</div>`;
-});
+// افزودن پست
+function addPost(){
+let text=document.getElementById("postInput").value;
+if(text==="") return;
+
+let post=document.createElement("div");
+post.className="post";
+post.innerHTML=`
+<p>${text}</p>
+<button onclick="this.parentElement.remove()" class="delete-btn">حذف پست</button>
+`;
+
+document.getElementById("posts").prepend(post);
+document.getElementById("postInput").value="";
+}
+
+// دایرکت واقعی
+function sendMessage(){
+let msg=document.getElementById("chatInput").value;
+if(msg==="") return;
+
+let div=document.createElement("div");
+div.className="message";
+div.innerText=msg;
+
+document.getElementById("chatBox").appendChild(div);
+document.getElementById("chatInput").value="";
 }
 
 </script>
