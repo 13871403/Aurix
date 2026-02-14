@@ -11,14 +11,58 @@ margin:0;
 font-family:tahoma;
 background:#f5f5f5;
 direction:rtl;
+padding-top:70px;
 }
+
+/* نوار بالا */
+.top-nav{
+position:fixed;
+top:0;
+width:100%;
+background:white;
+display:flex;
+justify-content:space-around;
+align-items:center;
+padding:12px 0;
+border-bottom:1px solid #ddd;
+z-index:1000;
+font-size:26px;
+}
+.top-nav div{
+cursor:pointer;
+position:relative;
+}
+.badge{
+position:absolute;
+top:-5px;
+left:-8px;
+background:red;
+color:white;
+font-size:12px;
+border-radius:50%;
+padding:2px 6px;
+}
+.profile-img{
+width:32px;
+height:32px;
+border-radius:50%;
+background:url('https://i.pravatar.cc/100') center/cover;
+position:relative;
+}
+.profile-dot{
+width:8px;
+height:8px;
+background:red;
+border-radius:50%;
+position:absolute;
+bottom:0;
+right:0;
+}
+
 header{
-background:#111;
-color:#fff;
-padding:15px;
-text-align:center;
-font-size:20px;
+display:none;
 }
+
 .screen{
 display:none;
 padding:15px;
@@ -38,38 +82,6 @@ button{
 background:#111;
 color:white;
 cursor:pointer;
-}
-.nav{
-position:fixed;
-bottom:0;
-width:100%;
-background:white;
-display:none;
-justify-content:space-around;
-align-items:center;
-border-top:1px solid #ddd;
-padding:10px 0;
-font-size:22px;
-}
-.nav div{
-cursor:pointer;
-position:relative;
-}
-.profile-icon{
-width:28px;
-height:28px;
-border-radius:50%;
-background:#ccc;
-display:inline-block;
-}
-.online-dot{
-width:8px;
-height:8px;
-background:red;
-border-radius:50%;
-position:absolute;
-bottom:0;
-right:0;
 }
 .post{
 background:white;
@@ -109,7 +121,21 @@ text-align:center;
 
 <body>
 
-<header>Aurix</header>
+<!-- نوار بالای جدید -->
+<div class="top-nav">
+<div onclick="showScreen('home')">🏠</div>
+<div onclick="showScreen('reels')">▶️</div>
+<div onclick="showScreen('create')">
+📨
+<span class="badge">1</span>
+</div>
+<div onclick="showScreen('explore')">🔍</div>
+<div onclick="showScreen('profile')">
+<div class="profile-img">
+<div class="profile-dot"></div>
+</div>
+</div>
+</div>
 
 <!-- LOGIN -->
 <div id="login" class="screen active">
@@ -156,14 +182,12 @@ text-align:center;
 <button onclick="like(this)">❤️</button>
 <button onclick="savePost('post2')">🔖 ذخیره</button>
 </div>
-
 </div>
 
 <!-- EXPLORE -->
 <div id="explore" class="screen">
 <h3>جستجو</h3>
-<input type="text" id="searchInput" placeholder="جستجو پیج، هشتگ، لوکیشن" onkeyup="searchPosts()">
-
+<input type="text" id="searchInput" placeholder="جستجو..." onkeyup="searchPosts()">
 <div id="explorePosts">
 <div class="post">پست عمومی شماره ۱</div>
 <div class="post">پست عمومی شماره ۲</div>
@@ -185,12 +209,12 @@ text-align:center;
 <!-- REELS -->
 <div id="reels" class="screen">
 <h3>Reels</h3>
-<div class="video-box">ریلز ویدیو ۱</div>
-<div class="video-box">ریلز ویدیو ۲</div>
-<div class="video-box">ریلز ویدیو ۳</div>
-<div class="video-box">ریلز ویدیو ۴</div>
-<div class="video-box">ریلز ویدیو ۵</div>
-<div class="video-box">ریلز ویدیو ۶</div>
+<div class="video-box">ریلز ۱</div>
+<div class="video-box">ریلز ۲</div>
+<div class="video-box">ریلز ۳</div>
+<div class="video-box">ریلز ۴</div>
+<div class="video-box">ریلز ۵</div>
+<div class="video-box">ریلز ۶</div>
 </div>
 
 <!-- PROFILE -->
@@ -214,39 +238,28 @@ text-align:center;
 <button onclick="showScreen('home')">بازگشت</button>
 </div>
 
-<!-- NAVBAR جدید -->
-<div class="nav">
-<div onclick="showScreen('home')">🏠</div>
-<div onclick="showScreen('reels')">▶️</div>
-<div onclick="showScreen('create')">➕</div>
-<div onclick="showScreen('explore')">🔍</div>
-<div onclick="showScreen('profile')">
-<div class="profile-icon"></div>
-<div class="online-dot"></div>
-</div>
-</div>
-
 <script>
+
+window.onload=function(){
+let savedUser=localStorage.getItem("aurixUser");
+if(savedUser){
+document.getElementById("profileName").innerText="@"+savedUser;
+showScreen("home");
+}else{
+showScreen("login");
+}
+}
 
 function showScreen(id){
 document.querySelectorAll('.screen').forEach(s=>{
 s.classList.remove('active');
 });
 document.getElementById(id).classList.add('active');
-
-let nav=document.querySelector('.nav');
-
-if(id==="login" || id==="signup"){
-nav.style.display="none";
-}else{
-nav.style.display="flex";
-}
 }
 
 function signup(){
 let user=document.getElementById("signupUser").value;
 localStorage.setItem("aurixUser",user);
-alert("ثبت‌نام انجام شد");
 document.getElementById("profileName").innerText="@"+user;
 showScreen("home");
 }
@@ -263,6 +276,7 @@ alert("کاربر یافت نشد");
 }
 
 function logout(){
+localStorage.removeItem("aurixUser");
 showScreen("login");
 }
 
@@ -291,11 +305,7 @@ function searchPosts(){
 let input=document.getElementById("searchInput").value.toLowerCase();
 let posts=document.querySelectorAll("#explorePosts .post");
 posts.forEach(p=>{
-if(p.innerText.toLowerCase().includes(input)){
-p.style.display="block";
-}else{
-p.style.display="none";
-}
+p.style.display=p.innerText.toLowerCase().includes(input)?"block":"none";
 });
 }
 
