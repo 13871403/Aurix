@@ -2,6 +2,7 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Avrix App</title>
 
 <style>
@@ -14,7 +15,7 @@ body{
 /* صفحات */
 .page{
     display:none;
-    padding-bottom:70px;
+    padding-bottom:90px;
 }
 .active{
     display:block;
@@ -24,7 +25,8 @@ body{
 .header{
     background:#6200ea;
     color:white;
-    padding:10px;
+    padding:15px;
+    font-size:18px;
     display:flex;
     justify-content:space-between;
     align-items:center;
@@ -35,7 +37,7 @@ body{
     position:fixed;
     bottom:0;
     width:100%;
-    height:60px;
+    height:80px;
     background:white;
     display:flex;
     justify-content:space-around;
@@ -44,37 +46,63 @@ body{
 
 .navbar div{
     text-align:center;
-    font-size:12px;
+    font-size:14px;
     cursor:pointer;
+}
+
+/* آیکون بزرگ */
+.navbar div span{
+    display:block;
+    font-size:28px;
 }
 
 /* کارت */
 .card{
     background:white;
-    margin:10px;
-    padding:10px;
-    border-radius:10px;
+    margin:15px;
+    padding:15px;
+    border-radius:15px;
+    font-size:17px;
 }
 
 /* دکمه */
 button{
-    padding:5px 10px;
-    margin:3px;
+    padding:14px 20px;
+    margin:6px;
+    font-size:16px;
+    border:none;
+    border-radius:12px;
+    background:#6200ea;
+    color:white;
+    width:100%;
 }
 
 /* پست */
 .post{
     background:white;
-    margin:10px;
-    padding:10px;
-    border-radius:10px;
+    margin:15px;
+    padding:15px;
+    border-radius:15px;
+    font-size:16px;
 }
 
 /* ورودی */
 input,textarea{
     width:100%;
-    padding:5px;
-    margin:5px 0;
+    padding:14px;
+    margin:8px 0;
+    font-size:16px;
+    border-radius:12px;
+    border:1px solid #ccc;
+}
+
+/* آیتم خدمات */
+.service{
+    padding:12px;
+    margin:8px 0;
+    background:#eee;
+    border-radius:10px;
+    font-size:16px;
 }
 
 </style>
@@ -83,9 +111,8 @@ input,textarea{
 
 <body>
 
-<!-- صفحه خانه -->
+<!-- خانه -->
 <div id="home" class="page active">
-
 <div class="header">
     <div>آوریکس</div>
     <div>⚙️</div>
@@ -94,19 +121,17 @@ input,textarea{
 <div class="card">
 <h3>خدمات</h3>
 
-<div>💰 کیف پول</div>
-<div>📶 شارژ اینترنت</div>
-<div>🎵 موسیقی</div>
-<div>🤖 هوش مصنوعی</div>
-<div onclick="support()">🛠 پشتیبانی</div>
+<div class="service">💰 کیف پول</div>
+<div class="service">📶 شارژ اینترنت</div>
+<div class="service">🎵 موسیقی</div>
+<div class="service">🤖 هوش مصنوعی</div>
+<div class="service" onclick="support()">🛠 پشتیبانی</div>
 
 </div>
-
 </div>
 
 <!-- پیام رسان -->
 <div id="chat" class="page">
-
 <div class="header">
     <div>🔍</div>
     <div>پیام‌رسان</div>
@@ -114,19 +139,19 @@ input,textarea{
 </div>
 
 <div class="card">
-<h4>گروه ها و کانال ها</h4>
-<div>گروه 1</div>
-<div>کانال 1</div>
+<h3>گروه ها و کانال ها</h3>
+
+<div class="service">گروه 1</div>
+<div class="service">کانال 1</div>
 
 <button onclick="newGroup()">گروه جدید</button>
 <button onclick="newChannel()">کانال جدید</button>
-</div>
 
+</div>
 </div>
 
 <!-- آورینو -->
 <div id="social" class="page">
-
 <div class="header">
     <div>❤️</div>
     <div>آورینو</div>
@@ -136,12 +161,10 @@ input,textarea{
 <button onclick="addPost()">➕ پست جدید</button>
 
 <div id="posts"></div>
-
 </div>
 
 <!-- ویترین -->
 <div id="shop" class="page">
-
 <div class="header">
     <div>ویترین</div>
     <div>🔍</div>
@@ -150,15 +173,13 @@ input,textarea{
 <input placeholder="جستجوی پیج...">
 
 <div class="card">
-<div>@user1</div>
-<div>@shop123</div>
+<div class="service">@user1</div>
+<div class="service">@shop123</div>
 </div>
-
 </div>
 
 <!-- فیلم -->
 <div id="video" class="page">
-
 <div class="header">
     <div>🎬 فیلم</div>
     <div>☰</div>
@@ -171,18 +192,17 @@ input,textarea{
 <div class="card">
 🎥 فیلم نمونه
 </div>
-
 </div>
 
 <!-- پروفایل -->
 <div id="profile" class="page">
-
 <div class="header">
     <div>پروفایل</div>
 </div>
 
 <div class="card">
-<img id="avatar" src="" width="80"><br>
+<img id="avatar" src="" width="100"><br><br>
+
 <button onclick="setAvatar()">➕ انتخاب عکس</button>
 
 <input id="name" placeholder="نام">
@@ -190,16 +210,15 @@ input,textarea{
 
 <button onclick="saveProfile()">ذخیره</button>
 </div>
-
 </div>
 
 <!-- نوار پایین -->
 <div class="navbar">
-<div onclick="showPage('home')">🏠<br>خانه</div>
-<div onclick="showPage('chat')">💬<br>پیام</div>
-<div onclick="showPage('social')">📸<br>آورینو</div>
-<div onclick="showPage('shop')">🛍<br>ویترین</div>
-<div onclick="showPage('video')">🎬<br>فیلم</div>
+<div onclick="showPage('home')"><span>🏠</span>خانه</div>
+<div onclick="showPage('chat')"><span>💬</span>پیام</div>
+<div onclick="showPage('social')"><span>📸</span>آورینو</div>
+<div onclick="showPage('shop')"><span>🛍</span>ویترین</div>
+<div onclick="showPage('video')"><span>🎬</span>فیلم</div>
 </div>
 
 <script>
@@ -218,18 +237,20 @@ function support(){
 /* گروه */
 function newGroup(){
     let name = prompt("نام گروه:");
-    alert("گروه ساخته شد: "+name);
+    if(name) alert("گروه ساخته شد: "+name);
 }
 
 /* کانال */
 function newChannel(){
     let name = prompt("نام کانال:");
-    alert("کانال ساخته شد: "+name);
+    if(name) alert("کانال ساخته شد: "+name);
 }
 
 /* پست */
 function addPost(){
     let text = prompt("متن پست:");
+    if(!text) return;
+
     let post = `
     <div class="post">
     <b>کاربر</b>
