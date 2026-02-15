@@ -2,206 +2,259 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
-<title>صفحه مجازی</title>
+<title>Avrix App</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: sans-serif;
-    background: linear-gradient(120deg,#3a7bd5,#00d2ff);
-    height: 100vh;
-    overflow: hidden;
+body{
+    margin:0;
+    font-family:sans-serif;
+    background:#f2f2f2;
 }
 
-/* دسکتاپ */
-.desktop {
-    display: flex;
-    gap: 30px;
-    padding: 20px;
+/* صفحات */
+.page{
+    display:none;
+    padding-bottom:70px;
+}
+.active{
+    display:block;
 }
 
-/* آیکون */
-.icon {
-    text-align: center;
-    cursor: pointer;
-    color: white;
+/* هدر */
+.header{
+    background:#6200ea;
+    color:white;
+    padding:10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
 
-.icon img {
-    width: 64px;
+/* پایین */
+.navbar{
+    position:fixed;
+    bottom:0;
+    width:100%;
+    height:60px;
+    background:white;
+    display:flex;
+    justify-content:space-around;
+    border-top:1px solid #ccc;
 }
 
-/* تسک بار */
-.taskbar {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 45px;
-    background: rgba(0,0,0,0.6);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: white;
-    padding: 0 15px;
+.navbar div{
+    text-align:center;
+    font-size:12px;
+    cursor:pointer;
 }
 
-/* پنجره */
-.window {
-    position: absolute;
-    top: 100px;
-    left: 100px;
-    width: 350px;
-    height: 300px;
-    background: white;
-    border-radius: 10px;
-    display: none;
-    flex-direction: column;
-    overflow: hidden;
-}
-
-/* هدر پنجره */
-.header {
-    background: #444;
-    color: white;
-    padding: 8px;
-    display: flex;
-    justify-content: space-between;
-}
-
-/* محتوا */
-.content {
-    padding: 10px;
-    flex: 1;
-    overflow: auto;
+/* کارت */
+.card{
+    background:white;
+    margin:10px;
+    padding:10px;
+    border-radius:10px;
 }
 
 /* دکمه */
-button {
-    padding: 6px 10px;
-    margin: 3px;
-    cursor: pointer;
+button{
+    padding:5px 10px;
+    margin:3px;
 }
+
+/* پست */
+.post{
+    background:white;
+    margin:10px;
+    padding:10px;
+    border-radius:10px;
+}
+
+/* ورودی */
+input,textarea{
+    width:100%;
+    padding:5px;
+    margin:5px 0;
+}
+
 </style>
+
 </head>
 
 <body>
 
-<div class="desktop">
+<!-- صفحه خانه -->
+<div id="home" class="page active">
 
-    <div class="icon" onclick="openApp('files')">
-        <img src="https://cdn-icons-png.flaticon.com/512/716/716784.png">
-        <div>فایل‌ها</div>
-    </div>
+<div class="header">
+    <div>آوریکس</div>
+    <div>⚙️</div>
+</div>
 
-    <div class="icon" onclick="openApp('browser')">
-        <img src="https://cdn-icons-png.flaticon.com/512/841/841364.png">
-        <div>مرورگر</div>
-    </div>
+<div class="card">
+<h3>خدمات</h3>
 
-    <div class="icon" onclick="openApp('calc')">
-        <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png">
-        <div>ماشین حساب</div>
-    </div>
-
-    <div class="icon" onclick="openApp('music')">
-        <img src="https://cdn-icons-png.flaticon.com/512/727/727245.png">
-        <div>موزیک</div>
-    </div>
-
-    <div class="icon" onclick="openApp('settings')">
-        <img src="https://cdn-icons-png.flaticon.com/512/2099/2099058.png">
-        <div>تنظیمات</div>
-    </div>
+<div>💰 کیف پول</div>
+<div>📶 شارژ اینترنت</div>
+<div>🎵 موسیقی</div>
+<div>🤖 هوش مصنوعی</div>
+<div onclick="support()">🛠 پشتیبانی</div>
 
 </div>
 
-<!-- پنجره‌ها -->
-
-<div class="window" id="files">
-    <div class="header">فایل‌ها <button onclick="closeApp('files')">X</button></div>
-    <div class="content">
-        📁 Documents<br>
-        📁 Photos<br>
-        📁 Videos
-    </div>
 </div>
 
-<div class="window" id="browser">
-    <div class="header">مرورگر <button onclick="closeApp('browser')">X</button></div>
-    <div class="content">
-        <input type="text" id="url" placeholder="آدرس سایت">
-        <button onclick="go()">برو</button>
-        <iframe id="frame" style="width:100%;height:200px;"></iframe>
-    </div>
+<!-- پیام رسان -->
+<div id="chat" class="page">
+
+<div class="header">
+    <div>🔍</div>
+    <div>پیام‌رسان</div>
+    <div>⚙️ ✏️</div>
 </div>
 
-<div class="window" id="calc">
-    <div class="header">ماشین حساب <button onclick="closeApp('calc')">X</button></div>
-    <div class="content">
-        <input id="calcInput" style="width:100%;">
-        <button onclick="calc()">=</button>
-        <div id="result"></div>
-    </div>
+<div class="card">
+<h4>گروه ها و کانال ها</h4>
+<div>گروه 1</div>
+<div>کانال 1</div>
+
+<button onclick="newGroup()">گروه جدید</button>
+<button onclick="newChannel()">کانال جدید</button>
 </div>
 
-<div class="window" id="music">
-    <div class="header">موزیک <button onclick="closeApp('music')">X</button></div>
-    <div class="content">
-        <audio controls>
-            <source src="https://www.w3schools.com/html/horse.mp3">
-        </audio>
-    </div>
 </div>
 
-<div class="window" id="settings">
-    <div class="header">تنظیمات <button onclick="closeApp('settings')">X</button></div>
-    <div class="content">
-        <button onclick="changeBg()">تغییر پس‌زمینه</button>
-    </div>
+<!-- آورینو -->
+<div id="social" class="page">
+
+<div class="header">
+    <div>❤️</div>
+    <div>آورینو</div>
+    <div onclick="openProfile()">👤 ➕</div>
 </div>
 
-<!-- تسک بار -->
-<div class="taskbar">
-    <div>صفحه مجازی</div>
-    <div id="clock"></div>
+<button onclick="addPost()">➕ پست جدید</button>
+
+<div id="posts"></div>
+
+</div>
+
+<!-- ویترین -->
+<div id="shop" class="page">
+
+<div class="header">
+    <div>ویترین</div>
+    <div>🔍</div>
+</div>
+
+<input placeholder="جستجوی پیج...">
+
+<div class="card">
+<div>@user1</div>
+<div>@shop123</div>
+</div>
+
+</div>
+
+<!-- فیلم -->
+<div id="video" class="page">
+
+<div class="header">
+    <div>🎬 فیلم</div>
+    <div>☰</div>
+</div>
+
+<input placeholder="جستجوی فیلم...">
+
+<button onclick="addVideo()">➕ افزودن فیلم</button>
+
+<div class="card">
+🎥 فیلم نمونه
+</div>
+
+</div>
+
+<!-- پروفایل -->
+<div id="profile" class="page">
+
+<div class="header">
+    <div>پروفایل</div>
+</div>
+
+<div class="card">
+<img id="avatar" src="" width="80"><br>
+<button onclick="setAvatar()">➕ انتخاب عکس</button>
+
+<input id="name" placeholder="نام">
+<textarea id="bio" placeholder="بیو"></textarea>
+
+<button onclick="saveProfile()">ذخیره</button>
+</div>
+
+</div>
+
+<!-- نوار پایین -->
+<div class="navbar">
+<div onclick="showPage('home')">🏠<br>خانه</div>
+<div onclick="showPage('chat')">💬<br>پیام</div>
+<div onclick="showPage('social')">📸<br>آورینو</div>
+<div onclick="showPage('shop')">🛍<br>ویترین</div>
+<div onclick="showPage('video')">🎬<br>فیلم</div>
 </div>
 
 <script>
 
-/* باز کردن برنامه */
-function openApp(id){
-    document.getElementById(id).style.display = 'flex';
+/* تغییر صفحه */
+function showPage(id){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
 }
 
-/* بستن برنامه */
-function closeApp(id){
-    document.getElementById(id).style.display = 'none';
+/* پشتیبانی */
+function support(){
+    alert("@Music_daniyal\nکسب درآمد | بلیط سینما | فیلم و سریال");
 }
 
-/* ساعت */
-function updateClock(){
-    let now = new Date();
-    document.getElementById("clock").innerText =
-        now.toLocaleTimeString();
-}
-setInterval(updateClock,1000);
-
-/* مرورگر */
-function go(){
-    let url = document.getElementById("url").value;
-    document.getElementById("frame").src = url;
+/* گروه */
+function newGroup(){
+    let name = prompt("نام گروه:");
+    alert("گروه ساخته شد: "+name);
 }
 
-/* ماشین حساب */
-function calc(){
-    let val = document.getElementById("calcInput").value;
-    document.getElementById("result").innerText = eval(val);
+/* کانال */
+function newChannel(){
+    let name = prompt("نام کانال:");
+    alert("کانال ساخته شد: "+name);
 }
 
-/* تغییر پس زمینه */
-function changeBg(){
-    document.body.style.background =
-    "linear-gradient(120deg,#ff9966,#ff5e62)";
+/* پست */
+function addPost(){
+    let text = prompt("متن پست:");
+    let post = `
+    <div class="post">
+    <b>کاربر</b>
+    <p>${text}</p>
+    ❤️ 0 | 💬 0 | 👁 0 | 💾 | 🔗
+    </div>`;
+    document.getElementById("posts").innerHTML += post;
+}
+
+/* ویدیو */
+function addVideo(){
+    alert("آپلود فیلم (شبیه‌سازی)");
+}
+
+/* پروفایل */
+function openProfile(){
+    showPage('profile');
+}
+
+function setAvatar(){
+    alert("انتخاب عکس (گالری)");
+}
+
+function saveProfile(){
+    alert("ذخیره شد");
 }
 
 </script>
